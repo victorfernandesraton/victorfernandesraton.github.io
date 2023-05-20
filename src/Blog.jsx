@@ -3,19 +3,19 @@ import PostList from './PostList';
 
 class Blog extends Nullstack {
 
-    prepare({ page }) {
-        page.title = "RatonDev - Blog"
-    }
-    render() {
-        return (
-            <div>
-                <h1>
-                    Blog
-                </h1>
-                <PostList />
-            </div>
-        )
-    }
+  prepare({ page }) {
+    page.title = "RatonDev - Blog"
+  }
+  render() {
+    return (
+      <div>
+        <h1>
+          Blog
+        </h1>
+        <PostList />
+      </div>
+    )
+  }
 
 }
 
