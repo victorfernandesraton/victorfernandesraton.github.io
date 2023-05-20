@@ -4,7 +4,9 @@ import Blog from './Blog.jsx'
 import Home from './Home.jsx'
 import NotFound from './NotFound.jsx'
 import Post from './Post.jsx'
-
+import Navbar from './Navbar.jsx'
+import "./Application.css"
+import "../tailwind.css"
 class Application extends Nullstack {
 
   prepare({ page }) {
@@ -18,24 +20,9 @@ class Application extends Nullstack {
 
   render() {
     return (
-      <body>
+      <body class='w-full bg-red-100'>
         <Head />
-        <nav>
-          <ul>
-            <li>
-              <a href="/">Home </a>
-            </li>
-            <li>
-              <a href="/blog">Blog</a>
-            </li>
-            <li>
-              <a href="/about">Sobre</a>
-            </li>
-            <li>
-              <a href="/contact">Contato</a>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
         <Home route="/" />
         <Blog route="/blog" />
         <Post route="/blog/:slug" />

@@ -1,6 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
-
 module.exports = {
   content: ["node_modules/nullwind/theme.ts", "src/**/*.{jsx,tsx}"],
   theme: {

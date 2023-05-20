@@ -15,8 +15,11 @@
     "build": "npx nullstack build --mode=ssg --output=ssg"
   },
   "dependencies": {
+    "@rose-pine/palette": "^4.0.1",
     "nullwind": "github:nullwind/nullwind",
+    "postcss-loader": "^7.3.0",
     "remarkable": "^2.0.1",
-    "remarkable-meta": "^1.0.1"
+    "remarkable-meta": "^1.0.1",
+    "string-replace-loader": "^3.1.0"
   }
 }
