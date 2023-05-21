@@ -49,11 +49,7 @@ class Post extends Nullstack {
     }
 
     return (
-      <section>
-        <article>
-          <div html={this.html} />
-        </article>
-      </section>
+      <article class='max-w-[900px] mx-auto' html={this.html} />
     )
   }
 

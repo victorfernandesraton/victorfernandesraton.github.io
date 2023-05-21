@@ -5,10 +5,10 @@ class Home extends Nullstack {
   
   render() {
     return (
-      <div>
+      <main class='max-w-[900px] mx-auto'>
         <h1>Home</h1>
         <PostList />
-      </div>
+      </main>
     )
   }
 

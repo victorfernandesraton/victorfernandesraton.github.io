@@ -8,7 +8,9 @@
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "nullstack": "~0.18.0",
-    "tailwindcss": "^3.3.2"
+    "postcss-loader": "^7.3.0",
+    "tailwindcss": "^3.3.2",
+    "webpack-bundle-analyzer": "^4.8.0"
   },
   "scripts": {
     "start": "npx nullstack start",
@@ -16,8 +18,7 @@
   },
   "dependencies": {
     "@rose-pine/palette": "^4.0.1",
-    "nullwind": "github:nullwind/nullwind",
-    "postcss-loader": "^7.3.0",
+    "nullwind": "^0.0.2",
     "remarkable": "^2.0.1",
     "remarkable-meta": "^1.0.1",
     "string-replace-loader": "^3.1.0"

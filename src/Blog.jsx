@@ -8,12 +8,12 @@ class Blog extends Nullstack {
   }
   render() {
     return (
-      <div>
+      <section class='max-w-[900px] mx-auto'>
         <h1>
           Blog
         </h1>
         <PostList />
-      </div>
+      </section>
     )
   }
 
