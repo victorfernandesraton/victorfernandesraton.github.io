@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "npx nullstack start",
-    "build": "npx nullstack build --mode=ssg --output=ssg"
+    "build": "npx nullstack build --mode=ssg --output=ssg",
+    "static": "npm run build && npx serve ./ssg"
   },
   "dependencies": {
     "@rose-pine/palette": "^4.0.1",

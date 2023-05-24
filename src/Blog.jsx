@@ -3,16 +3,16 @@ import PostList from './PostList';
 
 class Blog extends Nullstack {
 
-  prepare({ page }) {
-    page.title = "RatonDev - Blog"
+  prepare({ page, project }) {
+    page.title = `${project.name} - Blog`
   }
   render() {
     return (
-      <section class='max-w-[900px] mx-auto'>
-        <h1>
-          Blog
+      <section class='px-4 md:px-0 max-w-[900px] mx-auto'>
+        <h1 class='text-5xl font-bold my-16'>
+          Postagens
         </h1>
-        <PostList />
+        <PostList limit={3} />
       </section>
     )
   }

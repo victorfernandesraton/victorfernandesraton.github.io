@@ -6,6 +6,7 @@ import Home from './Home.jsx'
 import NotFound from './NotFound.jsx'
 import Post from './Post.jsx'
 import Navbar from './Navbar.jsx'
+import About from './About'
 
 
 const theme = {
@@ -39,9 +40,9 @@ class Application extends Nullstack {
   initiate(context) {
     context.useTheme = useTheme(theme);
   }
-  prepare({ page }) {
+  prepare({ page, project }) {
     page.locale = 'en-US'
-    page.title = 'RatonDev'
+    page.title = project.name
   }
 
   renderHead() {
@@ -57,6 +58,7 @@ class Application extends Nullstack {
         <Home route="/" />
         <Blog route="/blog" />
         <Post route="/blog/:slug" />
+        <About route="/me" />
         <NotFound route="/404" />
       </body>
     )

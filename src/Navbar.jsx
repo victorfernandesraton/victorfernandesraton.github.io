@@ -1,15 +1,28 @@
 import Nullstack from "nullstack"
-import {Button} from 'nullwind'
 
 class Navbar extends Nullstack {
+
+  // TODO loading from translation
+  tabs = [
+    {title: "Blog", href : "/blog"},
+    {title: "About me", href : "/me"}
+  ]
+
+  renderNavItem({title, href, router}) {
+    return <li class={[
+      'px-4 pb-2', 
+      'border border-transparent', 
+      router.path.includes(href) && 'border-b-rosePine-rose' 
+    ]}>
+      <a class='font-semibold' href={href}>{title}</a>
+    </li>
+  }
   render() {
     return (
-      <nav class="md:max-w-[900px] m-auto flex content-between gap-4">
-        <div class='w-36 bg-rosePine-rose'></div>
+      <nav class="max-w-[900px] m-auto flex content-between gap-8">
+        <a href="/" class='w-36 bg-rosePine-rose'/>
         <ul class='text-xl ml-auto text-rosePine-rose flex justify-between py-6'>
-          <li class="px-4"><a href="/">Home </a></li>
-          <li class="px-4"><a href="/blog">Blog </a></li>
-          <li class="px-4"><a href="/me">About me </a></li>
+          {this.tabs.map((item) => <NavItem {...{...item}} />)}
         </ul>
         <div class='w-36'></div>
       </nav>
