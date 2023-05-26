@@ -24,7 +24,11 @@ class Navbar extends Nullstack {
         <ul class='text-xl ml-auto text-rosePine-rose flex justify-between py-6'>
           {this.tabs.map((item) => <NavItem {...{...item}} />)}
         </ul>
-        <div class='w-36'></div>
+        <div class='w-24 flex flex-row items-center justify-between mr-4'>
+          <a target='_blank' href="https://github.com/victorfernandesraton">
+          <i class="fab fa-github text-rosePine-foam"></i>
+          </a>
+        </div>
       </nav>
     )
   }

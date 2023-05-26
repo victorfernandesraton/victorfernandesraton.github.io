@@ -21,6 +21,15 @@ class Post extends Nullstack {
   static _changePStyle (tokens, idx) {
     return '<p class="my-8 text-xl">';
   };
+
+  static _changeListStyle(tokens, idx) {
+    return '<ul class="list-disc my-0"'
+  } 
+
+  static _changeListItemStyle(index, idx) {
+    return '<li class="my-0">'
+  }
+
   static async getPost({ key }) {
     const path = `posts/${key}/index.md`
     if (!existsSync(path)) {
@@ -33,6 +42,9 @@ class Post extends Nullstack {
     data = this.replaceImageUrl({md: data})
     md.renderer.rules.heading_open = this._changeHStyle
     md.renderer.rules.paragraph_open = this._changePStyle
+    md.renderer.rules.bullet_list_open = this._changeListStyle
+    md.renderer.rules.list_item_open = this._changeListItemStyle
+
     const html= md.render(data)
 
     return {
