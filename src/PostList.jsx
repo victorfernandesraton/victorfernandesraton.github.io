@@ -1,6 +1,7 @@
 import Nullstack from 'nullstack'
 
-import { readdir } from 'node:fs/promises'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 
 import Post from './Post'
 class PostList extends Nullstack {
@@ -8,17 +9,24 @@ class PostList extends Nullstack {
   postList = []
 
   static async getPostTree() {
-    const files = await readdir(`posts`, { withFileTypes: true })
-    const filesList = files.filter((file) => file.isDirectory()).map((file) => file.name)
+    const directoryPath = 'posts'
+    const files = await fs.readdir(directoryPath)
+    const filteredFiles = []
 
-    const contentData = filesList.map((i) => Post.getPost({ key: i }))
+    for (const file of files) {
+      const filePath = path.join(directoryPath, file)
+      const fileStats = await fs.stat(filePath)
 
-    const posts = await Promise.all(contentData)
-    return posts.sort((a, b) => new Date(a.created_at) > new Date(b.created_at)).slice(1)
+      if (fileStats.isFile() && path.extname(file) === '.md') {
+        const data = await Post.getPost({ key: file.replace('.md', '') })
+        filteredFiles.push(data)
+      }
+    }
 
+    return filteredFiles.slice(1)
   }
 
-  async initiate({limit}) {
+  async initiate({ limit }) {
     this.postList = await this.getPostTree()
     if (limit) {
       this.postList = this.postList.slice(0, limit)
@@ -30,9 +38,9 @@ class PostList extends Nullstack {
       <li>
         <a href={`/blog/${name}`}>
           <p>{}</p>
-          <div class='bg-rosePine-surface mb-2 p-6 flex flex-col gap-y-4'>
-            <h3 class='text-4xl font-bold text-rosePine-love'>{title}</h3>
-            <p class='text-xl font-semibold text-rosePine-foam'>Published at {Post.timeAgo(published_at)}</p>
+          <div class="bg-rosePine-surface mb-2 p-6 flex flex-col gap-y-4">
+            <h3 class="text-4xl font-bold text-rosePine-love">{title}</h3>
+            <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(published_at)}</p>
           </div>
         </a>
       </li>
