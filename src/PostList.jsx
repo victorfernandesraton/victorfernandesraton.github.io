@@ -23,7 +23,7 @@ class PostList extends Nullstack {
       }
     }
 
-    return filteredFiles.slice(1)
+    return filteredFiles
   }
 
   async initiate({ limit }) {

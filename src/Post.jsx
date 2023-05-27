@@ -59,14 +59,13 @@ class Post extends Nullstack {
 
   async initiate({ page, params, router, project }) {
     const article = await Post.getPost({
-      locale: page.locale,
       key: params.slug !== '' ? params.slug : router.path.slice(1),
     })
 
     if (!article.found) {
       router.path = '/404'
     }
-    page.title = `${project.name} - ${article.title}`
+    page.title = `${article.title}`
     Object.assign(this, article)
   }
 
