@@ -34,15 +34,23 @@ class PostList extends Nullstack {
   }
 
   renderPostLink({ name, title, published_at, cover }) {
+    const coverLink = cover?.replace?.('/public','' );
     return (
       <li>
         <a href={`/blog/${name}`}>
-          {cover && (
-            <img src={cover.replace("/public", "")} />
-          )}
-          <div class="bg-rosePine-surface mb-2 p-6 flex flex-col gap-y-4">
-            <h3 class="text-4xl font-bold text-rosePine-love">{title}</h3>
-            <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(published_at)}</p>
+          <div class={[
+            "mb-2 p-6 flex flex-col gap-y-4", 
+            cover && 'bg-cover bg-center bg-no-repeat',
+            !cover && 'bg-rosePine-surface' 
+          ]}
+            style={cover && [
+              `background-image: linear-gradient(to right, rgba(7, 2, 18, 0.50), rgba(7, 2, 18, .0)), url(${coverLink});`,
+            ]}
+          >
+            <div class='brightness-100'>
+              <h3 class="text-4xl font-bold text-rosePine-love">{title}</h3>
+              <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(published_at)}</p>
+            </div>
           </div>
         </a>
       </li>

@@ -1,1 +1,1 @@
-{"version":3,"file":"client.css","mappings":"AAAA,ygRAEA,iuDAFA","sources":["webpack://myblog/./tailwind.css"],"sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n"],"names":[],"sourceRoot":""}
+{"version":3,"file":"client.css","mappings":"AAAA,ygRAEA,82DAFA","sources":["webpack://myblog/./tailwind.css"],"sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n"],"names":[],"sourceRoot":""}
