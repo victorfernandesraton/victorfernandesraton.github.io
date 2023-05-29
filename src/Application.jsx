@@ -1,5 +1,5 @@
 import Nullstack from 'nullstack'
-
+import Logo from 'nullstack/logo'
 import '../tailwind.css'
 import About from './About'
 import Blog from './Blog.jsx'
@@ -22,17 +22,36 @@ class Application extends Nullstack {
     )
   }
 
-  render() {
+  renderFooter() {
     return (
-      <body class="bg-rosePine-base text-rosePine-text">
-        <Head />
-        <Navbar />
-        <Home route="/" />
-        <Blog route="/blog" />
-        <Post route="/blog/:slug" />
-        <About route="/me" />
-        <NotFound route="/404" />
-      </body>
+      <footer class='max-w-[900px] mx-auto my-8 inset-x-0 bottom-0'>
+        <h3>Developer with &#128156; by victorfernandesraton</h3>
+        <a href='https://nullstack.app/'>
+          <h3>Powered by</h3>
+          <Logo height={20} light />
+        </a>
+      </footer>
+    )
+  }
+
+  render({router, page}) {
+    if(page.status == 404) {
+      router.path = '/404'
+    }
+
+    return (
+      <>
+        <body class="bg-rosePine-base text-rosePine-text">
+          <Head />
+          <Navbar />
+          <Home route="/" />
+          <Blog route="/blog" />
+          <Post route="/blog/:slug" />
+          <About route="/me" />
+          <NotFound route="/404" />
+          <Footer />
+        </body>
+      </>
     )
   }
 

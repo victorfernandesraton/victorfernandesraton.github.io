@@ -15,7 +15,7 @@ class Post extends Nullstack {
   static _changeHStyle(tokens, idx) {
     const level = tokens[idx].hLevel
 
-    const className = `text-${3 - level}xl text-rosePine-iris font-bold`
+    const className = `text-${5 -level}xl text-rosePine-iris font-bold`
 
     return `<h${level} class="${className}">`
   }
@@ -57,7 +57,7 @@ class Post extends Nullstack {
     }
   }
 
-  async initiate({ page, params, router, project }) {
+  async initiate({ page, params, router }) {
     const article = await Post.getPost({
       key: params.slug !== '' ? params.slug : router.path.slice(1),
     })
@@ -66,6 +66,9 @@ class Post extends Nullstack {
       router.path = '/404'
     }
     page.title = `${article.title}`
+    if (article?.cover) {
+      page.image = article.cover.replace("/public","" );
+    }
     Object.assign(this, article)
   }
 
@@ -113,7 +116,7 @@ class Post extends Nullstack {
     return (
       <>
         <header class="mx-auto my-16 px-4 md:px-0 max-w-[900px] flex flex-col gap-y-4 content-between">
-          <h1 class="text-4xl font-bold text-rosePine-love">{this?.title}</h1>
+          <h1 class="text-5xl font-bold text-rosePine-love">{this?.title}</h1>
           <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(this.published_at)}</p>
         </header>
         <article html={this.html} class="mx-auto px-4 md:px-0 max-w-[900px]" />

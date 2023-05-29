@@ -1,6 +1,7 @@
 ---
 title: console.log('Hello world!')
 published_at: 2023-05-15
+cover: /public/assets/img/leafy.png
 ---
 
 # E aí, pessoal!

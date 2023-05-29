@@ -23,7 +23,7 @@ class PostList extends Nullstack {
       }
     }
 
-    return filteredFiles
+    return filteredFiles.slice(1)
   }
 
   async initiate({ limit }) {
@@ -33,11 +33,13 @@ class PostList extends Nullstack {
     }
   }
 
-  renderPostLink({ name, title, published_at }) {
+  renderPostLink({ name, title, published_at, cover }) {
     return (
       <li>
         <a href={`/blog/${name}`}>
-          <p>{}</p>
+          {cover && (
+            <img src={cover.replace("/public", "")} />
+          )}
           <div class="bg-rosePine-surface mb-2 p-6 flex flex-col gap-y-4">
             <h3 class="text-4xl font-bold text-rosePine-love">{title}</h3>
             <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(published_at)}</p>
