@@ -9,7 +9,7 @@ class Home extends Nullstack {
         <h1 class='text-5xl font-bold my-16'>
           Home
         </h1>
-        <PostList />
+        <PostList persistent />
       </main>
     )
   }

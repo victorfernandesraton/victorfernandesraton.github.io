@@ -12,7 +12,7 @@ class Blog extends Nullstack {
     return (
       <section class="max-w-[900px] mx-auto">
         <h1 class="text-5xl font-bold mt-8 mb-16">Posts</h1>
-        <PostList limit={3} />
+        <PostList persistent limit={3} />
       </section>
     )
   }
