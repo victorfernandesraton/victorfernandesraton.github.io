@@ -1,5 +1,4 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "node_modules/nullwind/theme.ts", 
@@ -35,12 +34,6 @@ module.exports = {
           highlightMed: "#403d52",
           highlightHigh: "#524f67",
         },
-        primary: colors.pink,
-        secondary: colors.gray,
-        info: colors.blue,
-        success: colors.green,
-        warning: colors.orange,
-        danger: colors.red,
       },
     },
   },

@@ -24,8 +24,13 @@ class Application extends Nullstack {
 
   renderFooter() {
     return (
-      <footer class='flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center'>
+      <footer class='pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]'>
         <h3>Developer with &#128156; by victorfernandesraton</h3>
+        <div class="flex flex-row items-center justify-between mr-4">
+          <a target="_blank" href="https://github.com/victorfernandesraton">
+            <i class="fab fa-github text-rosePine-foam" />
+          </a>
+        </div>
         <a href='https://nullstack.app/'>
           <h3>Powered by</h3>
           <Logo height={20} light />
@@ -41,16 +46,16 @@ class Application extends Nullstack {
 
     return (
       <>
-        <body class="bg-rosePine-base text-rosePine-text">
-          <Head />
-          <Navbar />
+        <Head />
+        <Navbar />
+        <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4">
           <Home route="/" />
           <Blog route="/blog" />
           <Post route="/blog/:slug" />
           <About route="/me" />
           <NotFound route="/404" />
-          <Footer />
         </body>
+        <Footer />
       </>
     )
   }

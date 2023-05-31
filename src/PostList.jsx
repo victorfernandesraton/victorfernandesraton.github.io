@@ -22,7 +22,6 @@ class PostList extends Nullstack {
         filteredFiles.push(data)
       }
     }
-
     return filteredFiles.slice(1)
   }
 
