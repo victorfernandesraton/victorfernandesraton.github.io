@@ -25,10 +25,9 @@ jobs:
 
       - name: Build
         env:
-          NULLSTACK_PROJECT_NAME: 'Nullstack Project Name'
-          NULLSTACK_PROJECT_DOMAIN: 'some-awesome-nullstack-project.com'
+          NULLSTACK_PROJECT_NAME: 'raton.dev'
           NULLSTACK_PROJECT_COLOR: '#D22365'
-        run: yarn build --cache
+        run: yarn build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
