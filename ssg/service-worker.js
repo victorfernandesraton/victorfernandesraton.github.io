@@ -5,13 +5,14 @@ self.context = {
     "development": false,
     "production": true,
     "mode": "ssg",
-    "key": "8b92d611888714999a26dbabee03835704e543ef",
+    "key": "580ea90d56e1eea4b3fc459a22e0aff608152472",
     "name": ""
   },
   "project": {
     "domain": "localhost",
-    "name": "RatonDev",
-    "color": "#D22365",
+    "name": "/raton.dev",
+    "shortName": "raton.dev",
+    "color": "#ebbcba",
     "viewport": "width=device-width, initial-scale=1, shrink-to-fit=no",
     "type": "website",
     "display": "standalone",
