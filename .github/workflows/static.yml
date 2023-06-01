@@ -1,37 +1,31 @@
-name: Nullstack SSG Build and Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          path: |
-            **/node_modules
-            **/yarn.lock
-            **/.production
-          key: node_modules-${{ hashFiles('**/package.json') }}
+          node-version: '14'
 
-      - name: Install deps
-        run: yarn
+      - name: Install Dependencies
+        run: npm install
 
       - name: Build
-        env:
-          NULLSTACK_PROJECT_NAME: 'raton.dev'
-          NULLSTACK_PROJECT_COLOR: '#D22365'
-        run: yarn build
+        run: npm run build
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.3.3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: master
-          folder: built
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./sshg
