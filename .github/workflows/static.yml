@@ -21,7 +21,7 @@ jobs:
           key: node_modules-${{ hashFiles('**/package.json') }}
 
       - name: Install deps
-        run: npm
+        run: npm install
 
       - name: Build
         env:
