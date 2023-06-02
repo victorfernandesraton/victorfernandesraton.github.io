@@ -1,22 +1,27 @@
-name: Nullstack SSG Build and Deploy
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: SSG Build to Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
+      - uses: actions/checkout@v2
+      # cache the dependencies from any node_modules directory
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
+          node-version: '20'
           path: |
             **/node_modules
-            **/yarn.lock
+            **/package-lock.json
             **/.production
           key: node_modules-${{ hashFiles('**/package.json') }}
 
@@ -24,14 +29,15 @@ jobs:
         run: npm install
 
       - name: Build
-        env:
-          NULLSTACK_PROJECT_NAME: 'vraton.dev'
-          NULLSTACK_PROJECT_DOMAIN: 'vraton.dev'
-          NULLSTACK_PROJECT_COLOR: '#D22365'
-        run: npm run build
+        run: npx nullstack build --mode=ssg --output=ssg
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.3.3
-        with:
-          branch: gh-pages
-          folder: ssg
+      - name: Send to Github
+        run: |
+          git branch gh-pages -f
+          git checkout gh-pages
+          touch ./ssg/.nojekyll
+          git add ssg -f
+          git config --global user.name "vratondev"
+          git config --global user.email "vratondev@deployer.ci"
+          git commit -m ":rocket: New SSG Build"
+          git push -u origin gh-pages -f
