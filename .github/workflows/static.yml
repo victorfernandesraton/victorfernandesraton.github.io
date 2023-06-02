@@ -21,14 +21,14 @@ jobs:
           key: node_modules-${{ hashFiles('**/package.json') }}
 
       - name: Install deps
-        run: yarn
+        run: npm
 
       - name: Build
         env:
-          NULLSTACK_PROJECT_NAME: 'Nullstack Project Name'
-          NULLSTACK_PROJECT_DOMAIN: 'some-awesome-nullstack-project.com'
+          NULLSTACK_PROJECT_NAME: 'vraton.dev'
+          NULLSTACK_PROJECT_DOMAIN: 'vraton.dev'
           NULLSTACK_PROJECT_COLOR: '#D22365'
-        run: yarn build --cache
+        run: npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
