@@ -1,41 +1,43 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: SSG Build to Deploy
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [ main ]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      # cache the dependencies from any node_modules directory
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
-          node-version: "19"
-      - name: Install Dependencies
+          node-version: '20'
+          path: |
+            **/node_modules
+            **/package-lock.json
+            **/.production
+          key: node_modules-${{ hashFiles('**/package.json') }}
+
+      - name: Install deps
         run: npm install
+
       - name: Build
-        run: npm run build
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_branch: gh-pages
-          publish_dir: ./ssg
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: npx nullstack build --mode=ssg --output=ssg
+
+      - name: Send to Github
+        run: |
+          git branch gh-pages -f
+          git checkout gh-pages
+          touch ./ssg/.nojekyll
+          git add ssg -f
+          git config --global user.name "vraton"
+          git config --global user.email "vraton@deployer.ci"
+          git commit -m ":rocket: New SSG Build"
+          git push -u origin gh-pages -f
