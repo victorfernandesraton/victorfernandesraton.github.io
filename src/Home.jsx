@@ -6,7 +6,7 @@ class Home extends Nullstack {
   render() {
     return (
       <main class='max-w-[900px] mx-auto'>
-        <h1 class='text-5xl font-bold my-16'>
+        <h1 class='text-5xl font-bold mt-8 mb-16'>
           Home
         </h1>
         <PostList persistent />

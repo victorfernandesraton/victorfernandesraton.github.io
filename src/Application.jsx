@@ -56,7 +56,7 @@ class Application extends Nullstack {
       <>
         <Head />
         <Navbar />
-        <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4">
+        <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4 h-full">
           <Home route="/" />
           <Blog route="/blog" />
           <Post route="/blog/:slug" />

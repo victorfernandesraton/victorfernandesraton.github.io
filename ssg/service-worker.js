@@ -5,7 +5,7 @@ self.context = {
     "development": false,
     "production": true,
     "mode": "ssg",
-    "key": "580ea90d56e1eea4b3fc459a22e0aff608152472",
+    "key": "4b2f701aaf9c8af39e670cac75650bc7f629b950",
     "name": ""
   },
   "project": {

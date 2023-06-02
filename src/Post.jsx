@@ -62,8 +62,9 @@ class Post extends Nullstack {
       key: params.slug !== '' ? params.slug : router.path.slice(1),
     })
 
-    if (!article.found) {
+    if (!article) {
       router.path = '/404'
+      return
     }
     page.title = `${article.title}`
     if (article?.cover) {
@@ -98,7 +99,10 @@ class Post extends Nullstack {
     return `${yearsDifference} years ago`
   }
 
-  render() {
+  render({router}) {
+    if (!this.html && this.initiated) {
+      router.path = '/404'
+    }
     if (!this.initiated) {
       return (
         <section class="mx-auto max-w-[900px]">
@@ -106,13 +110,7 @@ class Post extends Nullstack {
         </section>
       )
     }
-    if (!this.html) {
-      return (
-        <section class="mx-auto max-w-[900px]">
-          <h1>Not Found</h1>
-        </section>
-      )
-    }
+
     return (
       <>
         <header class="mx-auto mb-16 mt-8 max-w-[900px] flex flex-col gap-y-4 content-between break-words">
