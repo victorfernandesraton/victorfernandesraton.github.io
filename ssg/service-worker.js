@@ -5,12 +5,12 @@ self.context = {
     "development": false,
     "production": true,
     "mode": "ssg",
-    "key": "4b2f701aaf9c8af39e670cac75650bc7f629b950",
+    "key": "8365adbc2561474b625faf7f74c511494aee4a62",
     "name": ""
   },
   "project": {
     "domain": "localhost",
-    "name": "/raton.dev",
+    "name": "vraton.dev - a place for my caothic mind",
     "shortName": "raton.dev",
     "color": "#ebbcba",
     "viewport": "width=device-width, initial-scale=1, shrink-to-fit=no",
@@ -38,7 +38,14 @@ self.context = {
   "worker": {
     "enabled": true,
     "fetching": false,
-    "preload": [],
+    "preload": [
+      "/",
+      "/me",
+      "/blog",
+      "/blog/me",
+      "/blog/post-two",
+      "/blog/pot-one"
+    ],
     "staleWhileRevalidate": [],
     "cacheFirst": [],
     "headers": {},

@@ -103,18 +103,11 @@ class Post extends Nullstack {
     if (!this.html && this.initiated) {
       router.path = '/404'
     }
-    if (!this.initiated) {
-      return (
-        <section class="mx-auto max-w-[900px]">
-          <h1>Loading .....</h1>
-        </section>
-      )
-    }
-
+    
     return (
       <>
         <header class="mx-auto mb-16 mt-8 max-w-[900px] flex flex-col gap-y-4 content-between break-words">
-          <h1 class="text-5xl font-bold text-rosePine-love">{this?.title}</h1>
+          <h1 class="text-4xl font-bold text-rosePine-love">{this?.title}</h1>
           <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(this.published_at)}</p>
         </header>
         <article html={this.html} class="mx-auto max-w-[900px]" />

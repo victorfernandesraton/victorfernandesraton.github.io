@@ -38,7 +38,8 @@ class PostList extends Nullstack {
       <li>
         <a href={`/blog/${name}`}>
           <div class={[
-            "mb-2 p-6 flex flex-col gap-y-4", 
+            "mb-2 p-6 flex flex-col gap-y-4",
+            "border border-rosePine-highlightMed border-b-4 border-r-4",
             cover && 'bg-cover bg-center bg-no-repeat',
             !cover && 'bg-rosePine-surface' 
           ]}
@@ -57,9 +58,6 @@ class PostList extends Nullstack {
   }
 
   render() {
-    if (!this.initiated) {
-      return <h1>Loading</h1>
-    }
 
     return (
       <ul>
