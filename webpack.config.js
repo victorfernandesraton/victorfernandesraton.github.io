@@ -1,6 +1,5 @@
 const [server, client] = require('nullstack/webpack.config')
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 function customClient(...args) {
   const config = client(...args)
@@ -16,19 +15,6 @@ function customClient(...args) {
       },
     },
   })
-
-  if (config.mode === 'buildtest') {
-    config.plugins.push(
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'server',
-        logLevel: 'info',
-      }),
-    )
-  }
-  // config.module.rules.push(mdxRule);
-
-  // config.module.rule
-  // config.resolve.alias = alias;
 
   return config
 }

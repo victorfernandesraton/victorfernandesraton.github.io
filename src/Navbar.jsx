@@ -32,7 +32,7 @@ class Navbar extends Nullstack {
         <div class='flex flex-col w-full'>
           <div class='flex w-full justify-between py-6 items-center border-b-rosePine-surface border-b-[1px]'>
 
-            <a href="/" class="flex items-center ">
+            <a href="/" aria-label='Go to homepage'  class="flex items-center ">
               <Logo />
             </a>
 

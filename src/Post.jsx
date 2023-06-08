@@ -1,5 +1,5 @@
 import Nullstack from 'nullstack'
-
+import './Post.scss'
 import { existsSync, readFileSync } from 'node:fs'
 import { Remarkable } from 'remarkable'
 import meta from 'remarkable-meta'
@@ -21,7 +21,7 @@ class Post extends Nullstack {
   }
 
   static _changePStyle() {
-    return '<p class="my-8 text-xl">'
+    return '<p class="my-8 text">'
   }
 
   static _changeListStyle() {
@@ -35,7 +35,7 @@ class Post extends Nullstack {
   static async getPost({ key }) {
     const path = `posts/${key}.md`
     if (!existsSync(path)) {
-      return { found: false }
+      return null
     }
     let data = readFileSync(path, 'utf-8')
     const md = new Remarkable()
@@ -46,11 +46,9 @@ class Post extends Nullstack {
     md.renderer.rules.paragraph_open = this._changePStyle
     md.renderer.rules.bullet_list_open = this._changeListStyle
     md.renderer.rules.list_item_open = this._changeListItemStyle
-
     const html = md.render(data)
 
     return {
-      found: true,
       html,
       name: key,
       ...md.meta,
@@ -66,7 +64,11 @@ class Post extends Nullstack {
       router.path = '/404'
       return
     }
-    page.title = `${article.title}`
+
+    page.title = article.title
+    if (article?.description) {
+      page.description = article.description
+    }
     if (article?.cover) {
       page.image = article.cover.replace("/public","" );
     }
@@ -103,14 +105,17 @@ class Post extends Nullstack {
     if (!this.html && this.initiated) {
       router.path = '/404'
     }
-    
+
     return (
       <>
         <header class="mx-auto mb-16 mt-8 max-w-[900px] flex flex-col gap-y-4 content-between break-words">
           <h1 class="text-4xl font-bold text-rosePine-love">{this?.title}</h1>
-          <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(this.published_at)}</p>
+          {this.description && (
+            <h2 class="text-2xl font-bold text-rosePine-gold mb-4">{this?.description}</h2>
+          )}
+          <p class="text-sm font-semibold text-rosePine-foam">Published at {Post.timeAgo(this.published_at)}</p>
         </header>
-        <article html={this.html} class="mx-auto max-w-[900px]" />
+        <article html={this.html} class="mx-auto max-w-[900px] article-custon-style" />
       </>
     )
   }

@@ -6,6 +6,7 @@ class Blog extends Nullstack {
 
   prepare({ page, project }) {
     page.title = `${project.name} - Blog`
+    page.description = "Some posts write by me"
   }
 
   render() {

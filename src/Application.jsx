@@ -26,9 +26,9 @@ class Application extends Nullstack {
   renderFooter() {
     return (
       <footer class='pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]'>
-        <h3>Developer with &#128156; by victorfernandesraton</h3>
+        <p>Developer with &#128156; by victorfernandesraton</p>
         <a href='https://nullstack.app/'>
-          <h3>Powered by</h3>
+          <p>Powered by</p>
           <Logo height={20} light />
         </a>
       </footer>
