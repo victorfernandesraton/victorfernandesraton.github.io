@@ -1,7 +1,8 @@
 ---
-title: console.log('Hello world!')
+title: About me
+description: console.log("hello world")
 published_at: 2023-05-15
-cover: /public/assets/img/leafy.png
+cover: /public/assets/img/profile.webp
 ---
 
 # E aí, pessoal!
