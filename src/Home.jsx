@@ -27,12 +27,12 @@ class Home extends Nullstack {
             <div class="flex mt-8 flex-row items-center justify-center md:justify-start">
               {this.links.map(({link, name}) => (
                 <a aria-label={`link to my ${name}`} target="_blank" href={link}>
-                  <i class={["fab text-rosePine-rose mr-4 text-3xl md:text-5xl",`fa-${name}`]} />
+                  <i class={["fab text-rosePine-rose mr-4 text-3xl md:text-2xl",`fa-${name}`]} />
                 </a>
               ))}
             </div>
           </div>
-          <img src='assets/img/profile.webp' alt="Victor Raton image face" class="md:w-48 w-40 self-center border border-rosePine-rose border-b-4 border-r-4" />
+          <img src='assets/img/profile.webp' alt="Victor Raton image face" class="md:w-64 w-40 self-center border border-rosePine-rose border-b-4 border-r-4 rounded-full" />
         </div>
         <h2 class='text-4xl font-bold text-rosePine-rose my-8'>O que andei aprontando </h2>
         <PostList persistent />
