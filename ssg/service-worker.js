@@ -5,7 +5,7 @@ self.context = {
     "development": false,
     "production": true,
     "mode": "ssg",
-    "key": "37f2b20425fbb25b0430be41e62b4284d3b287fa",
+    "key": "4559810507de7e0130cbab978a5a76f26230beb7",
     "name": ""
   },
   "project": {
@@ -23,15 +23,8 @@ self.context = {
     "favicon": "/favicon-96x96.png",
     "disallow": [],
     "icons": {
-      "72": "/icon-72x72.png",
-      "96": "/icon-96x96.png",
-      "128": "/icon-128x128.png",
-      "144": "/icon-144x144.png",
-      "152": "/icon-152x152.png",
-      "180": "/icon-180x180.png",
-      "192": "/icon-192x192.png",
-      "384": "/icon-384x384.png",
-      "512": "/icon-512x512.png"
+      "16": "/favicon-16x16.png",
+      "32": "/favicon-32x32.png"
     }
   },
   "settings": {},
