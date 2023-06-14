@@ -11,11 +11,15 @@ class Navbar extends Nullstack {
   ]
 
   showDropdown = false
-
+  
+  prepare(context) {
+    context.page.locale = 'en-US'
+  }
+  
   toggleClick() {
-    console.log(this.showDropdown)
     this.showDropdown = !this.showDropdown
   }
+
   renderNavItem({ title, href, router }) {
     return (
       <li class={['px-4 pb-2', 'border border-transparent', router.path.includes(href) && 'border-b-rosePine-rose']}>
@@ -41,7 +45,7 @@ class Navbar extends Nullstack {
                 <NavItem {...{ ...item }} />
               ))}
             </ul>
-
+          
             <button type="button" onclick={this.toggleClick} class="rounded-md p-4 text-rosePine-text hover:bg-rosePine-rose hover:text-rosePine-base focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rosePine-shiny md:hidden" aria-controls="mobile-menu" aria-expanded="false">
               <span class="sr-only">Open main menu</span>
 

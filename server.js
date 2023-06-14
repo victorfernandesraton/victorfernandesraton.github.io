@@ -17,7 +17,6 @@ worker.preload = [
   "/blog",
   ...articles.map((article) => '/blog/' + article.replace('.md', '')),
 ]
-
 context.start = async function start() {
   // https://nullstack.app/application-startup
 }

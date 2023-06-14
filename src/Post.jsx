@@ -75,7 +75,7 @@ class Post extends Nullstack {
     Object.assign(this, article)
   }
 
-  static timeAgo(date) {
+  static _timeAgo(date) {
     const currentDate = new Date()
     const previousDate = new Date(date)
 
@@ -113,7 +113,7 @@ class Post extends Nullstack {
           {this.description && (
             <h2 class="text-2xl font-bold text-rosePine-gold mb-4">{this?.description}</h2>
           )}
-          <p class="text-sm font-semibold text-rosePine-foam">Published at {Post.timeAgo(this.published_at)}</p>
+          <p class="text-sm font-semibold text-rosePine-foam">Published at {Post._timeAgo(this.published_at)}</p>
         </header>
         <article html={this.html} class="mx-auto max-w-[900px] article-custon-style" />
       </>

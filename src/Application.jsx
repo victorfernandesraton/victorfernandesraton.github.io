@@ -11,10 +11,7 @@ import Loading from './Loading'
 
 class Application extends Nullstack {
 
-  prepare({ page, project }) {
-    page.title = project.name
-  }
-
+ 
   renderHead() {
     return (
       <head>
@@ -26,7 +23,7 @@ class Application extends Nullstack {
   renderFooter() {
     return (
       <footer class='pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]'>
-        <p>Developer with &#128156; by victorfernandesraton</p>
+        <p>Developed with &#128156; by victorfernandesraton</p>
         <a href='https://nullstack.app/'>
           <p>Powered by</p>
           <Logo height={20} light />

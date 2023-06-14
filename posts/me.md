@@ -5,10 +5,12 @@ published_at: 2023-05-15
 cover: /public/assets/img/profile.webp
 ---
 
-# E aí, pessoal!
 
-Me chamo Victor Raton (alguns me chamam de Baião), sou um desenvolvedor full stack brasileiro. Quando não estou procrastinando ou inventando algum projeto paralelo que será esquecido, gosto de compartilhar aqui minhas ideias, abordando temas como desenvolvimento web, Linux, produtividade e até meus hobbies, como jogar alguns metroidvanias ou pesquisar e personalizar teclados.
+# Hey guys!
 
-Comecei a estudar desenvolvimento de software em 2018, no mesmo ano em que entrei para minha primeira graduação em Ciência da Computação. No ano seguinte, comecei a atuar como desenvolvedor full stack, principalmente com JavaScript.
+My name is Victor Raton (some call me Baião), and I'm a Brazilian full-stack developer. When I'm not procrastinating or coming up with some side project that will be forgotten, I like to share my ideas here, covering topics such as web development, Linux, productivity, and even my hobbies, like playing metroidvanias or researching and customizing keyboards.
 
-Decidi escrever um pouco mais sobre tecnologia com o objetivo de aprimorar minhas habilidades em escrita, produção de conteúdo e, principalmente, aprender mais inglês. Além disso, enquanto as IAs não dominam o mundo, decidi também registrar aqui um pedaço da minha mente e do meu conhecimento (ainda que escasso). Sem mais delongas, nos vemos por aí!.
+I started studying software development in 2018, the same year I entered my first Computer Science degree. The following year, I began working as a full-stack developer, mostly with JavaScript.
+
+I've decided to write more about technology in order to improve my skills.
+
