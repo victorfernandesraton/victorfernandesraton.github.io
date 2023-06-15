@@ -12,7 +12,6 @@ class PostList extends Nullstack {
     const directoryPath = 'posts'
     const files = await fs.readdir(directoryPath)
     const filteredFiles = []
-
     for (const file of files) {
       const filePath = path.join(directoryPath, file)
       const fileStats = await fs.stat(filePath)
@@ -22,7 +21,7 @@ class PostList extends Nullstack {
         filteredFiles.push(data)
       }
     }
-    return filteredFiles.slice(1)
+    return filteredFiles
   }
 
   async initiate({ limit }) {
@@ -34,9 +33,10 @@ class PostList extends Nullstack {
 
   renderPostLink({ name, title, published_at, cover }) {
     const coverLink = cover?.replace?.('/public','' );
+    const href = name == "me" ? name : `/blog/${name}`
     return (
       <li>
-        <a href={`/blog/${name}`}>
+        <a href={href}>
           <div class={[
             "mb-2 p-6 flex flex-col gap-y-4",
             "border border-rosePine-highlightMed border-b-4 border-r-4",
@@ -49,7 +49,7 @@ class PostList extends Nullstack {
           >
             <div class='brightness-100'>
               <h3 class="text-4xl font-bold text-rosePine-love">{title}</h3>
-              <p class="text-xl font-semibold text-rosePine-foam">Published at {Post.timeAgo(published_at)}</p>
+              <p class="text-xl font-semibold text-rosePine-foam">Published at {Post._timeAgo(published_at)}</p>
             </div>
           </div>
         </a>

@@ -7,7 +7,7 @@ class Home extends Nullstack {
     {"name": "linkedin", "link": "https://linkedin.com/in/vraton"},
     {"name": "mastodon", "link": "https://mastodon.social/@ratondev"}
   ]
-  description = "Bem vindo ao meu caos"
+  description = "Wellcome to my personal chaos"
 
   prepare(context) {
     context.page.title = `${context.project.shortName} - Home`
@@ -23,7 +23,7 @@ class Home extends Nullstack {
             <h1 class='text-5xl font-bold mt-8 mb-8 sm:mb-16'>
               {this.description}
             </h1>
-            <p class='text-xl my-2'>Fala guys, sou Victor Raton, desenvolvedor fullstack dedsde 2019, defensor ferrenho de open-source e criador exímio de bugs em javascript</p>
+            <p class='text-xl my-2'>Hello guys, I'm Victor Raton, a full-stack developer since 2019, a staunch advocate of open source, and an excellent creator of bugs in JavaScript.</p>
             <div class="flex mt-8 flex-row items-center justify-center md:justify-start">
               {this.links.map(({link, name}) => (
                 <a aria-label={`link to my ${name}`} target="_blank" href={link}>
@@ -34,7 +34,7 @@ class Home extends Nullstack {
           </div>
           <img src='assets/img/profile.webp' alt="Victor Raton image face" class="md:w-64 w-40 self-center border border-rosePine-rose border-b-4 border-r-4 rounded-full" />
         </div>
-        <h2 class='text-4xl font-bold text-rosePine-rose my-8'>O que andei aprontando </h2>
+        <h2 class='text-4xl font-bold text-rosePine-rose my-8'>What I've been up to lately.</h2>
         <PostList persistent />
       </main>
     )

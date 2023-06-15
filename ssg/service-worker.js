@@ -5,7 +5,7 @@ self.context = {
     "development": false,
     "production": true,
     "mode": "ssg",
-    "key": "4559810507de7e0130cbab978a5a76f26230beb7",
+    "key": "f4f5f5f6574d89f242053f4be453f84f51a8182d",
     "name": ""
   },
   "project": {
@@ -24,7 +24,23 @@ self.context = {
     "disallow": [],
     "icons": {
       "16": "/favicon-16x16.png",
-      "32": "/favicon-32x32.png"
+      "32": "/favicon-32x32.png",
+      "36": "/android-icon-36x36.png",
+      "48": "/android-icon-48x48.png",
+      "57": "/apple-icon-57x57.png",
+      "60": "/apple-icon-60x60.png",
+      "70": "/ms-icon-70x70.png",
+      "72": "/apple-icon-72x72.png",
+      "76": "/apple-icon-76x76.png",
+      "96": "/favicon-96x96.png",
+      "114": "/apple-icon-114x114.png",
+      "120": "/apple-icon-120x120.png",
+      "144": "/ms-icon-144x144.png",
+      "150": "/ms-icon-150x150.png",
+      "152": "/apple-icon-152x152.png",
+      "180": "/apple-icon-180x180.png",
+      "192": "/android-icon-192x192.png",
+      "310": "/ms-icon-310x310.png"
     }
   },
   "settings": {},
@@ -35,8 +51,7 @@ self.context = {
       "/",
       "/me",
       "/blog",
-      "/blog/me",
-      "/blog/post-two"
+      "/blog/me"
     ],
     "staleWhileRevalidate": [],
     "cacheFirst": [],
@@ -171,7 +186,7 @@ function activate(event) {
         const cacheNames = await caches.keys();
         const cachesToDelete = cacheNames.filter((cacheName)=>cacheName !== self.context.environment.key);
         await Promise.all(cachesToDelete.map((cacheName)=>caches.delete(cacheName)));
-        if (self.registration.navigationPreload) {
+        if ("navigationPreload" in self.registration) {
             await self.registration.navigationPreload.enable();
         }
         self.clients.claim();
