@@ -21,9 +21,8 @@
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@rose-pine/palette": "^4.0.1",
     "figlet": "^1.6.0",
-    "remarkable": "^2.0.1",
-    "remarkable-meta": "^1.0.1",
-    "string-replace-loader": "^3.1.0",
+    "front-matter": "^4.0.2",
+    "marked": "^5.1.0",
     "yaml": "^2.3.1"
   }
 }
