@@ -11,7 +11,7 @@ import Loading from './Loading'
 
 class Application extends Nullstack {
 
- 
+
   renderHead() {
     return (
       <head>
@@ -32,7 +32,7 @@ class Application extends Nullstack {
     )
   }
 
-  renderBody({children}) {
+  renderBody({ children }) {
     return (
       <>
         <Head />
@@ -45,8 +45,8 @@ class Application extends Nullstack {
     )
   }
 
-  render({router, page}) {
-    if(page.status == 404) {
+  render({ router, page }) {
+    if (page.status == 404) {
       router.path = '/404'
     }
 

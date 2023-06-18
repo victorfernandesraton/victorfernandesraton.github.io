@@ -3,9 +3,9 @@ import PostList from './PostList';
 
 class Home extends Nullstack {
   links = [
-    {"name": "github", "link": "https://github.com/victorfernandesraton"},
-    {"name": "linkedin", "link": "https://linkedin.com/in/vraton"},
-    {"name": "mastodon", "link": "https://mastodon.social/@ratondev"}
+    { "name": "github", "link": "https://github.com/victorfernandesraton" },
+    { "name": "linkedin", "link": "https://linkedin.com/in/vraton" },
+    { "name": "mastodon", "link": "https://mastodon.social/@ratondev" }
   ]
   description = "Wellcome to my personal chaos"
 
@@ -25,9 +25,9 @@ class Home extends Nullstack {
             </h1>
             <p class='text-xl my-2'>Hello guys, I'm Victor Raton, a full-stack developer since 2019, a staunch advocate of open source, and an excellent creator of bugs in JavaScript.</p>
             <div class="flex mt-8 flex-row items-center justify-center md:justify-start">
-              {this.links.map(({link, name}) => (
+              {this.links.map(({ link, name }) => (
                 <a aria-label={`link to my ${name}`} target="_blank" href={link}>
-                  <i class={["fab text-rosePine-rose mr-4 text-3xl md:text-2xl",`fa-${name}`]} />
+                  <i class={["fab text-rosePine-rose mr-4 text-3xl md:text-2xl", `fa-${name}`]} />
                 </a>
               ))}
             </div>

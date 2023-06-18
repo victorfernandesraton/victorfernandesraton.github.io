@@ -1,78 +1,67 @@
-import Nullstack from 'nullstack'
-import './Post.scss'
-import { existsSync, readFileSync } from 'node:fs'
-import { Remarkable } from 'remarkable'
-import meta from 'remarkable-meta'
-
+import Nullstack from 'nullstack';
+import './Post.scss';
+import { existsSync, readFileSync } from 'node:fs';
+import { marked } from 'marked';
+import fm from 'front-matter'
 class Post extends Nullstack {
-
   static replaceImageUrl({ md }) {
-    const regex = /(!\[[^\]]*]\([^)]*)\/public(\/[^)]+\))/g
+    const regex = /(!\[[^\]]*]\([^)]*)\/public(\/[^)]+\))/g;
 
-    return md.replace(regex, '$1$2')
+    return md.replace(regex, '$1$2');
   }
 
-  static _changeHStyle(tokens, idx) {
-    const level = tokens[idx].hLevel
+  static _heading(text, level) {
+    const className = `text-${5 - level}xl text-rosePine-iris font-bold`;
 
-    const className = `text-${5 -level}xl text-rosePine-iris font-bold`
-
-    return `<h${level} class="${className}">`
+    return `<h${level} class="${className}">${text}</h${level}>`;
   }
 
-  static _changePStyle() {
-    return '<p class="my-8 text">'
-  }
-
-  static _changeListStyle() {
-    return '<ul class="list-disc my-0"'
-  }
-
-  static _changeListItemStyle() {
-    return '<li class="my-0">'
+  static _paragraph(text) {
+    const className = 'my-8 text';
+    return `<p class="${className}">${text}</p>`;
   }
 
   static async getPost({ key }) {
-    const path = `posts/${key}.md`
+    const path = `posts/${key}.md`;
     if (!existsSync(path)) {
-      return null
+      return null;
     }
-    let data = readFileSync(path, 'utf-8')
-    const md = new Remarkable()
-    md.use(meta)
+    let data = readFileSync(path, 'utf-8');
+    let renderer = {
+      heading: this._heading,
+      paragraph: this._paragraph
+    }
 
-    data = this.replaceImageUrl({ md: data })
-    md.renderer.rules.heading_open = this._changeHStyle
-    md.renderer.rules.paragraph_open = this._changePStyle
-    md.renderer.rules.bullet_list_open = this._changeListStyle
-    md.renderer.rules.list_item_open = this._changeListItemStyle
-    const html = md.render(data)
+    marked.use({ renderer, mangle: false, headerIds: false })
 
+    data = this.replaceImageUrl({ md: data });
+
+    const { attributes, body } = fm(data)
     return {
-      html,
+      html: marked.parse(body),
       name: key,
-      ...md.meta,
-    }
+      ...attributes
+    };
   }
 
   async initiate({ page, params, router }) {
     const article = await Post.getPost({
       key: params.slug !== '' ? params.slug : router.path.slice(1),
-    })
+    });
 
     if (!article) {
-      router.path = '/404'
-      return
+      router.path = '/404';
+      return;
     }
 
-    page.title = article.title
+    page.title = article.title;
     if (article?.description) {
-      page.description = article.description
+      page.description = article.description;
     }
     if (article?.cover) {
-      page.image = article.cover.replace("/public","" );
+      page.image = article.cover.replace('/public', '');
     }
-    Object.assign(this, article)
+    Object.assign(this, article);
   }
 
   static _timeAgo(date) {
@@ -101,7 +90,7 @@ class Post extends Nullstack {
     return `${yearsDifference} years ago`
   }
 
-  render({router}) {
+  render({ router }) {
     if (!this.html && this.initiated) {
       router.path = '/404'
     }
