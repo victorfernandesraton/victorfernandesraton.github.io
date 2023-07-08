@@ -1,7 +1,6 @@
 import Nullstack from 'nullstack';
 import './Post.scss';
 import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer';
-import "highlight.js/styles/tokyo-night-dark.css"
 import { existsSync, readFileSync } from 'node:fs';
 import fm from 'front-matter'
 import fs from 'node:fs/promises'
