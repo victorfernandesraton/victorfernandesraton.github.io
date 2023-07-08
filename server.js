@@ -2,6 +2,7 @@ import { readdirSync } from 'node:fs'
 import path from 'node:path'
 
 import Nullstack from 'nullstack'
+import { MarkedAdapter } from './lib/marked/MarkedAdapter'
 
 import Application from './src/Application'
 
@@ -11,6 +12,7 @@ const { worker } = context;
 
 const articles = readdirSync(path.join(__dirname, '../posts',));
 
+
 worker.preload = [
   "/",
   "/me",
@@ -18,7 +20,7 @@ worker.preload = [
   ...articles.map((article) => '/blog/' + article.replace('.md', '')),
 ]
 context.start = async function start() {
-  // https://nullstack.app/application-startup
+  context.marked = MarkedAdapter._start()
 }
 
 export default context
