@@ -35,7 +35,7 @@ class Home extends Nullstack {
           <img src='assets/img/profile.webp' alt="Victor Raton image face" class="md:w-64 w-40 self-center border border-rosePine-rose border-b-4 border-r-4 rounded-full" />
         </div>
         <h2 class='text-4xl font-bold text-rosePine-rose my-8'>What I've been up to lately.</h2>
-        <PostList persistent />
+        <PostList />
       </main>
     )
   }
