@@ -19,12 +19,9 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
-    "@rose-pine/palette": "^4.0.1",
-    "figlet": "^1.6.0",
     "front-matter": "^4.0.2",
     "highlight.js": "^11.8.0",
-    "marked": "^5.1.1",
-    "marked-highlight": "^2.0.1",
-    "yaml": "^2.3.1"
+    "marked": "^5.1.2",
+    "marked-highlight": "^2.0.1"
   }
 }
