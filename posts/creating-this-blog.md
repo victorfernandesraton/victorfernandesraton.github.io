@@ -1,11 +1,22 @@
 ---
-title: Creating this blog Part 2
-description: Basic blog structure
-published_at: 2023-07-07
-cover: /public/assets/img/profile.webp
+title: Creating this blog
+description: Nullstack - A journey of Simplicity and Flexibility
+published_at: 2023-06-21
+cover: /public/assets/img/nulla-tools.webp
 ---
 
-# Without vite, swc complex config, just npx cli command
+# A big dsclaimer first
+
+![image](/public/assets/img/nulla-tools.webp)
+
+Exploring the vast array of JavaScript frameworks such as React, Vue, Angular, and Svelte, I encountered limitations, vendor lock-in issues, and the overwhelming chaos of the JavaScript ecosystem, with its countless dependencies and conflicting solutions. However, amidst this tumult, my discovery of Nullstack brought a ray of hope. Initially seen as unconventional due to its use of ES6 classes and named methods for component cycles, I soon recognized the brilliance and potential of this framework.
+
+Nullstack stands out for its refreshing simplicity, offering streamlined data management through class props rather than convoluted states. One remarkable feature is its superior application context, which eliminates the need for a Redux store. Notably, Nullstack goes beyond the capabilities of Next.js by providing built-in support for progressive web app (PWA) capabilities without the need for additional dependencies, resulting in improved SEO capabilities.
+
+But the greatness of Nullstack extends further. It offers the flexibility to adapt to various application architectures, be it single-page applications (SPAs), static HTML, or Node servers with Express. What truly sets it apart is its lack of vendor lock-in, allowing projects to run seamlessly across diverse infrastructures, from on-premises to cloud-based environments. In a world rife with complexity and uncertainty, Nullstack emerges as a great solution, offering clarity and stability for web developers seeking an alternative path.
+
+# Getting start
+
 Nullstack is very consistent, because of this structure, everything in nullstack is based on things is were worked well along side the internet, isntead of create something like css module, for default nullstack support css and sass style.
 
 For create and manager your aplication, you don´t need handle with complex stuff like vite , webpack or babel, Nullstack have a npx tool to create application , with is have some things on a opitional support like tailwind, typescript and sass support, is a convension over configuration like 
@@ -56,7 +67,7 @@ the first implementation is your post component, because there we create to func
 
 For access blog content you use /blog/some-post path, and they verify and get in /posts/some-post.md for contenrt
 
-## DISCLAIMER 1:
+# Almost perfect
 I know this is not performatic way to do this because of two things
 - The function for walking in directory is not optimized at all, also witch means we need iterate to every post and dcopllect every metadata and content like we do for show them, it's means , the scaklability of build time is incresead every time when i creating posts
 - I need call all posts at once if i make this avaliable in SSG, because when i build one page, i need to call in prepare or initialize all posts and they not is performatic to show this list in to or many places
@@ -74,6 +85,7 @@ import path from 'node:path'
 
 class Post extends Nullstack {
 
+  // itś a server side function witch will avaliable as endpoint later
   static async getPost({ key }) {
     const path = `posts/${key}.md`
     if (!existsSync(path)) {
@@ -90,6 +102,7 @@ class Post extends Nullstack {
     }
   }
 
+  // also another server side tunction, but in this case we need pass context paramas for using proxy
   static async getAllPost(context) {
     const directoryPath = 'posts'
     const files = await fs.readdir(directoryPath)
@@ -105,6 +118,8 @@ class Post extends Nullstack {
     }
     return filteredFiles
   }
+  
+  // initiate in some times run in server side like when you access link directly, or loading in client side if you access link navigating in site, See more in https://developer.chrome.com/docs/web-platform/declarative-link-capturing/
 
   async initiate({ page, params, router }) {
     const article = await Post.getPost({
@@ -172,7 +187,13 @@ import '../tailwind.css'
 import Post from './Post.jsx'
 
 class Application extends Nullstack {
-
+  postList = []
+  async initiate({ limit }) {
+    this.postList = await Post.getAllPost()
+    if (limit) {
+      this.postList = this.postList.slice(0, limit)
+    }
+  }
 
   renderHead() {
     return (
@@ -186,10 +207,6 @@ class Application extends Nullstack {
     return (
       <footer class='pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]'>
         <p>Developed with &#128156; by victorfernandesraton</p>
-        <a href='https://nullstack.app/'>
-          <p>Powered by</p>
-          <Logo height={20} light />
-        </a>
       </footer>
     )
   }
@@ -198,7 +215,11 @@ class Application extends Nullstack {
     return (
       <>
         <Head />
-        <Navbar />
+        <ul>
+            {this.postList.slice(0).sort((a, b) => b.published_at >= a.published_at).map((i) => (
+                <a href={`/blog/${a.name}`}>a.title</>
+            ))}
+        </ul>
         <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4 h-fulli">
           {children}
         </body>
@@ -220,25 +241,168 @@ class Application extends Nullstack {
 export default Application
 ```
 
-As you can see i also adding Footer , body and Navbar component, most for organization, and in navbar we have nothing , ok we create a blank page, with router it is not working, because of this i create Home component for show some content
-
+As you can see i also adding Footer , body and Navbar component, most for organization
 
 And i using initiate method again for get a list of existing posts, and render in List component, it's very simple
 
+Now just need create some post, a markdown file with headers information like this
 
-Now just need create some post and ta-dah, where is , a list and post render as a markdown, but wait, we neeed addin some style right?
-
-for this i just using two libraries, highlight.js for generate highlight stylesheet for coding in markdown and marked library witch is a markdown to html parser witch is allow to override some html classes
-
-because of separation of concerms, i create /lib/markd/MarkedParser.js for putting all thngs about markdown, and loading in server side, there is some dowbreaks here, i dont figure out how to resolve marked dependencies for they work i client side only, because of this , i make this work as a singleton in server side , witch means , we genereate only one time and all parsing processing occours in build time, in the end we generate only static html posts and some js and css dependencies,  but all components is rendered as a static content 
-
-
-i apply some styles here
-
-and add some custon cvolors in tailwind configuration and eere is, the blog is aliver
+```markdown
+---
+title: About me
+description: console.log('hello world')
+published_at: 2023-05-15
+cover: /public/assets/img/profile.webp
+---
 
 
-now you need using a build command like , henerate a static content in dist and publish in every place yo want
+# Hey guys!
+
+My name is Victor Raton (some call me Baião), and I'm a Brazilian full-stack developer. When I'm not procrastinating or coming up with some side project that will be forgotten, I like to share my ideas here, covering topics such as web development, Linux, productivity, and even my hobbies, like playing metroidvanias or researching and customizing keyboards.
+
+I started studying software development in 2018, the same year I entered my first Computer Science degree. The following year, I began working as a full-stack developer, mostly with JavaScript.
+
+I've decided to write more about technology in order to improve my skills.
 
 
+```
+
+For least and less important, we need adding some markdowen support, fr this i suing marked, a markdown parser solution with works in server side
+
+Maybe you can see my entire solution using highlight.js for adding code highlight support here
+
+but for now we kept simple:
+
+```js
+import Nullstack from 'nullstack'
+
+import { marked } from 'marked'
+export class MarkedAdapter extends Nullstack {
+
+  static replaceImageUrl({ md }) {
+    const regex = /(!\[[^\]]*]\([^)]*)\/public(\/[^)]+\))/g
+
+    return md.replace(regex, '$1$2')
+  }
+
+  static _heading(text, level) {
+    const className = `text-${5 - level}xl font-bold text-rosePine-iris`
+
+    return `<h${level} class="${className}">${text}</h${level}>`
+  }
+
+  static _listitem(body) {
+    const className = 'my-2'
+
+    return `<li class="${className}">${body}</li>`
+  }
+
+  static _list(body) {
+    const className = 'list-disc py-4 pl-4 marker:blue'
+
+    return `<ul class="${className}">${body}</ul>`
+  }
+
+  static _link(href, title, text) {
+    const className = 'text-blue-400 underline underline-offset-2'
+
+    return `<a ${title ? `title="${title}"` : ''} href="${href}" class="${className}">${text}</a>`
+  }
+
+  static _paragraph(text) {
+    const className = 'my-8 text'
+    return `<p class="${className}">${text}</p>`
+  }
+  static _start() {
+    const renderer = {
+      paragraph: MarkedAdapter._paragraph,
+      heading: MarkedAdapter._heading,
+      list: MarkedAdapter._list,
+      listitem: MarkedAdapter._listitem,
+      link: MarkedAdapter._link,
+    }
+    marked.use(
+      {
+        renderer,
+        mangle: false,
+        headerIds: false,
+      },
+   )
+
+    return marked
+  }
+
+}
+
+
+```
+
+Now using a server.js we added a singleton shared by context for server side funcions.
+
+```js
+import Nullstack from 'nullstack'
+
+import { readdirSync } from 'node:fs'
+import path from 'node:path'
+
+import { MarkedAdapter } from './lib/marked/MarkedAdapter'
+import Application from './src/Application'
+
+const context = Nullstack.start(Application)
+
+const { worker } = context
+
+const articles = readdirSync(path.join(__dirname, '../posts'))
+
+// this is a little workarround to creating prelaod paths for serviceWorker support
+worker.preload = [
+  '/',
+  ...articles.map((article) => `/blog/${article.replace('.md', '')}`).filter((article) => !article.includes('.draft')),
+]
+context.start = async function start() {
+  context.marked = MarkedAdapter._start()
+}
+
+export default context
+
+
+```
+and for leat , don`t forgot to copy my dependencies in `package.json``
+```json
+{
+  "name": "myblog",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.4",
+    "@tailwindcss/typography": "^0.5.9",
+    "nullstack": "^0.20.0",
+    "postcss-loader": "^7.3.3",
+    "tailwindcss": "^3.3.3",
+    "webpack-bundle-analyzer": "^4.9.0"
+  },
+  "scripts": {
+    "start": "npx nullstack start",
+    "build": "npx nullstack build --mode=ssg",
+    "static": "npm run build && npx serve ./ssg"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "highlight.js": "^11.8.0",
+    "marked": "^5.1.1",
+    "marked-highlight": "^2.0.1",
+  }
+}
+
+```
+
+And where is 
+
+a list and post render as a markdown 
+
+Its a simple blog implementation using for initial modeling for this blog, of course, along side of time , i added some styles and features, you can follow this repo and look some changes a made here.
+
+![image](/public/assets/img/thats-all.jpg)
 

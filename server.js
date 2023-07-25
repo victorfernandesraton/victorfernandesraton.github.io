@@ -12,7 +12,12 @@ const { worker } = context
 
 const articles = readdirSync(path.join(__dirname, '../posts'))
 
-worker.preload = ['/', '/me', '/blog', ...articles.map((article) => `/blog/${article.replace('.md', '')}`)]
+worker.preload = [
+  '/',
+  '/me',
+  '/blog',
+  ...articles.map((article) => `/blog/${article.replace('.md', '')}`).filter((article) => !article.includes('.draft')),
+]
 context.start = async function start() {
   context.marked = MarkedAdapter._start()
 }

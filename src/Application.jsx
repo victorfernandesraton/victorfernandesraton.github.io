@@ -1,13 +1,15 @@
 import Nullstack from 'nullstack'
+
 import Logo from 'nullstack/logo'
+
 import '../tailwind.css'
 import About from './About'
 import Blog from './Blog.jsx'
 import Home from './Home.jsx'
+import Loading from './Loading'
 import Navbar from './Navbar.jsx'
 import NotFound from './NotFound.jsx'
 import Post from './Post.jsx'
-import Loading from './Loading'
 
 class Application extends Nullstack {
 
@@ -22,9 +24,9 @@ class Application extends Nullstack {
 
   renderFooter() {
     return (
-      <footer class='pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]'>
+      <footer class="pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]">
         <p>Developed with &#128156; by victorfernandesraton</p>
-        <a href='https://nullstack.app/'>
+        <a href="https://nullstack.app/">
           <p>Powered by</p>
           <Logo height={20} light />
         </a>
@@ -37,9 +39,7 @@ class Application extends Nullstack {
       <>
         <Head />
         <Navbar />
-        <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4 h-fulli">
-          {children}
-        </body>
+        <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4 h-fulli">{children}</body>
         <Footer />
       </>
     )
