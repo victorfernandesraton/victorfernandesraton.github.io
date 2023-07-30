@@ -1,5 +1,5 @@
-import Nullstack from 'nullstack';
-import PostList from './PostList';
+import Nullstack from 'nullstack'
+import PostList from './PostList'
 
 class Home extends Nullstack {
   links = [
@@ -22,10 +22,10 @@ class Home extends Nullstack {
           <div class="flex flex-col">
             <h1 class='text-5xl font-bold mt-8 mb-8 sm:mb-16'>
               {this.description}
-            </h1>
-            <p class='text-xl my-2'>Hello guys, I'm Victor Raton, a full-stack developer since 2019, a staunch advocate of open source, and an excellent creator of bugs in JavaScript.</p>
-            <div class="flex mt-8 flex-row items-center justify-center md:justify-start">
-              {this.links.map(({ link, name }) => (
+        </h1>
+        <p class='text-xl my-2'>Hello guys, I'm Victor Raton, a full-stack developer since 2019, a staunch advocate of open source, and an excellent creator of bugs in JavaScript.</p>
+        <div class="flex mt-8 flex-row items-center justify-center md:justify-start">
+        {this.links.map(({ link, name }) => (
                 <a aria-label={`link to my ${name}`} target="_blank" href={link}>
                   <i class={["fab text-rosePine-rose mr-4 text-3xl md:text-2xl", `fa-${name}`]} />
                 </a>
