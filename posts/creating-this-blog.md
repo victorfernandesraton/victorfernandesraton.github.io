@@ -7,7 +7,7 @@ cover: /public/assets/img/nulla-tools.webp
 
 # A big dsclaimer first
 
-!i[image](/public/assets/img/nulla-tools.webp)
+![image](/public/assets/img/nulla-tools.webp)
 
 Exploring the vast array of JavaScript frameworks such as React, Vue, Angular, and Svelte, I encountered limitations, vendor lock-in issues, and the overwhelming chaos of the JavaScript ecosystem, with its countless dependencies and conflicting solutions. However, amidst this tumult, my discovery of Nullstack brought a ray of hope. Initially seen as unconventional due to its use of ES6 classes and named methods for component cycles, I soon recognized the brilliance and potential of this framework.
 
