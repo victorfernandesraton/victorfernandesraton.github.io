@@ -1,25 +1,42 @@
 import Nullstack from 'nullstack'
 
-import { readdirSync } from 'node:fs'
-import path from 'node:path'
-
 import { MarkedAdapter } from './lib/marked/MarkedAdapter'
 import Application from './src/Application'
-
+import Post from "./src//Post"
+import { Feed } from './lib/rss'
 const context = Nullstack.start(Application)
 
 const { worker } = context
 
-const articles = readdirSync(path.join(__dirname, '../posts'))
-
-worker.preload = [
-  '/',
-  '/me',
-  '/blog',
-  ...articles.map((article) => `/blog/${article.replace('.md', '')}`).filter((article) => !article.includes('.draft')),
-]
 context.start = async function start() {
-  context.marked = MarkedAdapter._start()
+
+    const posts = await Post.getAllPost(context)
+    const feed = Feed._start({
+        title: context.project.shortName,
+        description: context.project.name,
+        feed_url: `${context.project.domain}/feed.xml`,
+        site_url: context.project.domain,
+        managingEditor: 'Victor Raton',
+        webMaster: 'Victor Raton',
+        copyright: '2023 Victor Raton',
+        language: 'en',
+        categories: ['tech', 'sofware development'],
+        pubDate: 'May 20, 2013 04:00:00 GMT',
+        ttl: '60',
+    })
+
+
+
+    feed.parseContent(posts)
+    feed.writeInFile("./public/feed.xml")
+    context.marked = MarkedAdapter._start()
+
+    worker.preload= [...worker.preload,
+        '/',
+        '/me',
+        '/public/feed.xml',
+        ...posts.map(p => `/blog/${p.name}`)
+    ]
 }
 
 export default context
