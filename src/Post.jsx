@@ -11,17 +11,27 @@ import { MarkedAdapter } from '../lib/marked/MarkedAdapter'
 import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer'
 
 class Post extends Nullstack {
-
-  static async getPost({ key, marked }) {
+  static async _getMetadata(context) {
+    const {key} = context
     const path = `posts/${key}.md`
     if (!existsSync(path)) {
       return null;
     }
-  
+
     let data = readFileSync(path, 'utf-8')
-    data = MarkedAdapter.replaceImageUrl({ md: data })
+     data = MarkedAdapter.replaceImageUrl({ md: data })
 
     const { attributes, body } = fm(data)
+    return {
+        ...attributes,
+        name: key,
+        url: `${context.project.domain}/blog/${key}`,
+        body
+    }
+  }
+
+  static async getPost({ key, marked, ...context }) {
+    const {body, ...attributes} = await Post._getMetadata({...context, key})
     const html = marked.parse(body)
     return {
       html,
@@ -37,9 +47,8 @@ class Post extends Nullstack {
     for (const file of files) {
       const filePath = path.join(directoryPath, file)
       const fileStats = await fs.stat(filePath)
-
       if (fileStats.isFile() && path.extname(file) === '.md') {
-        const data = await Post.getPost({ ...context, key: file.replace('.md', '') })
+        const data = await this._getMetadata({...context, key: file.replace('.md', '') })
         filteredFiles.push(data)
       }
     }
