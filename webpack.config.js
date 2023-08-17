@@ -1,6 +1,5 @@
 const [server, client] = require('nullstack/webpack.config')
 
-
 function customClient(...args) {
   const config = client(...args)
   const rule = config.module.rules.find((rule) => rule.test.test('.css'))
