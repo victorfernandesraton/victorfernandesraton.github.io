@@ -1,37 +1,39 @@
 import Nullstack from 'nullstack'
+
 import fm from 'front-matter'
 import { existsSync, readFileSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-import "./Post.scss"
+import './Post.scss'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
 import { MarkedAdapter } from '../lib/marked/MarkedAdapter'
 import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer'
 
 class Post extends Nullstack {
+
   static async _getMetadata(context) {
-    const {key} = context
+    const { key } = context
     const path = `posts/${key}.md`
     if (!existsSync(path)) {
-      return null;
+      return null
     }
 
     let data = readFileSync(path, 'utf-8')
-     data = MarkedAdapter.replaceImageUrl({ md: data })
+    data = MarkedAdapter.replaceImageUrl({ md: data })
 
     const { attributes, body } = fm(data)
     return {
-        ...attributes,
-        name: key,
-        url: `${context.project.domain}/blog/${key}`,
-        body
+      ...attributes,
+      name: key,
+      url: `${context.project.domain}/blog/${key}`,
+      body,
     }
   }
 
   static async getPost({ key, marked, ...context }) {
-    const {body, ...attributes} = await Post._getMetadata({...context, key})
+    const { body, ...attributes } = await Post._getMetadata({ ...context, key })
     const html = marked.parse(body)
     return {
       html,
@@ -48,7 +50,7 @@ class Post extends Nullstack {
       const filePath = path.join(directoryPath, file)
       const fileStats = await fs.stat(filePath)
       if (fileStats.isFile() && path.extname(file) === '.md') {
-        const data = await this._getMetadata({...context, key: file.replace('.md', '') })
+        const data = await this._getMetadata({ ...context, key: file.replace('.md', '') })
         filteredFiles.push(data)
       }
     }
@@ -58,16 +60,16 @@ class Post extends Nullstack {
   async initiate({ page, params, router }) {
     const article = await Post.getPost({
       key: params.slug !== '' ? params.slug : router.path.slice(1),
-    });
+    })
 
     page.title = article.title
     if (article?.description) {
-      page.description = article.description;
+      page.description = article.description
     }
     if (article?.cover) {
       page.image = article.cover.replace('/public', '')
     }
-    Object.assign(this, article);
+    Object.assign(this, article)
   }
 
   render({ router }) {
@@ -89,6 +91,7 @@ class Post extends Nullstack {
       </>
     )
   }
+
 }
 
 export default Post
