@@ -12,7 +12,6 @@ import { MarkedAdapter } from '../lib/marked/MarkedAdapter'
 import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer'
 
 class Post extends Nullstack {
-
   static async _getMetadata(context) {
     const { key } = context
     const path = `posts/${key}.md`
@@ -21,18 +20,19 @@ class Post extends Nullstack {
     }
 
     let data = readFileSync(path, 'utf-8')
-    data = MarkedAdapter.replaceImageUrl({ md: data })
+     data = MarkedAdapter.replaceImageUrl({ md: data })
 
     const { attributes, body } = fm(data)
     return {
       ...attributes,
       name: key,
       url: `${context.project.domain}/blog/${key}`,
-      body,
+      body
     }
   }
 
   static async getPost({ key, marked, ...context }) {
+
     const { body, ...attributes } = await Post._getMetadata({ ...context, key })
     const html = marked.parse(body)
     return {

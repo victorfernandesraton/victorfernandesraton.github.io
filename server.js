@@ -1,9 +1,9 @@
 import Nullstack from 'nullstack'
 
 import { MarkedAdapter } from './lib/marked/MarkedAdapter'
-import { Feed } from './lib/rss'
-import Post from './src//Post'
 import Application from './src/Application'
+import Post from "./src//Post"
+import { Feed } from './lib/rss'
 const context = Nullstack.start(Application)
 
 const { worker } = context
