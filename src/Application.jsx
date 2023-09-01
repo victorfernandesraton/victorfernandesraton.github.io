@@ -12,7 +12,11 @@ import NotFound from './NotFound.jsx'
 import Post from './Post.jsx'
 class Application extends Nullstack {
 
-
+  prepare(context) {
+    context.page.title = `${context.project.shortName}`
+    context.page.description = this.description
+    context.page.image = `${context.project.domain}/assets/img/profile.webp`
+  }
   renderHead() {
     return (
       <head>
