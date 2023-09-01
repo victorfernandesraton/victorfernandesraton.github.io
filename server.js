@@ -28,7 +28,7 @@ context.start = async function start() {
   feed.writeInFile('public/assets/feed.xml')
   context.marked = MarkedAdapter._start()
 
-  worker.preload = [...worker.preload, '/', '/me', '/assets/feed.xml', ...posts.map((p) => `/blog/${p.name}`)]
+  worker.preload = [...worker.preload, '/', '/me', ...posts.map((p) => `/blog/${p.name}`)]
 }
 
 export default context
