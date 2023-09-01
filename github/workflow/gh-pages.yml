@@ -28,14 +28,14 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npx nullstack build --mode=ssg --output=docs
+        run: npx nullstack build --mode=ssg --output=dist
 
       - name: Send to Github
         run: |
           git branch gh-pages -f
           git checkout gh-pages
-          touch ./docs/.nojekyll
-          git add docs -f
+          touch ./dist/.nojekyll
+          git add dist -f
           git config --global user.name "NullstackDeployer"
           git config --global user.email "nullstack@deployer.ci"
           git commit -m ":rocket: New SSG Build"
