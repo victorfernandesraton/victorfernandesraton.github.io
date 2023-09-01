@@ -30,6 +30,14 @@ class Navbar extends Nullstack {
     )
   }
 
+  renderRssIcon() {
+    return (
+      <a aria-label="RSS feed" target="_blank" href="/assets/feed.xml">
+        <i class="fas text-rosePine-gold px-4 pb-2 md:fa-md fa-sm fa-rss fa-solid" />
+      </a>
+    )
+  }
+
   render() {
     return (
       <nav class="max-w-[900px] m-auto flex justify-between content-between gap-8">
@@ -39,14 +47,15 @@ class Navbar extends Nullstack {
             <a href="/" aria-label='Go to homepage'  class="flex items-center ">
               <Logo />
             </a>
-
             <ul class="hidden text-xl ml-auto text-rosePine-rose md:flex justify-between">
               {this.tabs.map((item) => (
                 <NavItem {...{ ...item }} />
               ))}
+                <RssIcon />
             </ul>
           
-            <button type="button" onclick={this.toggleClick} class="rounded-md p-4 text-rosePine-text hover:bg-rosePine-rose hover:text-rosePine-base focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rosePine-shiny md:hidden" aria-controls="mobile-menu" aria-expanded="false">
+               
+            <button type="button" onclick={this.toggleClick} class="rounded-md p-4 text-rosePine-text hover:bg-rosePine-rose hover:text-rosePine-base focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rosePine-shiny md:hidden" aria-controls="mobile-menu" aria-expanded="true">
               <span class="sr-only">Open main menu</span>
 
               <svg class="block h-6 w-6 hover:text-rosePine-base active:text-rosePine-base text-rosePine-rose" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -67,6 +76,7 @@ class Navbar extends Nullstack {
               {this.tabs.map((item) => (
                 <NavItem {...{ ...item }} />
               ))}
+              <RssIcon />
             </ul>
           </div>
         </div>

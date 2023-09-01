@@ -13,7 +13,7 @@ context.start = async function start() {
   const feed = Feed._start({
     title: context.project.shortName,
     description: context.project.name,
-    feed_url: `${context.project.domain}/feed.xml`,
+    feed_url: `${context.project.domain}/assets/feed.xml`,
     site_url: context.project.domain,
     managingEditor: 'Victor Raton',
     webMaster: 'Victor Raton',
@@ -25,10 +25,10 @@ context.start = async function start() {
   })
 
   feed.parseContent(posts)
-  feed.writeInFile('public/feed.xml')
+  feed.writeInFile('public/assets/feed.xml')
   context.marked = MarkedAdapter._start()
 
-  worker.preload = [...worker.preload, '/', '/me', '/public/feed.xml', ...posts.map((p) => `/blog/${p.name}`)]
+  worker.preload = [...worker.preload, '/', '/me', '/assets/feed.xml', ...posts.map((p) => `/blog/${p.name}`)]
 }
 
 export default context
