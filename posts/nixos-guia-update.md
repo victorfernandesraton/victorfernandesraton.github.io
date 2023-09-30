@@ -35,6 +35,13 @@ Como output você deve ter algo mais ou menos assim:
 nixos https://nixos.org/channels/nixos-23.05
 ```
 
+Dessa forma podemos realizar o upgrade do sistema atualizando os pacotes no mesmo canal de release.
+
+```bash
+sudo nix-channel --update
+```
+
+>>>>>>> origin/main
 # Como atualizar pacotes instalados via nix-env
 
 Para atualizar pacotes do ´nix-env´ usarei o comando abaixo
@@ -50,16 +57,20 @@ O que este comnaodo faz é atualizar todos os pacotes do ´nix-env´ mas usando 
 Basicamente é a forma de atualizar ou executar as builds do nixOS, neste caso com o comando abaixo:
 
 ```bash
-sudo nixos-rebuild switch
+sudo nixos-rebuild switch --update
 ```
 
 Em seguida basta fazer o mesmo para o home-manager
 
 ```bash
-sudo home-manager switch
+home-manager switch
 ```
 
 E vualá! Agora é só usar o famoso ´neofetch´ e postar em suas redes sociais, "I use nix BTW" pra irritar a galera do Arch.
 
 
 ![image](/public/assets/img/i-use-nix-btw.png)
+
+# Errata
+
+No dia 28/09/2023 o [Cássio Ávila](https://www.linkedin.com/in/c%C3%A1ssio-%C3%A1vila-569912152/) me alertou sobre o fato de que não precisamos usar `sudo` para fazer update do home-manager.
