@@ -41,7 +41,6 @@ Dessa forma podemos realizar o upgrade do sistema atualizando os pacotes no mesm
 sudo nix-channel --update
 ```
 
->>>>>>> origin/main
 # Como atualizar pacotes instalados via nix-env
 
 Para atualizar pacotes do ´nix-env´ usarei o comando abaixo
