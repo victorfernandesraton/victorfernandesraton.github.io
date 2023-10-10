@@ -23,6 +23,10 @@ Dai decidi verificar no site do Querido Diário se já havia sido cadastrado ant
 
 Como mostra captura de tela abaixo, eles possuem o link do diário oficial , mas não conseguem extrair o conteúdo, verificando o link, percebi que o mesmo estava errado.
 
+[CAPTURA QUERIDO DIARIO]
+
+[CAPTURA PÁGINA NÃO ENCONTRADA]
+
 Sem críticas ao projeto neste caso, pois acredito que algo mantido de forma voluntária tem a dificuldade em lhedar quando esse tipo de coisa muda, dependendo do trabalho ativo de alguém para notifica r esse tipo de coisa.
 
 Então sabemos o site , sabemos que temos arquivos recentes disponivéis , verificamos que temos tanbêm os arquivos diários (por publicação) em PDF e os resumos mensais em JSON e PDF
@@ -154,3 +158,122 @@ pip install "cython<3.0.0" wheel && pip install pyyaml==5.4.1 --no-build-isolati
 ```bash
 pre-commit install
 ```
+
+# Desenvolvendo o crowler
+
+Analisando os exmplos de implementação, eu precisava extrair do site os arquivos dos diários oficiais e, diferente do Selenium que eu uso no dia a dia que é uma ferramenta que permite você fazer algo como bot-like, o scrapy meio que faz o proceso de raspagem em conteúdos estátiocs.
+
+Este é o site que possui o diário oficial do município de Maragogipe, seria o portal do IMAP/SAI, aproveitei o fato de que havia uma issue referete a esta plataforma e decidi tocar.
+
+[CAPTURA IMAP SAI]
+
+Dai o famoso testa ali, usa o inspector do browser aculá, ao preencher o formulário eu descobri que é feito uma request do tipo POST passando algumas informaćões 
+
+[CAPTURA REQUEST]
+
+descobri tanbêm que após o uso do formulário, por algum motivo a página é atualizada para limitar a vizualização , trazendo os dados no formnato de breadcombs por mês em vez de uma tabela atualizada, como mostram as capuras de tela.
+
+Fazendo testes aqui e aculá no Insominia, descobri que se eu mudar o parâmetro `diarioOficial.TipoFormato` para o valor 1 eu obteruia os resultados em array de json, bem como para o valor 2 XML, mas vamos ficar com o JSON.
+
+Testando mais um pouco a requisição retirei alguns parâmetros e vualá! 
+
+[CAPTURA INSOMINIA]
+
+Agora vamos para o Python
+
+Com as informações que tivemos, basta dar uma olhada no código das demais implementções, dai decidi criar uma classe padrão que recebe como parâmetro apenas 3 variáveis:
+
+- `start_date` para data inicial , afinal não sabemos quando cada município adotou o SAI.
+- `state_city_url_part` que basicamente é o path estado/municipio onde municipio segue um carnelCase
+- `client_id` que se trata de um código do SAI que representa um município
+
+Como mencionei antes, tive que pesquisar um pouco sobre scrapy para saber como ele faz para mandar requisições POST, cai nessa parte da documentação oficial.
+
+Depois disso , foi desenvolver uma classe base para que seja implementado o raspador do site SAI , como mostra o código abaixo
+
+```python
+```
+
+Neste código apenas fazemos um método principal que faz a requisição chamado de [NOME DO METODO] onde mandamos nossa requisição POST, em, seguida temos um segundo método que normaliza os dados de cada documento encontrado como resultado, e por fim mandamos eles por meio da entidade Gazette, bem simples.
+
+
+# Problemas com o ruff
+
+Se você chegou até aqui , deve está se perguntando, "Bem agora é so comitar e partir pro abraço certo?", entâo, sem nenhuma cerimônia fui fazer isso e adivinha, no último check do pre-commit, mais precisamente as verificações da blibioteca ´ruff´ decidiram não funcionar,...
+
+[PRINT DO ERRO]
+
+Mais precisamente o ruff nâo quis processar, o fato é que o mesmo não estava sendo encontrado na pasta ahabitual, isso pq o pre-commit gera uma pasta de .cache na home do seu sistenma , mas no meu caso do sistema imutavél isso nâo era feito, pesquisei, matutei e pesquisei de nvo, até que percebi que teria que compilar o ruff, dai sem mais delongas eu decidi escrever um flake.nix que configura um cli com os compilaodres e ferramentas que vi nessa Issue, torrei minha CPU compilando o ruff, e dessa vez funcionou.
+
+Primeiro eu inicializei o flake com 
+```bash
+nix flake init
+```
+E em seguida alterei o arquivo flake.nix (Não se esqueça de evitar commitar ele como eu fiz em certo ponto)
+
+```nix
+{
+    description = "Querido diário flake base";
+    inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    };
+    outputs = { self, nixpkgs }:
+        let 
+        system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+    in {
+        devShells.${system}.default = 
+            pkgs.mkShell {
+                buildInputs = [
+                    pkgs.python310
+                    pkgs.pre-commit
+                    pkgs.rustc  # for ruff
+                    pkgs.cargo  # for ruff
+                ];
+                shellHook = ''
+                    export PIP_NO_BINARY="ruff"
+                    '';
+            };
+    };
+}
+
+```
+
+Não sabe o que é flake, dá uma olhada na documentacao oficial do nix e neste video sensacional 
+
+Dai basta inicializar o shell de dev com o comando 
+
+```bash
+nix develop
+```
+
+Depois apontar para a source do virtual enviroment antes crtiado
+
+```bash
+source .venv/bin/activate
+```
+
+Depois disso basta instalar o ruff via pip, que ele será buidado localmente (torrando sua CPU)
+
+```bash
+pip install ruff
+```
+
+E depois disso basta verificar se está tudo ok com o comando 
+
+```bash
+pre-commit run
+```
+
+# Seguindo em frente: Conversando com o pessoal no discord do projeto, foi acordado que para fins de eficiencia, eu poderia ir já desenvolvendo os demais municípios a serem incluídos.
+
+Entao para isso eu decidi investigar uma forma de extrair primeiro os dados de quais municipios usam este portal, depois iria verificar em cada página dos sites quais os ID's e as datas iniciais a serem consideradas, montaria uma tabela em excel e pronto.
+
+
+
+# Lições aprendidas
+
+- O scrpy e o conceito de spyders é bem diferente do que estou acostumado a faer no dia-a-dia com Selenium
+- As vezes fuçar requests do network te ajuda a descobrir coisas insanas sobre como os dados são trocados dentro de um site
+- O pessoal do Querido Diário está de parabéms, ainda que eu tenha tido problemas,  foram muito acolhedores, me responderam na comunidade e tentaram me ajudar da forma que cabia.
+
