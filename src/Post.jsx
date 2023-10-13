@@ -12,28 +12,31 @@ import { MarkedAdapter } from '../lib/marked/MarkedAdapter'
 import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer'
 
 class Post extends Nullstack {
+
   static async _getMetadata(context) {
     const { key } = context
-    const path = `posts/${key}.md`
-    if (!existsSync(path)) {
+    const content_path = `posts/${key}.md`
+    if (!existsSync(content_path)) {
       return null
     }
 
-    let data = readFileSync(path, 'utf-8')
-     data = MarkedAdapter.replaceImageUrl({ md: data })
+    let data = readFileSync(content_path, 'utf-8')
+    data = MarkedAdapter.replaceImageUrl({ md: data })
 
     const { attributes, body } = fm(data)
     return {
       ...attributes,
       name: key,
-      url: `${context.project.domain}/blog/${key}`,
-      body
+      body,
     }
   }
 
   static async getPost({ key, marked, ...context }) {
-
-    const { body, ...attributes } = await Post._getMetadata({ ...context, key })
+    const data = await Post._getMetadata({ ...context, key })
+    if (!data) {
+      return null
+    }
+    const { body, ...attributes } = data
     const html = marked.parse(body)
     return {
       html,
@@ -61,6 +64,9 @@ class Post extends Nullstack {
     const article = await Post.getPost({
       key: params.slug !== '' ? params.slug : router.path.slice(1),
     })
+    if (!article) {
+      router.path = '/404'
+    }
 
     page.title = article.title
     if (article?.description) {
