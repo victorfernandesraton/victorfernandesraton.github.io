@@ -10,11 +10,13 @@ const { worker } = context
 
 context.start = async function start() {
   const posts = await Post.getAllPost(context)
+  // TODO: Fix this later with .env config or something like
+  const domain = 'https://vraton.dev'
   const feed = Feed._start({
     title: context.project.shortName,
     description: context.project.name,
-    feed_url: `${context.project.domain}/assets/feed.xml`,
-    site_url: context.project.domain,
+    feed_url: `${domain}/assets/feed.xml`,
+    site_url: domain,
     managingEditor: 'Victor Raton',
     webMaster: 'Victor Raton',
     copyright: '2023 Victor Raton',
