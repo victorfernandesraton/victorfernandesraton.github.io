@@ -17,17 +17,22 @@ class Application extends Nullstack {
     context.page.description = this.description
     context.page.image = `/assets/img/profile.webp`
   }
+
   renderHead() {
     return (
       <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" as="style"/>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          as="style"
+        />
       </head>
     )
   }
 
   renderFooter() {
     return (
-        <footer class="pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]">
+      <footer class="pt-6 flex flex-col max-w-[900px] mx-auto my-8 inset-x-0 bottom-0 lg:items-start items-center gap-4 text-center lg:text-start border-t-rosePine-surface border-t-[1px]">
         <p>Developed with &#128156; by victorfernandesraton</p>
         <a href="https://nullstack.app/">
           <p>Powered by</p>
@@ -49,7 +54,7 @@ class Application extends Nullstack {
   }
 
   render({ router, page }) {
-    if (page.status == 404) {
+    if (page.status === 404) {
       router.path = '/404'
     }
 

@@ -3,9 +3,10 @@ import Nullstack from 'nullstack'
 import PostList from './PostList'
 
 class Blog extends Nullstack {
+
   prepare({ page, project }) {
     page.title = `${project.name} - Blog`
-    page.description = "Some posts write by me"
+    page.description = 'Some posts write by me'
   }
 
   render() {
