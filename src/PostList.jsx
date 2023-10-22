@@ -4,15 +4,32 @@ import Nullstack from 'nullstack'
 class PostList extends Nullstack {
 
   postList = []
+  tags = new Map()
 
   async initiate({ limit }) {
-    this.postList = await Post.getAllPost()
+    const data = await Post.getAllPost()
+    this.postList = data.sort((a, b) => b.published_at >= a.published_at)
+    for (const post of data) {
+        const tags = post?.tags ?? []
+        for (const tag of tags) {
+            let count = 1
+            if (this.tags.has(tag)) {
+                count = this.tags.get(tag) + 1
+            }
+            this.tags.set(tag, count)
+        }
+    }
     if (limit) {
       this.postList = this.postList.slice(0, limit)
     }
   }
 
-  renderPostLink({ name, title, published_at, cover }) {
+  renderPostTag({tag}) {
+    return <a href={`?tag=${tag}`} class="rounded-full px-4 text-lg text-rosePine-highlightLow bg-rosePine-rose border-2 border-r-10 border-rosePine-rose">{tag}</a>
+
+  }
+
+  renderPostLink({ name, title, published_at, cover, tags }) {
     const coverLink = cover?.replace?.('/public', '');
     const href = name == "me" ? name : `/blog/${name}`
     return (
@@ -31,6 +48,9 @@ class PostList extends Nullstack {
             <div class='brightness-100'>
               <h3 class="text-4xl font-bold text-rosePine-love">{title}</h3>
               <p class="text-xl font-semibold text-rosePine-foam">Published at {DateTimeNormalizer.dateToTimeAgo(published_at)}</p>
+              <div class="flex gap-x-2">  
+                {tags.map(tag => <PostTag tag={tag}/>)}
+              </div>
             </div>
           </div>
         </a>
@@ -38,17 +58,23 @@ class PostList extends Nullstack {
     )
   }
 
-  render() {
+  render({tagList = false}) {
     if (!this.initiated) {
       return <></>
     }
 
     return (
-      <ul>
-        {this.postList.slice(0).sort((a, b) => b.published_at >= a.published_at).map((i) => (
-          <PostLink {...{ ...i }} />
+      <div>
+        {tagList && (
+        <ul class="flex gap-x-2 mb-8">{Array.from(this.tags.entries()).map(([key]) => <PostTag tag={key} />)}</ul>
+        
+        )}
+        <ul>
+        {this.postList.map((i) => (
+            <PostLink {...{ ...i }} />
         ))}
-      </ul>
+        </ul>
+      </div>
     )
   }
 
