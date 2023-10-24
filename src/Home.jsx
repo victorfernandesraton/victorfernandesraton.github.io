@@ -1,7 +1,7 @@
 import Nullstack from 'nullstack'
 
-import PostList from './PostList'
-
+import Post from './Post'
+import PostItem from './PostItem'
 class Home extends Nullstack {
 
   links = [
@@ -12,9 +12,15 @@ class Home extends Nullstack {
 
   description = 'Wellcome to my personal chaos'
 
+  postList = []
   prepare(context) {
     context.page.title = `${context.project.shortName} - Home`
     context.page.description = this.description
+  }
+
+  async initiate() {
+    const data = await Post.getAllPost()
+    this.postList = data.sort((a, b) => b.published_at >= a.published_at).slice(0, 3)
   }
 
   render() {
@@ -42,7 +48,13 @@ class Home extends Nullstack {
           />
         </div>
         <h2 class="text-4xl font-bold text-rosePine-rose my-8">What I've been up to lately.</h2>
-        <PostList limit={2} persistent />
+        <ul>
+          {this.postList.map((item) => (
+            <li>
+              <PostItem {...{ ...item }} />
+            </li>
+          ))}
+        </ul>
       </main>
     )
   }

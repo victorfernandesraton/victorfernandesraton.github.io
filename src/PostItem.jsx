@@ -2,32 +2,10 @@ import Nullstack from 'nullstack'
 
 import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer'
 import Post from './Post'
-class PostList extends Nullstack {
+import TagItem from './TagItem'
 
-  postList = []
-  async initiate({ limit }) {
-    const data = await Post.getAllPost()
-    this.postList = data.sort((a, b) => b.published_at >= a.published_at)
-    if (limit) {
-      this.postList = this.postList.slice(0, limit)
-    }
-  }
 
-  renderPostTag({ tag, active }) {
-    return (
-      <a
-        href={active ? `?` : `?tag=${tag}`}
-        class={[
-          'rounded-full px-4 text-lg text-rosePine-highlightLow',
-          active ? 'bg-rosePine-rose' : 'bg-rosePine-iris',
-        ]}
-      >
-        {tag}
-      </a>
-    )
-  }
-
-  renderPostLink({ name, title, published_at, cover, tags = [] }) {
+function PostItem({ name, title, published_at, cover, tags = [] }) {
     const coverLink = cover?.replace?.('/public', '')
     const href = name === 'me' ? name : `/blog/${name}`
     return (
@@ -53,7 +31,7 @@ class PostList extends Nullstack {
               </p>
               <div class="flex gap-x-2">
                 {tags.map((tag) => (
-                  <PostTag tag={tag} />
+                  <TagItem tag={tag} />
                 ))}
               </div>
             </div>
@@ -63,22 +41,5 @@ class PostList extends Nullstack {
     )
   }
 
-  render() {
-    if (!this.initiated) {
-      return <></>
-    }
 
-    return (
-      <div>
-        <ul>
-          {this.postList.map((i) => (
-            <PostLink {...{ ...i }} />
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
-}
-
-export default PostList
+export default PostItem

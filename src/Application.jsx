@@ -73,6 +73,7 @@ class Application extends Nullstack {
         <Home route="/" />
         <Blog route="/blog" />
         <Post route="/blog/:slug" key={router.path} />
+        <Blog route="/tag/:tag" />
         <About route="/me" />
         <NotFound route="/404" />
       </Body>
