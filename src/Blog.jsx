@@ -14,7 +14,7 @@ class Blog extends Nullstack {
       <section class="flex-col max-w-[900px] mx-auto">
         <h1 class="text-5xl font-bold mt-8 mb-16">Posts</h1>
         <p class="text-xl mt-2 mb-8">This is a bunch of content with i produce, someones is a full messy, so... </p>
-        <PostList persistent tagList />
+        <PostList tagList />
       </section>
     )
   }

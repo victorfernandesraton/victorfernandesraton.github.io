@@ -29,7 +29,8 @@ context.start = async function start() {
   feed.parseContent(posts)
   feed.writeInFile('public/assets/feed.xml')
   context.marked = MarkedAdapter._start()
-
+  context.posts = Array.from(posts)
+  console.log(posts)
   worker.preload = [...worker.preload, '/', '/me', '/assets/feed.xml', ...posts.map((p) => `/blog/${p.name}`)]
 }
 

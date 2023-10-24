@@ -42,7 +42,7 @@ class Home extends Nullstack {
           />
         </div>
         <h2 class="text-4xl font-bold text-rosePine-rose my-8">What I've been up to lately.</h2>
-        <PostList limit={2} />
+        <PostList limit={2} persistent />
       </main>
     )
   }

@@ -5,38 +5,29 @@ import Post from './Post'
 class PostList extends Nullstack {
 
   postList = []
-  tags = new Map()
-
   async initiate({ limit }) {
     const data = await Post.getAllPost()
     this.postList = data.sort((a, b) => b.published_at >= a.published_at)
-    for (const post of data) {
-      const tags = post?.tags ?? []
-      for (const tag of tags) {
-        let count = 1
-        if (this.tags.has(tag)) {
-          count = this.tags.get(tag) + 1
-        }
-        this.tags.set(tag, count)
-      }
-    }
     if (limit) {
       this.postList = this.postList.slice(0, limit)
     }
   }
 
-  renderPostTag({ tag }) {
+  renderPostTag({ tag, active }) {
     return (
       <a
-        href={`?tag=${tag}`}
-        class="rounded-full px-4 text-lg text-rosePine-highlightLow bg-rosePine-rose border-2 border-r-10 border-rosePine-rose"
+        href={active ? `?` : `?tag=${tag}`}
+        class={[
+          'rounded-full px-4 text-lg text-rosePine-highlightLow',
+          active ? 'bg-rosePine-rose' : 'bg-rosePine-iris',
+        ]}
       >
         {tag}
       </a>
     )
   }
 
-  renderPostLink({ name, title, published_at, cover, tags }) {
+  renderPostLink({ name, title, published_at, cover, tags = [] }) {
     const coverLink = cover?.replace?.('/public', '')
     const href = name === 'me' ? name : `/blog/${name}`
     return (
@@ -72,20 +63,13 @@ class PostList extends Nullstack {
     )
   }
 
-  render({ tagList = false }) {
+  render() {
     if (!this.initiated) {
       return <></>
     }
 
     return (
       <div>
-        {tagList && (
-          <ul class="flex gap-x-2 mb-8">
-            {Array.from(this.tags.entries()).map(([key]) => (
-              <PostTag tag={key} />
-            ))}
-          </ul>
-        )}
         <ul>
           {this.postList.map((i) => (
             <PostLink {...{ ...i }} />
