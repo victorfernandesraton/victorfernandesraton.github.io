@@ -46,7 +46,7 @@ class Application extends Nullstack {
     return (
       <>
         <Head />
-        <Navbar />
+        <Navbar persist />
         <body class="bg-rosePine-base text-rosePine-text lg:px-0 px-4 h-fulli">{children}</body>
         <Footer />
       </>
@@ -73,7 +73,7 @@ class Application extends Nullstack {
         <Home route="/" />
         <Blog route="/blog" />
         <Post route="/blog/:slug" key={router.path} />
-        <Blog route="/tag/:tag" />
+        <Blog route="/tag/:tag" key={router?.params?.tag} />
         <About route="/me" />
         <NotFound route="/404" />
       </Body>
