@@ -10,11 +10,7 @@ function PostItem({ name, title, published_at, cover, tags = [] }) {
         class={['mb-2 gap-x-4 flex flex-col md:flex-row', 'border border-rosePine-highlightMed border-b-4 border-r-4']}
       >
         <div
-          class={[
-            'flex flex-col w-100 md:w-40',
-            cover && 'bg-cover bg-center bg-no-repeat',
-            !cover && 'bg-rosePine-surface',
-          ]}
+          class={cover ? 'w-100 h-40 lg:h-100 md:w-60 bg-cover bg-center bg-no-repeat' : 'bg-rosePine-surface'}
           style={
             cover && [`background-image: linear-gradient(rgba(7, 2, 18, 0), rgba(7, 2, 18, 0.75)), url(${coverLink});`]
           }
