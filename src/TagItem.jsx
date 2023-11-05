@@ -1,11 +1,15 @@
-function Tag({ tag, active }) {
+function Tag({ tag, active, anchor }) {
   return (
-    <a
-      href={`/tag/${tag}`}
-      class={['rounded-full px-4 text-lg text-rosePine-highlightLow', active ? 'bg-rosePine-rose' : 'bg-rosePine-iris']}
+    <element
+      tag={anchor ? 'a' : 'div'}
+      href={anchor ? `/tag/${tag}` : undefined}
+      class={[
+        'rounded-full px-4 py-1.5 text-lg text-rosePine-highlightLow',
+        active ? 'bg-rosePine-iris' : 'bg-rosePine-rose',
+      ]}
     >
       {tag}
-    </a>
+    </element>
   )
 }
 
