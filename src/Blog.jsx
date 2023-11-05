@@ -51,7 +51,7 @@ class Blog extends Nullstack {
         <TitleTag tag={this.tag} />
         <h2 class="text-xl mb-4">This is a bunch of content with i produce, someones is a full messy, so... </h2>
 
-        <ul class="flex gap-2 my-8 flex-wrap content-between">
+        <ul class="flex gap-4 my-8 flex-wrap content-between">
           {this.tags.map((tag) => (
             <li>
               <TagItem tag={tag} active={this.tag === tag} anchor />
