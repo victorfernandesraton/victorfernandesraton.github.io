@@ -2,7 +2,7 @@
 title: Contribuindo com o Querido Diário
 description: Como contribuir com open source usando meus limitados conhecimentos de RPA 
 published_at: 2023-09-30
-cover: /public/assets/img/qd-arch.png
+cover: /public/assets/img/ok-logo.png
 tags: ["python", "scrapping", "open source","Open knowledge"]
 ---
 

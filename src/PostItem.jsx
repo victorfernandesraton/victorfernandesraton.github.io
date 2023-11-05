@@ -24,7 +24,7 @@ function PostItem({ name, title, published_at, cover, tags = [] }) {
           </p>
         </div>
         {tags?.length && (
-          <ul class="flex gap-2 my-8 flex-wrap content-between">
+          <ul class="flex gap-2 my-4 flex-wrap content-between">
             {tags.map((tag) => (
               <li>
                 <TagItem tag={tag} />
