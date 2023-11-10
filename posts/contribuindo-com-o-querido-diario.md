@@ -26,7 +26,11 @@ Primeiro tentei descobrir se realmente havia uma versão digializada dos Diário
 
 Dai decidi verificar no site do Querido Diário se já havia sido cadastrado antes.
 
+![image](/public/assets/img/screenshot-qd-maragojipe.png)
+
 Como mostra captura de tela abaixo, eles possuem o link do diário oficial , mas não conseguem extrair o conteúdo, verificando o link, percebi que o mesmo estava errado.
+
+![image](/public/assets/img/screenshot-qd-error.png)
 
 Sem críticas ao projeto neste caso, pois acredito que algo mantido de forma voluntária tem a dificuldade em lhedar quando esse tipo de coisa muda, dependendo do trabalho ativo de alguém para notifica r esse tipo de coisa.
 
@@ -38,7 +42,7 @@ Eu inicialmente não iria explicar o processo de instalação, apenas deixaria u
 
 No geral para instalar é bem simples:
 
-1. SEMPRE verifique a versão do python, não estava explicita no projeto, mas por causa de uma das instruções em caso de falha, chuto que seja 3.6 ou >.
+1. SEMPRE verifique a versão do python, não estava explicita no projeto, mas por causa de uma das instruções em caso de falha, chuto que seja 3.6 ou +.
 
 ```bash
 python --version
@@ -70,7 +74,7 @@ pre-commit install
 
 # Desenvolvendo a solução
 
-Antes de mais nada eu decidi dar uma explorada no site em questão, neste caos o diário oficial Maragogipe que é mantido pela plataforma SAI/IMAP.
+Antes de mais nada eu decidi dar uma explorada no site em questão, neste caso o diário oficial de Maragogipe que é mantido pela plataforma SAI/IMAP.
 
 Ao navegar pelo site de primeira eu percebi que não seria fácil extrair os conteúdos da página pois estavam agrupados os diários oficiais por arcodeôns mensais, ou seja eu teria que desenvolver uma estrutura que extraisse os dados da página, logo eu decidi análisar os daods enviados ao preencher uma pesquisa.
 
@@ -85,7 +89,7 @@ Como pode ver, basicamente ao preencher um formulário o diário oficial manda u
 ALgumas coisas que descobrir ao futucar a url:
 
 - Podemos remover os parâmetros em branco ou com ""
-- Ao mudar o campo `diarioOficial.tipoFormato` para o valor 1 , teremos a resp`sta em json, assim como 2 teremos a resposta em xml
+- Ao mudar o campo `diarioOficial.tipoFormato` para o valor 1 , teremos a resposta em json, assim como 2 teremos a resposta em xml
 - Podemos usar os campos `diarioOficial.dataInicial` e `diarioOficial.dataFinal` para definir períodos
 - Precisamos sempre preencher o ano para que ele consiga trazer os diários oficiais para o mesmo ano, assim teremos que paginar as requisições por ano
 
@@ -201,3 +205,13 @@ class BaMaragogipeSpider(SaiGazetteSpider):
     base_url = "https://sai.io.org.br/ba/maragojipe"
 
 ```
+
+# Considerações finais
+
+Primeiramente ressaltar a importância do projeto, pode parecer bobo, mas criar um projeto de uma grande esclaa para fazer valer tem seus desafios, por exemplo, ao desenvolver a solução acima eu me deparei com dados faltantes, mas até nesse ponto o pessoal da Open Knowledge tem uma solução onde podemos reportar estes casos, os quais serão encaminhados para pessoas responsáveis que possam nos auxiliar , e em alguns casos oferencendo suporte jurídico.
+
+Ainda que de forma simplificada, não é difícil atuar com raspadores de dados usando soluções em Python, até mesmo eu mais acostumado com Javascript tive poucos problemas, mas nada que 10 min pesquisando no duckduckgo não resolvesse.
+
+E sim penso que o uso de IA e ferramentas generativas como Copilot e ChatGPT poderiam tornar meu trabalho mais simples , mas , é escavando, futucando, cutucando as onças com vara-curta que podemos evoluir profissionalmente e tecnicamente. Então se está a procura de um projeto open source com uma comunidade ativa e que PRECISA de muitas mãos, dá uma olhada no Querido Diário.
+
+Beijos de luz e fico por aqui
