@@ -3,9 +3,9 @@ import TagItem from './TagItem'
 
 function PostItem({ name, title, published_at, cover, tags = [] }) {
   const coverLink = cover?.replace?.('/public', '')
-  const href = name === 'me' ? name : `/blog/${name}`
+  const href = name === 'me' ? name : `blog/${name}`
   return (
-    <a href={href}>
+    <a href={`/${href}`}>
       <div
         class={['mb-2 gap-x-4 flex flex-col md:flex-row', 'border border-rosePine-highlightMed border-b-4 border-r-4']}
       >
