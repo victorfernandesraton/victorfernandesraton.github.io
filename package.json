@@ -7,10 +7,9 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
-    "nullstack": "^0.20.0",
+    "nullstack": "^0.20.1",
     "postcss-loader": "7.3.3",
-    "tailwindcss": "3.3.3",
-    "webpack-bundle-analyzer": "^4.9.0"
+    "tailwindcss": "^3.3.6"
   },
   "scripts": {
     "start": "npx nullstack start",
@@ -19,10 +18,10 @@
     "lint": "npx eslint --fix ./"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "6.4.2",
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "front-matter": "4.0.2",
     "highlight.js": "^11.9.0",
-    "marked": "^9.1.2",
+    "marked": "^11.0.0",
     "marked-highlight": "^2.0.6",
     "rss": "1.2.2"
   }
