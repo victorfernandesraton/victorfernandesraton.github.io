@@ -60,6 +60,20 @@ class Post extends Nullstack {
     return filteredFiles
   }
 
+  static async getAllTags(context) {
+    const tags = new Map()
+    const posts = await this.getAllPost(context)
+    for (const post of posts.sort((a, b) => b.published_at >= a.published_at)) {
+      const innerTags = post?.tags ?? []
+      for (const tag of innerTags) {
+        if (!tags.has(tag)) {
+          tags.set(tag, tag)
+        }
+      }
+    }
+    return Array.from(tags.keys())
+  }
+
   async initiate({ page, params, router }) {
     const article = await Post.getPost({
       key: params.slug !== '' ? params.slug : router.path.slice(1),

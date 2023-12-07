@@ -10,6 +10,7 @@ const { worker } = context
 
 context.start = async function start() {
   const posts = await Post.getAllPost(context)
+  const tags = await Post.getAllTags(context)
   // TODO: Fix this later with .env config or something like
   const domain = 'https://vraton.dev'
   const feed = Feed._start({
@@ -29,7 +30,7 @@ context.start = async function start() {
   feed.parseContent(posts)
   feed.writeInFile('public/assets/feed.xml')
   context.marked = MarkedAdapter._start()
-  worker.preload = [...worker.preload, '/', '/me', '/assets/feed.xml', ...posts.map((p) => `/blog/${p.name}`)]
+  worker.preload = [...worker.preload, '/', '/me', '/assets/feed.xml', ...posts.map((p) => `/blog/${p.name}`), ...tags.map(t => `/tag/${t}`)]
 }
 
 export default context
