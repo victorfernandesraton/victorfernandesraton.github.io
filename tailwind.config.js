@@ -1,5 +1,5 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-module.exports = {
+import defaultTheme from 'tailwindcss/defaultTheme'
+export default {
   mode: 'jit',
   content: ['node_modules/nullwind/theme.ts', 'src/**/*.{jsx,tsx,js}', './src/**/*.jsx'],
   theme: {
