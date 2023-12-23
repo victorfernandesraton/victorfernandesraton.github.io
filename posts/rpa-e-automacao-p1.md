@@ -107,3 +107,18 @@ Agora é só pegar o preço do frete e pronto , processo de extração de dados 
 [CAPTURA DE PRECO DE ENTREGA AMAZON]
 
 Tendo tudo isso em mente vamos começar a desenvolver nossa solução
+
+
+# Criando Projeto em Go
+
+Podemos criar o projeto com python javascript ou java, ou até outra tecnologia desde que esta possua suporte ao Selenium.
+
+Por questões de gosto pessoal , decidi usar Go neste projeto, para criar o projeto bastou criar uma pasta com um nome quaisquer e dentro dela executar o comando para criar um module, neste caso irei manter meu código fonte no github na minha conta pessoal , dessa forma usei o seguinte comando:
+
+```bash
+go mod init github.com/victorfernandesraton/webscrap-go
+```
+
+Agora vamos instalar nossas extensões:
+
+
