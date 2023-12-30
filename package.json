@@ -18,11 +18,11 @@
     "lint": "npx eslint --fix ./"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@fortawesome/fontawesome-free": "6.5.1",
     "front-matter": "4.0.2",
-    "highlight.js": "^11.9.0",
-    "marked": "^11.0.0",
-    "marked-highlight": "^2.0.6",
+    "highlight.js": "11.9.0",
+    "marked": "11.0.0",
+    "marked-highlight": "2.0.6",
     "rss": "1.2.2"
   }
 }
