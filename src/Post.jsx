@@ -87,7 +87,7 @@ class Post extends Nullstack {
             page.description = article.description
         }
         if (article?.cover) {
-            page.image = article.cover.replace('/public', '')
+            page.image = `${router.base}${article.cover.replace('/public', '')}`
         }
         Object.assign(this, article)
     }
