@@ -13,104 +13,104 @@ import { DateTimeNormalizer } from '../lib/normalizer/DateTimeNormalizer'
 
 class Post extends Nullstack {
 
-  static async _getMetadata(context) {
-    const { key } = context
-    const content_path = `posts/${key}.md`
-    if (!existsSync(content_path)) {
-      return null
-    }
-
-    let data = readFileSync(content_path, 'utf-8')
-    data = MarkedAdapter.replaceImageUrl({ md: data })
-
-    const { attributes, body } = fm(data)
-    return {
-      ...attributes,
-      name: key,
-      body,
-    }
-  }
-
-  static async getPost({ key, marked, ...context }) {
-    const data = await Post._getMetadata({ ...context, key })
-    if (!data) {
-      return null
-    }
-    const { body, ...attributes } = data
-    const html = marked.parse(body)
-    return {
-      html,
-      name: key,
-      ...attributes,
-    }
-  }
-
-  static async getAllPost(context) {
-    const directoryPath = 'posts'
-    const files = await fs.readdir(directoryPath)
-    const filteredFiles = []
-    for (const file of files) {
-      const filePath = path.join(directoryPath, file)
-      const fileStats = await fs.stat(filePath)
-      if (fileStats.isFile() && path.extname(file) === '.md') {
-        const data = await this._getMetadata({ ...context, key: file.replace('.md', '') })
-        filteredFiles.push(data)
-      }
-    }
-    return filteredFiles
-  }
-
-  static async getAllTags(context) {
-    const tags = new Map()
-    const posts = await this.getAllPost(context)
-    for (const post of posts.sort((a, b) => b.published_at >= a.published_at)) {
-      const innerTags = post?.tags ?? []
-      for (const tag of innerTags) {
-        if (!tags.has(tag)) {
-          tags.set(tag, tag)
+    static async _getMetadata(context) {
+        const { key } = context
+        const content_path = `posts/${key}.md`
+        if (!existsSync(content_path)) {
+            return null
         }
-      }
-    }
-    return Array.from(tags.keys())
-  }
 
-  async initiate({ page, params, router }) {
-    const article = await Post.getPost({
-      key: params.slug !== '' ? params.slug : router.path.slice(1),
-    })
-    if (!article) {
-      router.path = '/404'
-    }
+        let data = readFileSync(content_path, 'utf-8')
+        data = MarkedAdapter.replaceImageUrl({ md: data })
 
-    page.title = article.title
-    if (article?.description) {
-      page.description = article.description
-    }
-    if (article?.cover) {
-      page.image = article.cover.replace('/public', '')
-    }
-    Object.assign(this, article)
-  }
-
-  render({ router }) {
-    if (!this.html && this.initiated) {
-      router.path = '/404'
+        const { attributes, body } = fm(data)
+        return {
+            ...attributes,
+            name: key,
+            body,
+        }
     }
 
-    return (
-      <>
-        <header class="mx-auto mb-16 mt-8 max-w-[900px] flex flex-col gap-y-4 content-between break-words">
-          <h1 class="text-4xl font-bold text-rosePine-love">{this?.title}</h1>
-          {this.description && <h2 class="text-2xl font-bold text-rosePine-gold mb-4">{this?.description}</h2>}
-          <p class="text-sm font-semibold text-rosePine-foam">
-            Published at {DateTimeNormalizer.dateToTimeAgo(this.published_at)}
-          </p>
-        </header>
-        <article html={this.html} class="mx-auto max-w-[900px] article-custon-style" />
-        <div class="text-rosePine-iris list-disc pl-4 marker:text-rosePine-iris underline" />
-      </>
-    )
-  }
+    static async getPost({ key, marked, ...context }) {
+        const data = await Post._getMetadata({ ...context, key })
+        if (!data) {
+            return null
+        }
+        const { body, ...attributes } = data
+        const html = marked.parse(body)
+        return {
+            html,
+            name: key,
+            ...attributes,
+        }
+    }
+
+    static async getAllPost(context) {
+        const directoryPath = 'posts'
+        const files = await fs.readdir(directoryPath)
+        const filteredFiles = []
+        for (const file of files) {
+            const filePath = path.join(directoryPath, file)
+            const fileStats = await fs.stat(filePath)
+            if (fileStats.isFile() && path.extname(file) === '.md') {
+                const data = await this._getMetadata({ ...context, key: file.replace('.md', '') })
+                filteredFiles.push(data)
+            }
+        }
+        return filteredFiles
+    }
+
+    static async getAllTags(context) {
+        const tags = new Map()
+        const posts = await this.getAllPost(context)
+        for (const post of posts.sort((a, b) => b.published_at >= a.published_at)) {
+            const innerTags = post?.tags ?? []
+            for (const tag of innerTags) {
+                if (!tags.has(tag)) {
+                    tags.set(tag, tag)
+                }
+            }
+        }
+        return Array.from(tags.keys())
+    }
+
+    async initiate({ page, params, router }) {
+        const article = await Post.getPost({
+            key: params.slug !== '' ? params.slug : router.path.slice(1),
+        })
+        if (!article) {
+            router.path = '/404'
+        }
+
+        page.title = article.title
+        if (article?.description) {
+            page.description = article.description
+        }
+        if (article?.cover) {
+            page.image = article.cover.replace('/public', '')
+        }
+        Object.assign(this, article)
+    }
+
+    render({ router }) {
+        if (!this.html && this.initiated) {
+            router.path = '/404'
+        }
+
+        return (
+            <>
+                <header class="mx-auto mb-16 mt-8 max-w-[900px] flex flex-col gap-y-4 content-between break-words">
+                    <h1 class="text-4xl font-bold text-rosePine-gold">{this?.title}</h1>
+                    {this.description && <h2 class="text-2xl font-bold text-rosePine-love mb-4">{this?.description}</h2>}
+                    <p class="text-sm font-semibold text-rosePine-foam">
+                        Published at {DateTimeNormalizer.dateToTimeAgo(this.published_at)}
+                    </p>
+                </header>
+                <article html={this.html} class="mx-auto max-w-[900px] article-custon-style" />
+                <div class="text-rosePine-iris list-disc pl-4 marker:text-rosePine-iris underline" />
+            </>
+        )
+    }
 
 }
 
