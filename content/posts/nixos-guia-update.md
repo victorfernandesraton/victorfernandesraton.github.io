@@ -4,7 +4,7 @@ description = 'Como atualizar os pacotes do seu NixOS'
 published_at = 2023-09-25T00:00:00-03:00
 +++
 
-![image](/public/assets/img/nixos-rose-pine.png)
+![image](/images/nixos-rose-pine.png)
 Neste rápido e não verboso guia eu vou mostrar como eu faço para atualizar o meu NixOS, atualmente na versão 23.05
 
 Aqui não explicarei o que é Nix ou NixOS, deixarei isso com os universitários e estrangeiros como pode ver neste [link](https://nixos.org) e [neste outro](https://tilvids.com/w/kNVby1VfBYz9vbn6Zbg5xW).
@@ -68,7 +68,7 @@ home-manager switch
 E vualá! Agora é só usar o famoso ´neofetch´ e postar em suas redes sociais, "I use nix BTW" pra irritar a galera do Arch.
 
 
-![image](/public/assets/img/i-use-nix-btw.png)
+![image](/images/i-use-nix-btw.png)
 
 # Errata
 

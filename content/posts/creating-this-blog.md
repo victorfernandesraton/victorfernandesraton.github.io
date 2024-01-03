@@ -6,7 +6,7 @@ date = 2023-06-21T00:00:00-03:00
 
 # A big dsclaimer first
 
-![image](/public/assets/img/nulla-tools.webp)
+![image](/images/nulla-tools.webp)
 
 Exploring the vast array of JavaScript frameworks such as React, Vue, Angular, and Svelte, I encountered limitations, vendor lock-in issues, and the overwhelming chaos of the JavaScript ecosystem, with its countless dependencies and conflicting solutions. However, amidst this tumult, my discovery of Nullstack brought a ray of hope. Initially seen as unconventional due to its use of ES6 classes and named methods for component cycles, I soon recognized the brilliance and potential of this framework.
 
@@ -269,7 +269,7 @@ Now just need create some post, a markdown file with headers information like th
 title: About me
 description: console.log('hello world')
 published_at: 2023-05-15
-cover: /public/assets/img/profile.webp
+cover: /images/profile.webp
 ---
 
 
@@ -472,9 +472,9 @@ export default Post
 And where is 
 a list and post render as a markdown 
 
-![image](/public/assets/img/blog-works.gif)
+![image](/images/blog-works.gif)
 
 Its a simple blog implementation using for initial modeling for this blog, of course, along side of time , i added some styles and features, you can follow this repo and look some changes a made here.
 
-![image](/public/assets/img/thats-all.jpg)
+![image](/images/thats-all.jpg)
 
