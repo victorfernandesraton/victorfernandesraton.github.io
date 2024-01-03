@@ -1,10 +1,8 @@
----
-title: Creating this blog
-description: Nullstack - A journey of Simplicity and Flexibility
-published_at: 2023-06-21
-cover: /public/assets/img/nulla-tools.webp
-tags: ["javascript", "nullsack", "web"]
----
++++
+title = 'Creating this blog'
+description = 'Nullstack - A journey of Simplicity and Flexibility'
+date = 2023-06-21T00:00:00-03:00
++++
 
 # A big dsclaimer first
 

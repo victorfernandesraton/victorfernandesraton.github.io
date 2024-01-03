@@ -1,10 +1,9 @@
----
-title: NixOS - guia de update
-description: Como atualizar os pacotes do seu NixOS 
-published_at: 2023-09-25
-cover: /public/assets/img/nixos-rose-pine.png
-tags: ["nixos", "linux"]
----
++++
+title = 'NixOS - guia de update'
+description = 'Como atualizar os pacotes do seu NixOS'
+published_at = 2023-09-25T00:00:00-03:00
++++
+
 ![image](/public/assets/img/nixos-rose-pine.png)
 Neste rápido e não verboso guia eu vou mostrar como eu faço para atualizar o meu NixOS, atualmente na versão 23.05
 

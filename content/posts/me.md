@@ -1,10 +1,9 @@
----
-title: About me
-description: console.log('hello world')
-published_at: 2023-05-15
-cover: /public/assets/img/profile.webp
-tags: ["profile", "professional"]
----
++++
+title = 'About me'
+description = 'print("hello world")'
+date = 2023-05-15T00:00:00-03:00
+cover = '/public/assets/img/profile.webp'
++++
 
 
 # Hey guys!

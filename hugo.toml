@@ -1,0 +1,9 @@
+baseURL = 'https://vraton.dev'
+languageCode = 'pt-BR'
+title = 'Blog tech do Raton'
+theme = 'ananque'
+social = [
+    {name = "Mastodon", url = "https://fosstodon.org/@v_raton"},
+    {name = "Github", url = "https://github.com/victorfernandesraton"},
+    {name = "Linkedin", url = "https://linkedin.com/in/v_raton"}
+]
