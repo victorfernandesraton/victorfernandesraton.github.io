@@ -24,7 +24,7 @@ Primeiro tentei descobrir se realmente havia uma versão digializada dos Diário
 
 Dai decidi verificar no site do Querido Diário se já havia sido cadastrado antes.
 
-![image](/img/screenshot-qd-maragojipe.png)
+![image](/images/screenshot-qd-maragojipe.png)
 
 Como mostra captura de tela abaixo, eles possuem o link do diário oficial , mas não conseguem extrair o conteúdo, verificando o link, percebi que o mesmo estava errado.
 

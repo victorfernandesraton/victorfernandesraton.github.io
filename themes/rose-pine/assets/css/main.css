@@ -74,6 +74,10 @@ html {
     font-variation-settings: normal;
     font-family: Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
 }
+main {
+    margin: 0px auto;
+    max-width: 900px;
+}
 body {
     background-color: var(--base);
     color: var(--text);
@@ -125,16 +129,16 @@ footer {
     flex-direction: column;
     margin: 2rem 0 4rem 0;
     row-gap: 1rem;
+
 }
 
 
 .single-article {
+    overflow-wrap: break-word;
+    hyphens: manual;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 900px;
     h1 , h2, h3, h4, h5, h6 {
         font-weight: 700;
         color: var(--iris);
@@ -151,12 +155,15 @@ footer {
         max-width: 100%;
         heigth: auto;
     }
-    ol {
+
+    ol, ul {
         padding-top: 1rem;
         padding-bottom: 1rem; 
         padding-left: 1rem; 
-        list-style-type: disc; 
 
+    }
+    ul {
+        list-style-type: disc; 
     }
     li::marker {
         padding-top: 1rem;
@@ -165,9 +172,11 @@ footer {
         color: var(--rose);
     }
 
-    code {
-        padding: 1em;
-        display: block;
-        overflow-x: auto;
+    pre {
+        code {
+            padding: 1rem;
+            overflow-x: auto;
+            display: block;
+        }
     }
 }
