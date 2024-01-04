@@ -1,7 +1,7 @@
 baseURL = 'https://vraton.dev'
 languageCode = 'pt-BR'
 title = 'Blog tech do Raton'
-theme = 'ananque'
+theme = 'rose-pine'
 social = [
     {name = "Mastodon", url = "https://fosstodon.org/@v_raton"},
     {name = "Github", url = "https://github.com/victorfernandesraton"},
