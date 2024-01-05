@@ -2,7 +2,7 @@
 title = 'About me'
 description = 'print("hello world")'
 date = 2023-05-15T00:00:00-03:00
-cover = '/images/profile.webp'
+cover = "/images/profile.webp"
 +++
 
 
