@@ -7,3 +7,6 @@ social = [
     {name = "Github", url = "https://github.com/victorfernandesraton"},
     {name = "Linkedin", url = "https://linkedin.com/in/v_raton"}
 ]
+
+[outputs]
+    posts = ['html', 'rss']
