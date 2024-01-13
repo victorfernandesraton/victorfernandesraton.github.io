@@ -1,0 +1,9 @@
+{{ define "main" }}
+<section class="home">
+    {{ .Content }}
+
+</section>
+{{ range site.RegularPages }}
+{{ .Render "summary" }}
+{{ end }}
+{{ end }}

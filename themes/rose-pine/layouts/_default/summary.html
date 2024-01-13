@@ -1,0 +1,37 @@
+<article class="summary" href="{{ .RelPermalink }}">
+    {{ $linkToCover := "" }}
+    {{ $matches := "feature,cover" }}
+    {{/* Use the value from front matter if present */}}
+    {{ with .Params.cover }}
+    {{/* This is the default case, the image lives in the static directory.
+    In which case we'll use the static dir */}}
+    {{ $linkToCover = trim . "/" | absURL }}
+    {{/* If we find a Page Resource matching the exact value, we use it instead. */}}
+    {{ with $.Resources.GetMatch . }}
+    {{ $linkToCover = .RelPermalink }}
+    {{ end }}
+    {{/* Find the first image with 'cover' in the name in this page bundle. */}}
+    {{ end }}
+    {{ if $linkToCover }}
+    <img class="cover" src="{{ $linkToCover }}" />
+    {{ end }}
+    <div class="container">
+        <h2 class="title">
+            {{ .LinkTitle }}
+        </h2>
+        <p class="desc">{{ .Description }}</p>
+        <h3 class="date">
+            {{ $dateHuman := .Date | time.Format ":date_long" }}
+            {{ $dateHuman }}
+        </h3>
+        <a href="{{ .RelPermalink  }}"> Read Now</a>
+        {{ $tags := "tags" }}
+        {{ with .GetTerms $tags }}
+        <ul class="tags-list">
+            {{ range . }}
+            {{ partial "tags-in-content.html" . }}
+            {{ end }}
+        </ul>
+        {{ end }}
+    </div>
+</article>
