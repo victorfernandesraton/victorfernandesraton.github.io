@@ -1,12 +1,15 @@
 baseURL = 'https://vraton.dev'
-languageCode = 'pt-BR'
+languageCode = 'en-US'
 title = 'Blog tech do Raton'
 theme = 'rose-pine'
-social = [
-    {name = "Mastodon", url = "https://fosstodon.org/@v_raton"},
-    {name = "Github", url = "https://github.com/victorfernandesraton"},
-    {name = "Linkedin", url = "https://linkedin.com/in/v_raton"}
-]
 
-[outputs]
-    posts = ['html', 'rss']
+[[params.social]] 
+    name = "Mastodon"
+    url = "https://fosstodon.org/@v_raton"
+[[params.social]] 
+    name = "Github"
+    url = "https://github.com/victorfernandesraton"
+[[params.social]] 
+    name = "Linkedin" 
+    url = "https://linkedin.com/in/v_raton"
+

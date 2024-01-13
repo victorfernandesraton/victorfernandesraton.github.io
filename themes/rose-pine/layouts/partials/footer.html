@@ -5,4 +5,11 @@
         src="https://raw.githubusercontent.com/gohugoio/gohugoioTheme/master/static/images/hugo-logo-wide.svg?sanitize=true" />
 </a>
 
+<p> Follow me in</p>
+<ul class="social-list">
+    {{ range .Site.Params.social }}
+    <li><a href="{{ .url }}" target="_blank">{{ .name }}</a></li>
+    {{ end }}
+</ul>
+
 <p>Copyright {{ now.Year }}. All rights reserved.</p>

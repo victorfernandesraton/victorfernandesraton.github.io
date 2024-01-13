@@ -5,15 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
 
-    stack = {
-      url = github:theNewDynamic/gohugo-theme-ananke;
-      flake = false;
-    };
 
 
   };
 
-  outputs = { self, nixpkgs, flake-utils, stack }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -29,7 +25,6 @@
           # Link theme to themes folder and build
           buildPhase = ''
             mkdir -p themes
-            ln -s ${stack} themes/ananque
             ${pkgs.hugo}/bin/hugo --minify
           '';
           installPhase = ''
@@ -49,10 +44,6 @@
 
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [ hugo ];
-          shellHook = ''
-            mkdir -p themes
-            ln -sf ${stack} themes/ananque
-          '';
         };
       });
 

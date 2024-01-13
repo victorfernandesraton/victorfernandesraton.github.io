@@ -1,4 +1,5 @@
 {{ define "main" }}
+
 <div class='single-header'>
     <h1 class='single-title bold'>{{ .Title }}</h1>
     <h2 class='single-description bold'>{{ .Description }}</h2>
@@ -19,6 +20,5 @@
 
 <article class='single-article'>
     {{ .Content }}
-    <article>
-        {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
-        {{ end }}
+</article>
+{{ end }}

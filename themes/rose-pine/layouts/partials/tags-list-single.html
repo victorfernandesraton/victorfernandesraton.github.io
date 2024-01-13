@@ -1,0 +1,9 @@
+<ul class="tags-list">
+    {{ range . }}
+    <li class="tag-item">
+        <a href="{{ .RelPermalink }}">
+            #{{- .LinkTitle -}}
+        </a>
+    </li>
+    {{ end }}
+</ul>
