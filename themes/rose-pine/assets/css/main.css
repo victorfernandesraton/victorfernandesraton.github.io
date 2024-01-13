@@ -237,10 +237,20 @@ footer {
          }
 
          .desc {
+
+            font-size: 1.25rem;
+            line-height: 1.75rem; 
             color: var(--love);
             font-weight: 600;
          }
 
+         a {
+            display: block;
+            font-size: 1.25rem;
+            line-height: 1.75rem; 
+            font-weight: 600;
+            text-decoration: none;
+         }
     }
 }
 header {
@@ -248,9 +258,13 @@ header {
     position: sticky; 
     top: 0; 
     display: flex;
-    padding 0 0;
+    padding: 0 1rem;
     justify-content: center;
     z-index: 1;
+
+    @media(min-width: 768px) {
+        padding 0 0;
+    }
 }
 
 nav {
@@ -259,7 +273,7 @@ nav {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem; 
     gap: 2rem; 
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-content: space-between; 
     max-width: 900px;
     width: 100vw;
@@ -267,7 +281,6 @@ nav {
     flex-wrap: wrap;
 
     @media(min-width: 768px) {
-        justify-content: space-between;
         flex-wrap: nowrap;
     }
 
@@ -375,4 +388,29 @@ nav {
     vertical-align: middle; 
     max-width: 900px;
     padding: 8rem 0;
+}
+
+ul.tags-list {
+    display: flex; 
+    margin-top: 1rem;
+    margin-bottom: 1rem; 
+    flex-wrap: wrap; 
+    gap: .875rem; 
+    align-content: space-between; 
+
+    li.tag-item {
+        a {
+
+            padding-top: 0.375rem;
+            padding-bottom: 0.375rem; 
+            padding-left: 1rem;
+            padding-right: 1rem; 
+            border-radius: 9999px; 
+            font-size: .875rem;
+            line-height: 1.25rem;
+            background-color: var(--rose);
+            color: var(--base);
+            text-decoration: none;
+        }
+    }
 }

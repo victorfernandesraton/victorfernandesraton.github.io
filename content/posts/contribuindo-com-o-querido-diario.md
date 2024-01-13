@@ -3,6 +3,7 @@ title = 'Contribuindo com o Querido Diário'
 description = 'Como contribuir com open source usando meus limitados conhecimentos de RPA'
 date = 2023-09-30T00:00:00-03:00
 cover = "/images/ok-logo.png"
+tags = ["python","web", "web-scrapping", "spyder" ]
 +++
 
 # O projeto

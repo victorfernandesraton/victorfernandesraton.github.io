@@ -3,6 +3,7 @@ title = 'Creating this blog'
 description = 'Nullstack - A journey of Simplicity and Flexibility'
 date = 2023-06-21T00:00:00-03:00
 cover = "/images/nulla-tools.webp"
+tags = ["javascript", "nullstack", "web"]
 +++
 
 # A big dsclaimer first

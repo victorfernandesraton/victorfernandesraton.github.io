@@ -25,5 +25,13 @@
             {{ $dateHuman }}
         </h3>
         <a href="{{ .RelPermalink  }}"> Read Now</a>
+        {{ $tags := "tags" }}
+        {{ with .GetTerms $tags }}
+        <ul class="tags-list">
+            {{ range . }}
+            {{ partial "tags-in-content.html" . }}
+            {{ end }}
+        </ul>
+        {{ end }}
     </div>
 </article>
