@@ -247,9 +247,8 @@ header {
     background-color: var(--surface);
     position: sticky; 
     top: 0; 
-    width: 100vw;
     display: flex;
-    padding 0 auto;
+    padding 0 0;
     justify-content: center;
     z-index: 1;
 }
