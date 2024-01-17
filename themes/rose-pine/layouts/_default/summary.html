@@ -1,4 +1,4 @@
-<article class="summary" href="{{ .RelPermalink }}">
+<article class="summary">
     {{ $linkToCover := "" }}
     {{ $matches := "feature,cover" }}
     {{/* Use the value from front matter if present */}}
@@ -13,18 +13,21 @@
     {{/* Find the first image with 'cover' in the name in this page bundle. */}}
     {{ end }}
     {{ if $linkToCover }}
-    <img class="cover" src="{{ $linkToCover }}" />
+    <a href="{{ .RelPermalink }}">
+        <img class="cover" src="{{ $linkToCover }}" />
+    </a>
     {{ end }}
     <div class="container text-xs">
-        <h2 class="title text-lg bold">
-            {{ .LinkTitle }}
-        </h2>
+        <a href="{{ .RelPermalink }}">
+            <h2 class="title text-lg bold">
+                {{ .LinkTitle }}
+            </h2>
+        </a>
         <p class="desc bold text-justify">{{ .Description }}</p>
         <h3 class="date">
             {{ $dateHuman := .Date | time.Format ":date_long" }}
             {{ $dateHuman }}
         </h3>
-        <a class="text-lg bold" href="{{ .RelPermalink  }}"> Read Now</a>
         {{ $tags := "tags" }}
         {{ with .GetTerms $tags }}
         <ul class="tags-list overflow-scroll">
