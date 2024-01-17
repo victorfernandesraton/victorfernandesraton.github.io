@@ -1,5 +1,5 @@
 <nav>
-    <a href="/">
+    <a id="logo" href="/">
         {{ partialCached "logo.html" . }}
     </a>
     {{ if .Site.Menus.main }}
@@ -18,7 +18,7 @@
     <ul class="navigation-list">
         {{ range .Site.Menus.main }}
         <li class="">
-            <a class="" href="{{ .URL }}" title="{{ i18n " pageTitle" . }}">
+            <a class="text-lg bold" href="{{ .URL }}" title="{{ i18n " pageTitle" . }}">
                 {{ .Name }}
             </a>
         </li>

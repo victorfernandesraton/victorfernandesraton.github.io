@@ -1,8 +1,12 @@
 {{ define "main" }}
 <section class="list-content">
-    <h1 class="title">{{ .Title }}</h1>
-    {{ range .Pages }}
-    {{ .Render "summary" }}
-    {{ end }}
+    <h1 class="title text-2xl bold">{{ .Title }}</h1>
+    <ul class="list-default">
+        {{ range .Pages }}
+        <li>
+            {{ .Render "summary" }}
+            {{ end }}
+        </li>
+    </ul>
 </section>
 {{ end }}

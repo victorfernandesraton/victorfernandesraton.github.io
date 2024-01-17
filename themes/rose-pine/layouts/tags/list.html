@@ -1,13 +1,17 @@
 {{ define "main" }}
 <section class="list-content">
-    <h1 class="title">#{{ .Title }}</h1>
+    <h1 class="title text-2xl bold">#{{ .Title }}</h1>
     <a href="{{ .Parent.Permalink }}" />Back to {{ .Parent.Title }} </a>
 
     <ul class="tags-list">
         {{ partial "tags-list-single" .Parent.Pages }}
     </ul>
-    {{ range .Pages }}
-    {{ .Render "summary" }}
-    {{ end }}
+    <ul class="list-default">
+        {{ range .Pages }}
+        <li>
+            {{ .Render "summary" }}
+        </li>
+        {{ end }}
+    </ul>
 </section>
 {{ end }}

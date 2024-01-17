@@ -3,7 +3,15 @@
     {{ .Content }}
 
 </section>
-{{ range site.RegularPages }}
-{{ .Render "summary" }}
-{{ end }}
+
+<article class="home-list">
+    <h1 class="text-lg bold">What i have doing</h1>
+    <ul class="list-default">
+        {{ range first 3 site.RegularPages }}
+        <li>
+            {{ .Render "summary" }}
+        </li>
+        {{ end }}
+    </ul>
+</article>
 {{ end }}

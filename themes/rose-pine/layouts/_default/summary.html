@@ -15,19 +15,19 @@
     {{ if $linkToCover }}
     <img class="cover" src="{{ $linkToCover }}" />
     {{ end }}
-    <div class="container">
-        <h2 class="title">
+    <div class="container text-xs">
+        <h2 class="title text-lg bold">
             {{ .LinkTitle }}
         </h2>
-        <p class="desc">{{ .Description }}</p>
+        <p class="desc bold text-justify">{{ .Description }}</p>
         <h3 class="date">
             {{ $dateHuman := .Date | time.Format ":date_long" }}
             {{ $dateHuman }}
         </h3>
-        <a href="{{ .RelPermalink  }}"> Read Now</a>
+        <a class="text-lg bold" href="{{ .RelPermalink  }}"> Read Now</a>
         {{ $tags := "tags" }}
         {{ with .GetTerms $tags }}
-        <ul class="tags-list">
+        <ul class="tags-list overflow-scroll">
             {{ range . }}
             {{ partial "tags-in-content.html" . }}
             {{ end }}
