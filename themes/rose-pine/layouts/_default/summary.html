@@ -13,8 +13,8 @@
     {{/* Find the first image with 'cover' in the name in this page bundle. */}}
     {{ end }}
     {{ if $linkToCover }}
-    <a href="{{ .RelPermalink }}">
-        <img class="cover" src="{{ $linkToCover }}" />
+    <a href="{{ .RelPermalink }}" aria-label="Go to {{ .LinkTitle }}">
+        <img class="cover" src="{{ $linkToCover }}" width="100%" alt="Cover for {{ .LinkTitle }} post" />
     </a>
     {{ end }}
     <div class="container text-xs">

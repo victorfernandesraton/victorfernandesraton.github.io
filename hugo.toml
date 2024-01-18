@@ -1,8 +1,9 @@
 baseURL = 'https://vraton.dev'
 languageCode = 'en-US'
-title = 'Blog tech do Raton'
+title = 'vraton.dev'
 theme = 'rose-pine'
 
+params.description = "Victor Raton's personal space"
 [[params.social]] 
     name = "Mastodon"
     url = "https://fosstodon.org/@v_raton"

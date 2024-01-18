@@ -1,11 +1,11 @@
 <nav>
-    <a id="logo" href="/">
+    <a id="logo" href="/" aria-label="Go to homepage">
         {{ partialCached "logo.html" . }}
     </a>
     {{ if .Site.Menus.main }}
 
-    <input class="checkbox-menu" type="checkbox" role="checkbox" id="toggle-menu" name="toggle-menu" />
-    <label class="hamburger-button" for="toggle-menu" role="button">
+    <input class="checkbox-menu" type="checkbox" id="toggle-menu" name="toggle-menu" />
+    <label class="hamburger-button" for="toggle-menu">
 
         <svg class="hamburger-open" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -15,10 +15,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
     </label>
-    <ul class="navigation-list">
+    <ul class="navigation-list" id="flayout-menu">
         {{ range .Site.Menus.main }}
         <li class="">
-            <a class="text-lg bold" href="{{ .URL }}" title="{{ i18n " pageTitle" . }}">
+            <a tabindex=”-1″ aria-label="Link to {{ .Name }} session" class="text-lg bold" href="{{ .URL }}"
+                title="{{ i18n " pageTitle" . }}">
                 {{ .Name }}
             </a>
         </li>
