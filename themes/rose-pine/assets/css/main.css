@@ -255,8 +255,6 @@ article.single-article a:hover {
             flex-direction: column;
     gap: 2rem;
 
-  text-align: justify;
-  text-justify: inter-word;
 
 }
 
@@ -289,11 +287,12 @@ article.single-article a:hover {
 
 }
 
-.summary .cover {
+.summary  .cover {
     @media (min-width: 768px) { 
         height: 10rem; 
         width: 15rem;
     }
+    width: 100%;
     height: 10rem;
     -o-object-fit: cover;
        object-fit: cover;
@@ -513,10 +512,6 @@ nav .hamburger-button .hamburger-open {
             flex-direction: column;
     margin: 1.25rem 0;
     gap: 3rem;
-}
-.home p {
-    text-align: justify;
-    text-justify: inter-word;
 }
 
 .home h1 {
