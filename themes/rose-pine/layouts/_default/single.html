@@ -1,6 +1,26 @@
 {{ define "main" }}
 
 <div class='single-header'>
+
+
+    {{ $linkToCover := "" }}
+    {{ $matches := "feature,cover" }}
+    {{/* Use the value from front matter if present */}}
+    {{ with .Params.cover }}
+    {{/* This is the default case, the image lives in the static directory.
+    In which case we'll use the static dir */}}
+    {{ $linkToCover = trim . "/" | absURL }}
+    {{/* If we find a Page Resource matching the exact value, we use it instead. */}}
+    {{ with $.Resources.GetMatch . }}
+    {{ $linkToCover = .RelPermalink }}
+    {{ end }}
+    {{/* Find the first image with 'cover' in the name in this page bundle. */}}
+    {{ end }}
+    {{ if $linkToCover }}
+    <a href="{{ .RelPermalink }}" aria-label="Go to {{ .LinkTitle }}">
+        <img class="cover" src="{{ $linkToCover }}" alt="Cover for {{ .LinkTitle }} post" />
+    </a>
+    {{ end }}
     <h1 class='single-title bold text-xl'>{{ .Title }}</h1>
     <h2 class='single-description text-sm'>{{ .Description }}</h2>
     {{ $dateMachine := .Date | time.Format "01-02-2006" }}
