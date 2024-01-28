@@ -1,7 +1,7 @@
 +++
 title = 'Desvendamdo decorators em Python'
 date = 2024-01-20T10:27:08-03:00
-draft = true
+draft = false
 description ='Decorators: O que são, aonde vivem e o que comen'
 tags = ["python", "designpattern", "decorators"]
 cover = 'cover.jpg'
