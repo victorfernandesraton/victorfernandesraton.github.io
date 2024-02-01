@@ -24,14 +24,9 @@
             </a>
         </li>
         {{ end }}
-        <li>
-
-            <ul>
-                {{ range $.Site.Home.AllTranslations }}
-                <li><a href="{{ .RelPermalink }}">{{ .Language.LanguageName }}</a></li>
-                {{ end }}
-            </ul>
-        </li>
+        {{ range $.Site.Home.Translations }}
+        <li class="flex-center"><a href="{{ .RelPermalink }}">{{ (.Language.LanguageName) | emojify }}</a></li>
+        {{ end }}
     </ul>
     {{ end }}
 

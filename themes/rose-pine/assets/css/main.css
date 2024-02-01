@@ -596,3 +596,8 @@ ul.tags-list li.single-tag a {
     gap: 1rem;
     align-items: center;
 }
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
