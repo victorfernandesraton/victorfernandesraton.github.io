@@ -1,0 +1,14 @@
+[home]
+  other = 'Início'
+[Posts]
+    one = 'Postagen'
+    other = 'Postagens'
+[language]
+    one = 'Idioma'
+    other = 'Idiomas'
+
+[followmeon]
+    other = 'Siga-me em'
+[whatIdoing]
+    other = 'O que andei fazendo....'
+
