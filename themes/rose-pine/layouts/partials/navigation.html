@@ -1,5 +1,5 @@
 <nav>
-    <a id="logo" href="/" aria-label="Go to homepage">
+    <a id="logo" href="{{ .Site.BaseURL | relLangURL }}" aria-label="Go to homepage">
         {{ partialCached "logo.html" . }}
     </a>
     {{ if .Site.Menus.main }}
@@ -24,6 +24,16 @@
             </a>
         </li>
         {{ end }}
+        <li>
+
+            <ul>
+                {{ range $.Site.Home.AllTranslations }}
+                <li><a href="{{ .RelPermalink }}">{{ .Language.LanguageName }}</a></li>
+                {{ end }}
+            </ul>
+        </li>
     </ul>
     {{ end }}
+
+
 </nav>
