@@ -8,7 +8,8 @@ defaultContentLanguage = "pt-br"
 
 [languages]
 [languages.en]
-    languageName = 'English'
+    languageCode = 'en'
+    languageName = ':us:'
 
 [languages.en.menus]
 [[languages.en.menus.main]]
@@ -25,7 +26,7 @@ defaultContentLanguage = "pt-br"
 
 [languages.pt-br]
     languageCode = 'pt-br'
-    languageName = 'Portugês (Brasil)'
+    languageName = ':brazil:'
 
 [languages.pt-br.menus]
 [[languages.pt-br.menus.main]]
