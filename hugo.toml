@@ -1,9 +1,47 @@
 baseURL = 'https://vraton.dev'
-languageCode = 'en-US'
 title = 'vraton.dev'
 theme = 'rose-pine'
+IsMultiLingual = true
+languageCode = 'pt-br'
+defaultContentLanguageInSubdir = false
+defaultContentLanguage = "pt-br"
 
-params.description = "Victor Raton's personal space"
+[languages]
+[languages.en]
+    languageName = 'English'
+
+[languages.en.menus]
+[[languages.en.menus.main]]
+        name = 'Home'
+        pageRef = '/'
+
+[[languages.en.menus.main]]
+        name = 'Posts'
+        pageRef = '/posts'
+
+[[languages.en.menus.main]]
+        name = 'Tags'
+        pageRef = '/tags'
+
+[languages.pt-br]
+    languageCode = 'pt-br'
+    languageName = 'Portugês (Brasil)'
+
+[languages.pt-br.menus]
+[[languages.pt-br.menus.main]]
+        name = 'Início'
+        pageRef = '/'
+
+[[languages.pt-br.menus.main]]
+        name = 'Postagens'
+        pageRef = '/posts'
+
+[[languages.pt-br.menus.main]]
+        name = 'Tags'
+        pageRef = '/tags'
+
+[params]
+description = "Victor Raton's personal space"
 [[params.social]] 
     name = "Mastodon"
     url = "https://fosstodon.org/@v_raton"
@@ -13,4 +51,7 @@ params.description = "Victor Raton's personal space"
 [[params.social]] 
     name = "Linkedin" 
     url = "https://linkedin.com/in/v_raton"
+
+
+
 

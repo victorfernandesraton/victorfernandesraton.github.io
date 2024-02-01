@@ -1,7 +1,7 @@
 {{ define "main" }}
 
 <section class="list-content">
-    <h1 class="title text-2xl bold">{{ .Title }}</h1>
+    <h1 class="title text-2xl bold">{{ .Title }} ({{ (len .Data.Pages) }}) </h1>
 
     {{ partial "tags-list-single" .Pages }}
 </section>
