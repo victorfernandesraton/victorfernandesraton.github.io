@@ -1,0 +1,15 @@
+[home]
+  other = 'Home'
+[Posts]
+    one = 'Post'
+    other = 'Posts'
+
+[language]
+    one = 'Language'
+    other = 'Languages'
+
+[followmeon]
+    other = 'Follow me on'
+[whatIdoing]
+    other = 'What i had doing....'
+
