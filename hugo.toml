@@ -36,7 +36,9 @@ defaultContentLanguage = "pt-br"
 [[languages.pt-br.menus.main]]
         name = 'Postagens'
         pageRef = '/posts'
-
+[[languages.pt-br.menus.main]]
+        name = 'Experiências'
+        pageRef = '/experiences'
 [[languages.pt-br.menus.main]]
         name = 'Tags'
         pageRef = '/tags'
@@ -56,3 +58,5 @@ description = "Victor Raton's personal space"
 
 
 
+[taxonomies]
+skills = 'skills'

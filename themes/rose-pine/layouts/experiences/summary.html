@@ -1,0 +1,24 @@
+<article class="summary">
+    {{$start_date := time.Format "Jan 2006" .Params.start_date}}
+    {{$end_date := time.Format "Jan 2006" .Params.end_date}}
+
+
+
+    <div class="container text-xs">
+        <a href="{{ .RelPermalink }}">
+            <h2 class="title text-lg bold">
+                {{ .Params.position }} | {{.Params.business}}
+            </h2>
+        </a>
+        <h3 class="date">{{ $start_date }} | {{ $end_date}}</h3>
+       
+        {{ $skills := "skills" }}
+        {{ with .GetTerms $skills }}
+        <ul class="tags-list overflow-scroll">
+            {{ range . }}
+            {{ partial "tags-in-content.html" . }}
+            {{ end }}
+        </ul>
+        {{ end }}
+    </div>
+</article>

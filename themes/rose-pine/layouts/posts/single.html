@@ -1,4 +1,8 @@
-<article class="summary">
+{{ define "main" }}
+
+<div class='single-header'>
+
+
     {{ $linkToCover := "" }}
     {{ $matches := "feature,cover" }}
     {{/* Use the value from front matter if present */}}
@@ -14,24 +18,27 @@
     {{ end }}
     {{ if $linkToCover }}
     <a href="{{ .RelPermalink }}" aria-label="Go to {{ .LinkTitle }}">
-        <img class="cover" src="{{ $linkToCover }}" width="100%" alt="Cover for {{ .LinkTitle }} post" />
+        <img class="cover" src="{{ $linkToCover }}" alt="Cover for {{ .LinkTitle }} post" />
     </a>
     {{ end }}
-    <div class="container text-xs">
-        <a href="{{ .RelPermalink }}">
-            <h2 class="title text-lg bold">
-                {{ .LinkTitle }}
-            </h2>
-        </a>
-        <p class="desc bold">{{ .Description }}</p>
-       
-        {{ $tags := "tags" }}
-        {{ with .GetTerms $tags }}
-        <ul class="tags-list overflow-scroll">
-            {{ range . }}
-            {{ partial "tags-in-content.html" . }}
-            {{ end }}
-        </ul>
+    <h1 class='single-title bold text-xl'>{{ .Title }}</h1>
+    <h2 class='single-description text-sm'>{{ .Description }}</h2>
+    {{ $dateMachine := .Date | time.Format "01-02-2006" }}
+    {{ $dateHuman := .Date | time.Format ":date_long" }}
+    <time class='single-time text-xs' datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+
+    {{ $tags := "tags" }}
+    {{ with .GetTerms $tags }}
+    <ul class="tags-list">
+        {{ range . }}
+        {{ partial "tags-in-content.html" . }}
         {{ end }}
-    </div>
+    </ul>
+    {{ end }}
+</div>
+
+
+<article class='single-article text-md'>
+    {{ .Content }}
 </article>
+{{ end }}

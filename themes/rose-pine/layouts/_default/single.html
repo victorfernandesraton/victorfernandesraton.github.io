@@ -17,15 +17,8 @@
     {{/* Find the first image with 'cover' in the name in this page bundle. */}}
     {{ end }}
     {{ if $linkToCover }}
-    <a href="{{ .RelPermalink }}" aria-label="Go to {{ .LinkTitle }}">
-        <img class="cover" src="{{ $linkToCover }}" alt="Cover for {{ .LinkTitle }} post" />
-    </a>
     {{ end }}
     <h1 class='single-title bold text-xl'>{{ .Title }}</h1>
-    <h2 class='single-description text-sm'>{{ .Description }}</h2>
-    {{ $dateMachine := .Date | time.Format "01-02-2006" }}
-    {{ $dateHuman := .Date | time.Format ":date_long" }}
-    <time class='single-time text-xs' datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
 
     {{ $tags := "tags" }}
     {{ with .GetTerms $tags }}
