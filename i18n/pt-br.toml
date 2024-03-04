@@ -3,6 +3,9 @@
 [Posts]
     one = 'Postagen'
     other = 'Postagens'
+[Experiences]
+    one = 'Experiência'
+    other = 'Experiências'
 [language]
     one = 'Idioma'
     other = 'Idiomas'
@@ -11,4 +14,7 @@
     other = 'Siga-me em'
 [whatIdoing]
     other = 'O que andei fazendo....'
+
+[myJobs]
+    other = "Onde trabalhei"
 

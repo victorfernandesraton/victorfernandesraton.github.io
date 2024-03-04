@@ -12,6 +12,7 @@ demosite = 'https://owner.github.io/repo'
 # Taxonomy terms
 tags = ['blog', 'company']
 features = ['some', 'awesome', 'features']
+skills = ['javascript']
 
 # If the theme has multiple authors
 authors = [

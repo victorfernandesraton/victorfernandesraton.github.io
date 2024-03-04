@@ -24,7 +24,10 @@
             </h2>
         </a>
         <p class="desc bold">{{ .Description }}</p>
-       
+        <h3 class="date">
+            {{ $dateHuman := .Date | time.Format ":date_long" }}
+            {{ $dateHuman }}
+        </h3>
         {{ $tags := "tags" }}
         {{ with .GetTerms $tags }}
         <ul class="tags-list overflow-scroll">

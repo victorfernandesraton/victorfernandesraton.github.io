@@ -3,7 +3,9 @@
 [Posts]
     one = 'Post'
     other = 'Posts'
-
+[Experiences]
+    one = 'Experience'
+    other = 'Experiences'
 [language]
     one = 'Language'
     other = 'Languages'
@@ -12,4 +14,7 @@
     other = 'Follow me on'
 [whatIdoing]
     other = 'What i had doing....'
+
+[myJobs]
+    other = "Onde trabalhei"
 

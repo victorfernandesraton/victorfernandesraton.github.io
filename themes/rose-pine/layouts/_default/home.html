@@ -7,11 +7,21 @@
 <article class="home-list">
     <h1 class="text-lg bold">{{ i18n "whatIdoing" }}</h1>
     <ul class="list-default">
-        {{ range first 3 site.RegularPages }}
+        {{ range first 3 site.RegularPages}}
         <li>
             {{ .Render "summary" }}
         </li>
         {{ end }}
     </ul>
+    <h2 class="text-lg bold">{{ i18n "myJobs" }}</h2>
+    {{ with .Site.GetPage "/experiences"}}
+        <ul class="list-default">
+            {{ range .Pages  }}
+                <li>
+                    {{ .Render "experiences/summary" }}
+                </li>
+            {{ end }}
+        </ul>
+    {{end}}
 </article>
 {{ end }}
