@@ -14,11 +14,11 @@
         {{ end }}
     </ul>
     <h2 class="text-lg bold">{{ i18n "myJobs" }}</h2>
-    {{ with .Site.GetPage "/experiences"}}
+    {{ with .Site.GetPage "experiences"}}
         <ul class="list-default">
             {{ range .Pages  }}
                 <li>
-                    {{ .Render "experiences/summary" }}
+                    {{ .Render "summary" }}
                 </li>
             {{ end }}
         </ul>

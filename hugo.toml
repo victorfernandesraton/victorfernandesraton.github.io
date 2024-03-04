@@ -60,3 +60,4 @@ description = "Victor Raton's personal space"
 
 [taxonomies]
 skills = 'skills'
+tags = 'tags'
