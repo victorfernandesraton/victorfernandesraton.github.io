@@ -16,7 +16,7 @@ Explicando (e não explicando) Open knowledge é uma iniciativa muito massa que 
 
 Achei o projeto muito interessante, principalmente a parte da arquitetura, e mais impressionante ainda como é que eles fazuam para conseguir raspar dados de N sites com N formas de se interagir, dai nada melhor do que fazer para aprender
 
-![image](/images/qd-arch.png)
+![image](qd-arch.png)
 
 Então eu, o idiota que vos fala decidi usar meu não tão vasto conhecimento em extraćão e webcrawler de dados para adicionar o Diário Oficial da cidade dos meus pais Maragogipe , município do reconcavo Baiano
 
@@ -26,11 +26,11 @@ Primeiro tentei descobrir se realmente havia uma versão digializada dos Diário
 
 Dai decidi verificar no site do Querido Diário se já havia sido cadastrado antes.
 
-![image](/images/screenshot-qd-maragojipe.png)
+![image](screenshot-qd-maragojipe.png)
 
 Como mostra captura de tela abaixo, eles possuem o link do diário oficial , mas não conseguem extrair o conteúdo, verificando o link, percebi que o mesmo estava errado.
 
-![image](/images/screenshot-qd-error.png)
+![image](screenshot-qd-error.png)
 
 Sem críticas ao projeto neste caso, pois acredito que algo mantido de forma voluntária tem a dificuldade em lhedar quando esse tipo de coisa muda, dependendo do trabalho ativo de alguém para notifica r esse tipo de coisa.
 
@@ -78,13 +78,13 @@ Antes de mais nada eu decidi dar uma explorada no site em questão, neste caso o
 
 Ao navegar pelo site de primeira eu percebi que não seria fácil extrair os conteúdos da página pois estavam agrupados os diários oficiais por arcodeôns mensais, ou seja eu teria que desenvolver uma estrutura que extraisse os dados da página, logo eu decidi análisar os daods enviados ao preencher uma pesquisa.
 
-![image](/images/site-maragojipe.png)
+![image](site-maragojipe.png)
 
-![image](/images/request-post.png)
+![image](request-post.png)
 
 Como pode ver, basicamente ao preencher um formulário o diário oficial manda uma requisição post com algumas informações, ao transpor a requisição pro insominia ela ficaria mais ou menos assim:
 
-![image](/images/insominia-test.png)
+![image](insominia-test.png)
 
 ALgumas coisas que descobrir ao futucar a url:
 
@@ -193,7 +193,8 @@ class SaiGazetteSpider(BaseGazetteSpider):
 
 ```
 
-Como trata-se de um site e uma implementação que pode funcionar para vários municípios eu criei esta classe base, dessa forma posso usar ela dessa forma:
+Como trata-se de um site e uma implementação qu:w
+e pode funcionar para vários municípios eu criei esta classe base, dessa forma posso usar ela dessa forma:
 
 ```python
 from gazette.spiders.base.sai import SaiGazetteSpider
