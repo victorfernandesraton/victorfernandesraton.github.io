@@ -5,7 +5,6 @@ position = "Desenvolvedor Fullstack"
 start_date = 2019-09-01
 end_date = 2022-03-01
 business = "Ecglobal Solutions"
-draft = true
 tags = ["javascript", "php", "react", "react-native", "lumen|laravel", "postgres", "neo4j", "docker", "nginx", "microservices", "nestjs", "nextjs"]
 +++
 
