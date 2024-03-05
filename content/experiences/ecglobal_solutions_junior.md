@@ -6,7 +6,7 @@ start_date = 2019-09-01
 end_date = 2022-03-01
 business = "Ecglobal Solutions"
 draft = true
-skills = ["javascript", "php", "react", "react-native", "lumen|laravel", "postgres", "neo4j", "docker", "nginx", "microservices", "nestjs", "nextjs"]
+tags = ["javascript", "php", "react", "react-native", "lumen|laravel", "postgres", "neo4j", "docker", "nginx", "microservices", "nestjs", "nextjs"]
 +++
 
 Atuei como desenvolvedor do core tean de funcionalidades do produto ecglobal.com e suas comunidades.

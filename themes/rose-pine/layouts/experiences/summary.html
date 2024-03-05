@@ -12,8 +12,8 @@
         </a>
         <h3 class="date">{{ $start_date }} | {{ $end_date}}</h3>
        
-        {{ $skills := "skills" }}
-        {{ with .GetTerms $skills }}
+        {{ $tags := "tags" }}
+        {{ with .GetTerms $tags }}
         <ul class="tags-list overflow-scroll">
             {{ range . }}
             {{ partial "tags-in-content.html" . }}
