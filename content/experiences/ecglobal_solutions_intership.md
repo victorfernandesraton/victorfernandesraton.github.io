@@ -5,7 +5,7 @@ start_date = 2019-04-01
 end_date = 2019-09-01
 business = "Ecglobal Solutions"
 draft = true
-skills = ["javascript", "php", "excel", "data science"]
+tags = ["javascript", "php", "excel", "data science"]
 +++
 
 Atuei como desenvolvedor de pesquisas automatizadas para projetos de coleta de dados com usuários de pplataforma de várias empresas de diversos ramos como bancário, de aplicativo de carona compartilhada e operadoras de telefonia no brasil e paises da américa latina.

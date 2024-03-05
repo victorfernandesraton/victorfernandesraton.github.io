@@ -11,8 +11,8 @@
     {{ $dateMachine := .Params.start_date | time.Format ":date_long" }}
     <time class='single-time text-xs' datetime="{{ $dateMachine }}">{{ $start_date }} | {{$end_date}}</time>
 
-    {{ $skills := "skills" }}
-    {{ with .GetTerms $skills }}
+    {{ $tags := "tags" }}
+    {{ with .GetTerms $tags }}
     <ul class="tags-list">
         {{ range . }}
         {{ partial "tags-in-content.html" . }}
