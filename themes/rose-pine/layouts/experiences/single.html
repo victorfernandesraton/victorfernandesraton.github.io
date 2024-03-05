@@ -1,13 +1,13 @@
 {{ define "main" }}
 
 <div class='single-header'>
-
-
-
     <h1 class='single-title bold text-xl'>{{ .Params.Position }}</h1>
     <h2 class='single-description text-sm'>{{ .Params.Business }}</h2>
     {{ $start_date := .Params.start_date | time.Format "Jan 2006" }}
-    {{ $end_date := .Params.end_date | time.Format "Jan 2006" }}
+    {{$end_date := i18n ("endDateNow")}}
+    {{ if .Params.end_date }}
+        {{ $end_date := .Params.end_date | time.Format "Jan 2006" }}
+    {{end}}
     {{ $dateMachine := .Params.start_date | time.Format ":date_long" }}
     <time class='single-time text-xs' datetime="{{ $dateMachine }}">{{ $start_date }} | {{$end_date}}</time>
 

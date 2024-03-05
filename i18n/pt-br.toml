@@ -18,3 +18,5 @@
 [myJobs]
     other = "Onde trabalhei"
 
+[endDateNow]
+    other = "O momento"
