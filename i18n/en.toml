@@ -18,3 +18,5 @@
 [myJobs]
     other = " Where i've worked "
 
+[endDateNow]
+    other = "Now"
