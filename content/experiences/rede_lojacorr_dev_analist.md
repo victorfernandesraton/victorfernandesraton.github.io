@@ -3,7 +3,6 @@ title = "Desenvolvedor Analista | Lojacorr"
 position = "Desenvolvedor Analista"
 start_date = 2023-03-01
 business = "Lojacorr"
-draft = true
 tags = ["python", "django", "djangorestframework", "postgres", "selenium", "rpa", "webscraping", "aws lambda", "archteture", "data science"]
 +++
 Atuei como desenvolvedor analista no time de automações, a fim de possibilitar a implementação de RPA's bem como prover e manter uma arquitetuura de um orquestrador para estes usando como base a framework Django.

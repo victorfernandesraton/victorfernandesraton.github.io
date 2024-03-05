@@ -4,7 +4,6 @@ position = "Desenvolvedor Fullstack"
 start_date = 2022-04-01
 end_date = 2022-12-20
 business = "Involves Tecnologia"
-draft = true
 tags = ["javascript", "react", "react-native", "postgres", "docker", "CQRS", "nestjs"]
 +++
 
