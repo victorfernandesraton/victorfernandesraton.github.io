@@ -20,3 +20,6 @@
 
 [endDateNow]
     other = "O momento"
+
+[videoNotSuport]
+    other = "Seu navegador não suporta a tag de vídeo."
