@@ -1,8 +1,8 @@
 +++
-title = 'Criando um bot para achar posts de vagas no linkedin'
-description = 'Usando querys de postagens e selenium para automatizar o processo de busca de vagas no linkedin'
+title = 'Criando um bot para achar posts de vagas no linkedin Parte 1: Autenticando no linkedin'
+description = 'Implementando uma forma de logar no linkedin usando Python e selenium'
 date = 2024-03-14T00:00:00-03:00
-tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker", "sqlite", "sql" ]
+tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker" ]
 +++
 
 # Disclaimer
@@ -18,21 +18,19 @@ Claro a plataforma tem toda uma estrutura de anúncios de empregos e formas de a
 
 # Vamos ao diagrama postumo
 
-Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais <del>estúpida</del> criativa que conheço, mas como nem toda boa ação sai impune, tive que fazer esse diagrama com o inutito de <del>tentar</del> descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
+Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais <del>estúpida</del> criativa que conheço, mas como nem toda boa ação sai impune, tive que organizaer essa bagunça em passos com o inutito de <del>tentar</del> descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
 
 Piadas de gosto duvidoso a parte, esses são os objetivos e fluxos necessários para este projeto
 
-- Buscar postagens com base na query do usuário, como por exemplo "vaga" + "estágio" + "java" + "remoto"
-- Comentar (por hora de forma genérica) em postagens encontradas em que ainda não comentou
-- Dar um like nessas postagens
-- Se conectar aos autores da postagem
+1. Implementar uma forma de autenticar no linkedin sem ser detectado como bot
+2. Buscar postagens com base na query do usuário, como por exemplo "vaga" + "estágio" + "java" + "remoto"
+3. Comentar (por hora de forma genérica) em postagens encontradas em que ainda não comentou
+4. Dar um like nessas postagens
+5. Se conectar aos autores da postagem
 
 E assim fariamos nosso network.
 
-Todavia , pro se tratar de uma prova de conceito , eu decidi me ater aos dois primeiros itens, sem mais delongas aqui está o diagrama do que quero fazer 
-
-[DIAGRAMA]
-
+Por hoje vamos criar a estrutura de gerenciamento dos navegadores e implementar o passo 1
 
 # Dependencias
 
@@ -349,12 +347,12 @@ Open browser in http://localhost:4444
 >>> service.close(driver_key)
 ```
 
-
-
-
 Agora podemos iniciar o anbiente interativo do python e importar o que queremos, com o cli ativo basta chamar nosso módulo e o método passando o login e a senha. Lembrando que antes desse passo recomenda-se logar no linkedin no seu navegador.
 
 Como exemplo você pode ver o teste no vídeo abaixo do que fiz acima
 
-
 {{< video "./video_login_linkedin_demo.mp4" >}}
+
+E assim conseguimos cumprir nosso primeiro objetivo, uma implementação geral que consegue logar no linkedim.
+
+Ufa! Por hoje é só, nos vemos por ai...
