@@ -1,9 +1,9 @@
 +++
-title = 'Criando um bot para achar posts de vagas no linkedin Parte 1: Autenticando no linkedin'
+title = 'Criando um bot para buscar vagas no linkedin Parte 1'
 description = 'Implementando uma forma de logar no linkedin usando Python e selenium'
 date = 2024-03-14T00:00:00-03:00
 tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker" ]
-cover = "cover.jpg"
+cover = "cover.webp"
 +++
 
 # Disclaimer
