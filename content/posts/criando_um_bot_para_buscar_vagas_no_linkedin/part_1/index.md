@@ -11,7 +11,7 @@ O resultado que eu desenvolvi trata-se de um cli que automatiza por meio do sele
 
 Este projeto assume que você saiba ler definições de [Dockerfile](https://github.com/victorfernandesraton/vagabot/blob/main/Dockerfile) , esteja habituado ao uso de ferramentas como [poetry](https://python-poetry.org/) e tenha em seu sistema python instalado ao menos na versão 3.11 e a versão mais recente do Docker com o plugin docker-compose. Lembrando que esses experiemtnos foram feitos no Debian 12 (bookworm), não sei até que ponto usar Mac ou Windows será reproduzivél
 
-# Linkedisney: Um lugar para falar <del>mal</del> sobre seu trabalho
+# Linkedisney: Um lugar para falar ~~mal~~ sobre seu trabalho
 
 O linkedin é uma rede social que tem o intuito de conectar profissionais a outros profissionais e empresas, ou seja , um mar de confusão, posts motivacionais e pessoas ditando regras sobre if's e elses's, mas em meio a essa bagunça nada organizada , é possivél sim achar vagas de empregos.
 
@@ -19,7 +19,7 @@ Claro a plataforma tem toda uma estrutura de anúncios de empregos e formas de a
 
 # Vamos ao diagrama postumo
 
-Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais <del>estúpida</del> criativa que conheço, mas como nem toda boa ação sai impune, tive que organizaer essa bagunça em passos com o inutito de <del>tentar</del> descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
+Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais ~~estúpida~~ criativa que conheço, mas como nem toda boa ação sai impune, tive que organizaer essa bagunça em passos com o inutito de ~~tentar~~ descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
 
 Piadas de gosto duvidoso a parte, esses são os objetivos e fluxos necessários para este projeto
 
@@ -39,7 +39,7 @@ Para entender melhor as depedências que serão usadas no projeto recomendo dar 
 
 # Vamos criar nosso container
 
-Para facilitar o uso <del>e por cuasa da minha preguiça</del>, usaremos o selenium e o selenium-grid como base pra esse projeto, como a documentação descreve na captura que tirei no dia 16/03/2024 é uma ferramenta para automatizar o browser e é isso... Já o selenium-grid é uma solução que permite manipular webdrivers do selenium em maquinas geridas remotamente. Resumindo para nosso caso de uso, vamos criar uma configuração de containeres com o docker-composer que nos permita criar containeres de navegadores pré configurados para serem operados pelo selenium, asism estarei reduzindo todo o atrito que normalmente temos ao usar o selenium que é selecionar o navegador da maquina rost pra ser usado.
+Para facilitar o uso ~~e por cuasa da minha preguiça~~, usaremos o selenium e o selenium-grid como base pra esse projeto, como a documentação descreve na captura que tirei no dia 16/03/2024 é uma ferramenta para automatizar o browser e é isso... Já o selenium-grid é uma solução que permite manipular webdrivers do selenium em maquinas geridas remotamente. Resumindo para nosso caso de uso, vamos criar uma configuração de containeres com o docker-composer que nos permita criar containeres de navegadores pré configurados para serem operados pelo selenium, asism estarei reduzindo todo o atrito que normalmente temos ao usar o selenium que é selecionar o navegador da maquina rost pra ser usado.
 
 Para fazer essa magia toda funcionar, iremos usar docker e docker-composer, que é por onde vamos começar:
 
