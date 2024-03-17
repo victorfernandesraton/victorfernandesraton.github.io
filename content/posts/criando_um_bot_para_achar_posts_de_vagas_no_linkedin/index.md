@@ -2,11 +2,13 @@
 title = 'Criando um bot para achar posts de vagas no linkedin'
 description = 'Usando querys de postagens e selenium para automatizar o processo de busca de vagas no linkedin'
 date = 2024-03-14T00:00:00-03:00
-tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid" ]
+tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker", "sqlite", "sql" ]
 +++
 
 # Disclaimer
 O resultado que eu desenvolvi trata-se de um cli que automatiza por meio do selenium o acesso ao Linkedin, testei em minha conta pessoal e não tive problemas, mas não sei dizer qual a legalidade dessa brincadeira e se usuários detectados usufruindo desta poderão sofrer algum tipo de penalidade ou perder a sua conta. USE POR CONTA E RISCO
+
+Este projeto assume que você saiba ler definições de [Dockerfile](https://github.com/victorfernandesraton/vagabot/blob/main/Dockerfile) , esteja habituado ao uso de ferramentas como [poetry](https://python-poetry.org/) e tenha em seu sistema python instalado ao menos na versão 3.11 e a versão mais recente do Docker com o plugin docker-compose. Lembrando que esses experiemtnos foram feitos no Debian 12 (bookworm), não sei até que ponto usar Mac ou Windows será reproduzivél
 
 # Linkedisney: Um lugar para falar <del>mal</del> sobre seu trabalho
 
@@ -30,6 +32,11 @@ E assim fariamos nosso network.
 Todavia , pro se tratar de uma prova de conceito , eu decidi me ater aos dois primeiros itens, sem mais delongas aqui está o diagrama do que quero fazer 
 
 [DIAGRAMA]
+
+
+# Dependencias
+
+Para entender melhor as depedências que serão usadas no projeto recomendo dar uma conferida (ou copiar e colar) as definições do nosso Dockerfile no [repositório do bot](https://github.com/victorfernandesraton/vagabot)
 
 # Vamos criar nosso container
 
@@ -155,4 +162,199 @@ Agora ao utilizar o comando abaixo teremos toda a nossa infra de selenium dispon
 docker compose up -d --build
 ```
 
+Podemos verificar se está funcionado acessando localhost:4444, mas apenas verá um painel vazio como mostra o print abaixo
 
+# Implementando o browser e o login
+
+Agora que temos nossa infraestturua, vamos por nossa mão na massa para conseguir logar no linkedin sem ser detectado como bot , essa parte do projeto ainda está meio obscura, pois ainda não consegui desvendar de fato a metodologia aplicada pelo linkedin para esta detecção.
+
+Para isso eu criei um diretório `vagabot/workflows` para podeer modularizar melhor a aplicação, tudo que for executado no browser será nesse tal de módulo workflows
+
+Então , usando python decidi definir uma instância de browser anonimizada por meio de configurações de agente. Essa brincadeira ficou mais ou menos assim:
+
+```python
+# vagabot/workflows/linkedin_workflow.py                                                                                         56,2       
+import time
+from abc import abstractmethod
+
+import fake_useragent
+from decouple import config
+from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
+from undetected_chromedriver import ChromeOptions
+
+
+class LinkedinWorkflow:
+    # TODO: moving foward for cli
+    _se_router_host = config("SE_ROUTER_HOST", "localhost")
+    _se_router_port = config("SE_ROUTER_PORT", "4444")
+
+    def __init__(self) -> None:
+        self.drivers: dict[str, WebDriver] = {}
+        if self._se_router_port:
+            self._se_router_url = (
+                f"http://{self._se_router_host}:{self._se_router_port}"
+            )
+        else:
+            self._se_router_url = f"http://{self._se_router_host}"
+
+    @staticmethod
+    def human_input_simulate(element: WebElement, content: str, delay=1):
+        for key in content:
+            time.sleep(delay)
+            element.send_keys(key)
+
+    def open_browser(self) -> str:
+        print(f"Open browser in {self._se_router_url}")
+        opts = ChromeOptions()
+        opts.add_argument(
+            f"user-agent={fake_useragent.UserAgent(os='windows', browsers=['chrommiun'])}"
+        )
+        driver = webdriver.Remote(options=opts, command_executor=self._se_router_url)
+
+        if not driver.session_id:
+            raise Exception("Not able to regisrer a driver")
+        driver.maximize_window()
+        self.drivers[driver.session_id] = driver
+
+        return driver.session_id
+
+    def close(self, driver_key: str):
+        self.drivers[driver_key].close()
+        del self.drivers[driver_key]
+
+    def __del__(self):
+        for driver_key in list(self.drivers.keys()):
+            self.close(driver_key)
+
+    @abstractmethod
+    def execute(self, *args, **kwargs): ...
+```
+
+
+usando a blibioteca `fake_useragent` no método `open_browser`, pude implementar um browser cujo as configurações são pouco detectáveis, de forma que simule um pc com Windows usando o chrome, algo não muito incomun certo?
+
+Usando o `webbdricver.Remote` provido pela blibioteca do selenium eu pude configurar uma instancia de browser que usa as variaveis de anbiente `SE_ROUTER_HOST` e `SE_ROUTER_PORT`
+
+No construtor da classe (método `__init__`) eu implemento um dicionario de webdrivers, para que eu possa ter multiplos browsers instanciados por execução, algo que usarei no futuro para paralelizar a execução
+
+O método `human_input_simulate` é uma gambiarra para que o input de textos e conteúdos ao serem digitados possuam um dlay de um segundo ao menos para que o bnt não seja detectado por digitar rápido demais, algo que acontecia com frequencia ao tentar logar
+
+defini um método abstrato para poder usar essa classe como base para as demais, mas basicamente criamos uma classe abstrata que definie como vai ser a esttrutura interna da execução que de fato irá controlar o navegador
+
+Em seguida e por algum motivo que eu não me lembro, decidi separar a instância do navegador e a função de logar no linkedin em classes separadas, dessa forma ficamos com a seguinte implementação
+
+```python
+# vagabot/workflows/linkedin_auth.py
+import logging
+import time
+
+from selenium.common import exceptions
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+from vagabot.workflows.linkedin_workflow import LinkedinWorkflow
+
+
+class LinkedinAuth(LinkedinWorkflow):
+    USERNAME_INPUT_XPATH = "//input[@id='session_key']"
+    PASSWORD_INPUT_XPATH = "//input[@id='session_password']"
+    BUTTON_SUBMIT_XPATH = "//*[@id='main-content']/section/div/div/form/div/button"
+
+    def login(self, driver: WebDriver, username: str, password: str):
+        logging.info("go to site")
+        driver.maximize_window()
+        driver.get("https://www.linkedin.com")
+        input_wait = WebDriverWait(driver, timeout=30)
+        logging.info("set input")
+        input_list = {
+            self.USERNAME_INPUT_XPATH: username,
+            self.PASSWORD_INPUT_XPATH: password,
+        }
+        for xpath, value in input_list.items():
+            try:
+                txt_input = input_wait.until(
+                    EC.presence_of_element_located((By.XPATH, xpath))
+                )
+                self.human_input_simulate(txt_input, value)
+            except exceptions.TimeoutException:
+                raise Exception(f"Not found {xpath} input")
+
+        try:
+            time.sleep(5)
+            btn_submit = input_wait.until(
+                EC.presence_of_element_located((By.XPATH, self.BUTTON_SUBMIT_XPATH))
+            )
+
+            btn_submit.click()
+            logging.info("button clicked")
+        except exceptions.TimeoutException:
+            raise Exception("Not found button input")
+```
+Aqui está uma explicação detalhada do que o código faz:
+
+1. **Importações**: O código começa importando os módulos necessários. Isso inclui `logging` e `time` do Python padrão, várias classes e funções do pacote `selenium`, e a classe `LinkedinWorkflow` de um módulo local.
+
+2. **Definição da Classe**: A classe `LinkedinAuth` é definida, herdando de `LinkedinWorkflow`. Ela contém três constantes de classe que definem os caminhos XPATH para os campos de entrada do nome de usuário e senha e o botão de envio na página de login do LinkedIn.
+
+3. **Método de Login**: A classe `LinkedinAuth` tem um método chamado `login` que aceita três argumentos: um objeto `WebDriver`, um nome de usuário e uma senha. Este método automatiza o processo de login no LinkedIn da seguinte maneira:
+    - Primeiro, ele registra uma mensagem de log, maximiza a janela do navegador e navega até a página inicial do LinkedIn.
+    - Em seguida, ele cria um objeto `WebDriverWait` que será usado para pausar a execução do script até que certas condições sejam atendidas.
+    - Ele define um dicionário `input_list` que mapeia os caminhos XPATH dos campos de entrada para os valores correspondentes do nome de usuário e senha.
+    - Para cada par de caminho XPATH e valor no dicionário `input_list`, ele tenta localizar o elemento de entrada correspondente na página e simula a digitação do valor no campo de entrada. Se o elemento de entrada não for encontrado dentro do tempo limite, ele lança uma exceção.
+    - Depois de preencher os campos de entrada, ele pausa a execução do script por 5 segundos. Isso pode ser para dar tempo para a página processar as entradas ou para simular o comportamento humano.
+    - Finalmente, ele tenta localizar o botão de envio na página e clica nele. Se o botão de envio não for encontrado dentro do tempo limite, ele lança uma exceção.
+
+Nós já conseguimos testar essa brincadeira no terminal interativo do python
+
+Assumindo que você visitou o [repositório do vagabot](https://github.com/victorfernandesraton/vagabot), tenha copiado nosso `requirements.txt` e nosso arquivo `pyproject.toml`, iremos iniciar nosso projeto da seguinte forma:
+
+1. Criando um anbiente virtual python
+```bash
+python -m venv .venv
+```
+
+2. Ativando esse anbiente virtual (exemplo linux)
+```bash
+source .veenv/bin/activate
+```
+
+3. Instalando o poetry no anbiente virtual
+```bash
+pip install -r requirements.txt
+```
+
+4. Instalando as dependeicas do projeto via poetry
+```bash
+poetry install --no-interaction
+```
+
+5. Defina um arquio .env com os valores `LINKEDIN_EMAIL` e `LINKEDIN_PASS` com os valores de seu usuário e senha
+6. Abra o interpretador do python localmente com o comando python apenas
+7. Digite os seguintes comandos no interpretador dinamico, lembrando que linha a linha para dar certo
+```bash
+Python 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from decouple import config
+>>> print(config("LINKEDIN_EMAIL"))
+vfbraton@gmail.com
+>>> from vagabot.workflows.linkedin_auth import LinkedinAuth
+>>> service = LinkedinAuth()
+>>> driver_key = service.open_browser()
+Open browser in http://localhost:4444
+>>> service.login(username=config("LINKEDIN_EMAIL"),password=config("LINKEDIN_PASS"),driver=service.drivers[driver_key])
+>>> service.close(driver_key)
+```
+
+
+
+
+Agora podemos iniciar o anbiente interativo do python e importar o que queremos, com o cli ativo basta chamar nosso módulo e o método passando o login e a senha. Lembrando que antes desse passo recomenda-se logar no linkedin no seu navegador.
+
+Como exemplo você pode ver o teste no vídeo abaixo do que fiz acima
+
+
+{{< video "./video_login_linkedin_demo.mp4" >}}
