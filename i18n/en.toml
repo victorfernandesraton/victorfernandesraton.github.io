@@ -20,3 +20,6 @@
 
 [endDateNow]
     other = "Now"
+
+[videoNotSuport]
+    other = "Your browsser not support video tag"
