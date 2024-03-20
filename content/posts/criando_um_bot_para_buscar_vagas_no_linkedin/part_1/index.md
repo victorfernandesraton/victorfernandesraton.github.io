@@ -1,6 +1,6 @@
 +++
-title = 'Criando um bot para buscar vagas no linkedin Parte 1'
-description = 'Implementando uma forma de logar no linkedin usando Python e selenium'
+title = 'Criando um bot para buscar vagas no LinkedIn Parte 1'
+description = 'Implementando uma forma de logar no LinkedIn usando Python e Selenium'
 date = 2024-03-14T00:00:00-03:00
 tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker" ]
 cover = "cover.webp"
@@ -9,21 +9,21 @@ cover = "cover.webp"
 # Disclaimer
 O resultado que eu desenvolvi trata-se de um cli que automatiza por meio do selenium o acesso ao Linkedin, testei em minha conta pessoal e não tive problemas, mas não sei dizer qual a legalidade dessa brincadeira e se usuários detectados usufruindo desta poderão sofrer algum tipo de penalidade ou perder a sua conta. USE POR CONTA E RISCO
 
-Este projeto assume que você saiba ler definições de [Dockerfile](https://github.com/victorfernandesraton/vagabot/blob/main/Dockerfile) , esteja habituado ao uso de ferramentas como [poetry](https://python-poetry.org/) e tenha em seu sistema python instalado ao menos na versão 3.11 e a versão mais recente do Docker com o plugin docker-compose. Lembrando que esses experiemtnos foram feitos no Debian 12 (bookworm), não sei até que ponto usar Mac ou Windows será reproduzivél
+Este projeto assume que você saiba ler definições de [Dockerfile](https://github.com/victorfernandesraton/vagabot/blob/main/Dockerfile), esteja habituado ao uso de ferramentas como [poetry](https://python-poetry.org/) e tenha em seu sistema python instalado ao menos na versão 3.11 e a versão mais recente do Docker com o plugin docker-compose. Lembrando que esses experiemtnos foram feitos no Debian 12 (bookworm), não sei até que ponto usar Mac ou Windows será reproduzivél
 
 # Linkedisney: Um lugar para falar ~~mal~~ sobre seu trabalho
 
-O linkedin é uma rede social que tem o intuito de conectar profissionais a outros profissionais e empresas, ou seja , um mar de confusão, posts motivacionais e pessoas ditando regras sobre if's e elses's, mas em meio a essa bagunça nada organizada , é possivél sim achar vagas de empregos.
+O LinkedIn é uma rede social que tem o intuito de conectar profissionais a outros profissionais e empresas, ou seja, um mar de confusão, posts motivacionais e pessoas ditando regras sobre if's e else's, mas em meio a essa bagunça nada organizada, é possível sim achar vagas de empregos.
 
-Claro a plataforma tem toda uma estrutura de anúncios de empregos e formas de aplicações, ainda que, sem saber o motivo, eu tenho encontrado posts de anuncio de vagas , onde constam a descrição da posição, os requisitos e por fim alguma forma de contato, bem como aprendi recentemente por meio do [post do Gab Bo](https://www.linkedin.com/posts/gabebo_existem-milhares-de-vagas-escondidas-no-linkedin-activity-7159184550667923457-rHei) , dessa forma decidi criar uma ferramenta de CLI (por hora) que auxiliasse as pessoas a fazerem network em cima dessas postagens do linkedin, afinal o que conta pra uma vaga de emprego é o famoso QI (Quem indica)
+Claro a plataforma tem toda uma estrutura de anúncios de empregos e formas de aplicações, ainda que, sem saber o motivo, eu tenho encontrado posts de anuncio de vagas, onde constam a descrição da posição, os requisitos e por fim alguma forma de contato, bem como aprendi recentemente por meio do [post do Gab Bo](https://www.linkedin.com/posts/gabebo_existem-milhares-de-vagas-escondidas-no-linkedin-activity-7159184550667923457-rHei), dessa forma decidi criar uma ferramenta de CLI (por hora) que auxiliasse as pessoas a fazerem network em cima dessas postagens do LinkedIn, afinal o que conta pra uma vaga de emprego é o famoso QI (Quem indica)
 
 # Vamos ao planejamento postumo
 
-Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais ~~estúpida~~ criativa que conheço, mas como nem toda boa ação sai impune, tive que organizaer essa bagunça em passos com o inutito de ~~tentar~~ descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
+Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais ~~estúpida~~ criativa que conheço, mas como nem toda boa ação sai impune, tive que organizar essa bagunça em passos com o inutito de ~~tentar~~ descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
 
 Piadas de gosto duvidoso a parte, esses são os objetivos e fluxos necessários para este projeto
 
-1. Implementar uma forma de autenticar no linkedin sem ser detectado como bot
+1. Implementar uma forma de autenticar no LinkedIn sem ser detectado como bot
 2. Buscar postagens com base na query do usuário, como por exemplo "vaga" + "estágio" + "java" + "remoto"
 3. Comentar (por hora de forma genérica) em postagens encontradas em que ainda não comentou
 4. Dar um like nessas postagens
@@ -39,7 +39,7 @@ Para entender melhor as depedências que serão usadas no projeto recomendo dar 
 
 # Vamos criar nosso container
 
-Para facilitar o uso ~~e por cuasa da minha preguiça~~, usaremos o selenium e o selenium-grid como base pra esse projeto, como a documentação descreve na captura que tirei no dia 16/03/2024 é uma ferramenta para automatizar o browser e é isso... Já o selenium-grid é uma solução que permite manipular webdrivers do selenium em maquinas geridas remotamente. Resumindo para nosso caso de uso, vamos criar uma configuração de containeres com o docker-composer que nos permita criar containeres de navegadores pré configurados para serem operados pelo selenium, asism estarei reduzindo todo o atrito que normalmente temos ao usar o selenium que é selecionar o navegador da maquina rost pra ser usado.
+Para facilitar o uso ~~e por cuasa da minha preguiça~~, usaremos o selenium e o selenium-grid como base pra esse projeto, como a documentação descreve na captura que tirei no dia 16/03/2024 é uma ferramenta para automatizar o browser e é isso... Já o selenium-grid é uma solução que permite manipular webdrivers do selenium em maquinas geridas remotamente. Resumindo para nosso caso de uso, vamos criar uma configuração de containeres com o docker-composer que nos permita criar containeres de navegadores pré configurados para serem operados pelo selenium, asism estarei reduzindo todo o atrito que normalmente temos ao usar o selenium que é selecionar o navegador da maquina host pra ser usado.
 
 Para fazer essa magia toda funcionar, iremos usar docker e docker-composer, que é por onde vamos começar:
 
@@ -156,7 +156,7 @@ Um pouco extenso não? Mas explicando o que acontece aqui nesse docker-compose, 
 5. `selenium-router`: Este serviço roteia as solicitações para o componente apropriado na grid Selenium. Ele depende do `selenium-distributor`, `selenium-sessions` e `selenium-session-queue`.
 6. `chrome`: Este serviço executa um nó Selenium que permite a execução de uma instância do chrome, podemos usar ele como base para definir outros navegadores como firefox e o Edge com suporte ao Internet Exxplorer habilitado.
 
-Agora ao utilizar o comando abaixo teremos toda a nossa infra de selenium disponivél com uma interface web que permite a visualização das sessões ativas por meio do protocolo VNC 
+Agora ao utilizar o comando abaixo teremos toda a nossa infra de selenium disponível com uma interface web que permite a visualização das sessões ativas por meio do protocolo VNC 
 ```bash
 docker compose up -d --build
 ```
@@ -165,11 +165,11 @@ Podemos verificar se está funcionado acessando localhost:4444, mas apenas verá
 
 # Implementando o browser e o login
 
-Agora que temos nossa infraestturua, vamos por nossa mão na massa para conseguir logar no linkedin sem ser detectado como bot , essa parte do projeto ainda está meio obscura, pois ainda não consegui desvendar de fato a metodologia aplicada pelo linkedin para esta detecção.
+Agora que temos nossa infraestrutura, vamos por nossa mão na massa para conseguir logar no LinkedIn sem ser detectado como bot, essa parte do projeto ainda está meio obscura, pois ainda não consegui desvendar de fato a metodologia aplicada pelo LinkedIn para esta detecção.
 
 Para isso eu criei um diretório `vagabot/workflows` para podeer modularizar melhor a aplicação, tudo que for executado no browser será nesse tal de módulo workflows
 
-Então , usando python decidi definir uma instância de browser anonimizada por meio de configurações de agente. Essa brincadeira ficou mais ou menos assim:
+Então, usando python decidi definir uma instância de browser anonimizada por meio de configurações de agente. Essa brincadeira ficou mais ou menos assim:
 
 ```python
 # vagabot/workflows/linkedin_workflow.py                                                                                         56,2       
@@ -236,13 +236,13 @@ usando a blibioteca `fake_useragent` no método `open_browser`, pude implementar
 
 Usando o `webbdricver.Remote` provido pela blibioteca do selenium eu pude configurar uma instancia de browser que usa as variaveis de anbiente `SE_ROUTER_HOST` e `SE_ROUTER_PORT`
 
-No construtor da classe (método `__init__`) eu implemento um dicionario de webdrivers, para que eu possa ter multiplos browsers instanciados por execução, algo que usarei no futuro para paralelizar a execução
+No construtor da classe (método `__init__`) eu implemento um dicionário de webdrivers, para que eu possa ter múltiplos browsers instanciados por execução, algo que usarei no futuro para paralelizar a execução
 
-O método `human_input_simulate` é uma gambiarra para que o input de textos e conteúdos ao serem digitados possuam um dlay de um segundo ao menos para que o bnt não seja detectado por digitar rápido demais, algo que acontecia com frequencia ao tentar logar
+O método `human_input_simulate` é uma gambiarra para que o input de textos e conteúdos ao serem digitados possuam um delay de um segundo ao menos para que o bot não seja detectado por digitar rápido demais, algo que acontecia com frequencia ao tentar logar
 
-defini um método abstrato para poder usar essa classe como base para as demais, mas basicamente criamos uma classe abstrata que definie como vai ser a esttrutura interna da execução que de fato irá controlar o navegador
+defini um método abstrato para poder usar essa classe como base para as demais, mas basicamente criamos uma classe abstrata que definie como vai ser a estrutura interna da execução que de fato irá controlar o navegador
 
-Em seguida e por algum motivo que eu não me lembro, decidi separar a instância do navegador e a função de logar no linkedin em classes separadas, dessa forma ficamos com a seguinte implementação
+Em seguida e por algum motivo que eu não me lembro, decidi separar a instância do navegador e a função de logar no LinkedIn em classes separadas, dessa forma ficamos com a seguinte implementação
 
 ```python
 # vagabot/workflows/linkedin_auth.py
@@ -348,12 +348,12 @@ Open browser in http://localhost:4444
 >>> service.close(driver_key)
 ```
 
-Agora podemos iniciar o anbiente interativo do python e importar o que queremos, com o cli ativo basta chamar nosso módulo e o método passando o login e a senha. Lembrando que antes desse passo recomenda-se logar no linkedin no seu navegador.
+Agora podemos iniciar o anbiente interativo do python e importar o que queremos, com o cli ativo basta chamar nosso módulo e o método passando o login e a senha. Lembrando que antes desse passo recomenda-se logar no LinkedIn no seu navegador.
 
 Como exemplo você pode ver o teste no vídeo abaixo do que fiz acima
 
 {{< video "./video_login_linkedin_demo.mp4" >}}
 
-E assim conseguimos cumprir nosso primeiro objetivo, uma implementação geral que consegue logar no linkedim.
+E assim conseguimos cumprir nosso primeiro objetivo, uma implementação geral que consegue logar no LinkedIn.
 
 Ufa! Por hoje é só, nos vemos por ai...
