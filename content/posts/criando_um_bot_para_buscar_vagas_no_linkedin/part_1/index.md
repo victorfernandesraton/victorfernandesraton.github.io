@@ -17,7 +17,7 @@ O linkedin é uma rede social que tem o intuito de conectar profissionais a outr
 
 Claro a plataforma tem toda uma estrutura de anúncios de empregos e formas de aplicações, ainda que, sem saber o motivo, eu tenho encontrado posts de anuncio de vagas , onde constam a descrição da posição, os requisitos e por fim alguma forma de contato, bem como aprendi recentemente por meio do [post do Gab Bo](https://www.linkedin.com/posts/gabebo_existem-milhares-de-vagas-escondidas-no-linkedin-activity-7159184550667923457-rHei) , dessa forma decidi criar uma ferramenta de CLI (por hora) que auxiliasse as pessoas a fazerem network em cima dessas postagens do linkedin, afinal o que conta pra uma vaga de emprego é o famoso QI (Quem indica)
 
-# Vamos ao diagrama postumo
+# Vamos ao planejamento postumo
 
 Como bom desenvolvedor, adepto do Go Horse, eu simplesmente fui desenvolvendo tudo da forma mais ~~estúpida~~ criativa que conheço, mas como nem toda boa ação sai impune, tive que organizaer essa bagunça em passos com o inutito de ~~tentar~~ descrever o que eu pensei como solução pra essa brincadeira, afinal amo gastar um mês automatizando algo que faço em meia hora.
 
