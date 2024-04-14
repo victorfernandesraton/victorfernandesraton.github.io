@@ -8,7 +8,7 @@ cover = "cover.jpg"
 
 # No episódio anterior...
 
-Como vimos antes [aqui]({{<ref "/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/">}}), conseguimos criar uma estrutura básica de como gerenciar mais de um processo usando selenium pra logar no linkedin e docker+selenium-grid para gerir essa bagunça organizada, nas agora temos que ir além, nosso desafio hoje é apenas mostrar como fazer scrapping e interagir com as páginas, fora toda a ciência tosca e esforço que tive que fazer para "hackear" os links do linkedin, nosso objetivo hoje se resume em 3:
+Como vimos antes [aqui]({{<ref "/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/index.md">}}), conseguimos criar uma estrutura básica de como gerenciar mais de um processo usando selenium pra logar no linkedin e docker+selenium-grid para gerir essa bagunça organizada, nas agora temos que ir além, nosso desafio hoje é apenas mostrar como fazer scrapping e interagir com as páginas, fora toda a ciência tosca e esforço que tive que fazer para "hackear" os links do linkedin, nosso objetivo hoje se resume em 3:
 
 1. Refatorar o vagabot para que use mais composição e menos herança
 1. Conseguir fazer uma busca no linkedin
