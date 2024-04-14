@@ -2,7 +2,7 @@
 title = 'Criando um bot para buscar vagas no linkedin Parte 2'
 description = 'Fazendo scrapping e extraindo dados'
 date = 2024-04-13T18:00:00-03:00
-tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker" ]
+tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "urn" ]
 +++
 
 # No episódio anterior...
