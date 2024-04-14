@@ -270,7 +270,7 @@ class LinkedinGetPosts(LinkedinWorkflow):
         return result
 ```
 
-essa classe é bem simples e condensa o que vimos antes na [parte 1]({{<ref "/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/">}}), usamos a tag `SEARCH_INPUT_XPATH` para definir o xpath daquela barra de navegação do linkedin, digitamos o texto que queremos e apertamos o que seria o ENTER pra ele fazer a busca. Mas devido ao comportamento estranho dos botões de menu para selecionar o tipo de postagen (afinal são botões com eventos específicos sendo invocados) eu preferi ajustar a url diretamente para busca , porém mantive a busca em texto com imput para evitar ser pego como bot pelo próprio linkedin 
+essa classe é bem simples e condensa o que vimos antes na [parte 1]({{<ref "/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/index.md">}}), usamos a tag `SEARCH_INPUT_XPATH` para definir o xpath daquela barra de navegação do linkedin, digitamos o texto que queremos e apertamos o que seria o ENTER pra ele fazer a busca. Mas devido ao comportamento estranho dos botões de menu para selecionar o tipo de postagen (afinal são botões com eventos específicos sendo invocados) eu preferi ajustar a url diretamente para busca , porém mantive a busca em texto com imput para evitar ser pego como bot pelo próprio linkedin 
 
 
 depois pegamos todas as postagens , isto é o conteúdo em html inteiro e separamos, usamos novamente a magial do xapth com `POSTS_LIST_XPATH`
