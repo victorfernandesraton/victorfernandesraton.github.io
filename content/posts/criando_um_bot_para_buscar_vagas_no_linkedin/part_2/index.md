@@ -210,12 +210,12 @@ if __name__ == "__main__":
     main()
 ```
 
-Dei tanbém uma mexida melhor nos logs e em alguns detalhes de baixo nivél, mas por hoje temos isso ai....
+Dei tanbém uma mexida melhor nos logs e em alguns detalhes de baixo nivél, mas por agora temos isso ai....
 
 
 # Buscando as postagens
 
-Sabe quando seu colega de trabalho enche teu saco pra usar o html semântico? quando eu reclamo quando vejo um código React cheio de div em vez de usar os componentes nativos como inputs e checkbox? Então uma das razõoes disso é que querendo ou não seu projeto web vai ser indexado, seja pela google pra te avaliar no algoritimo de busca deles, seja a openai varrendo a internet e desdenhando de propriedade intelectual, seja só eu fazendo automações para pagar as contas. Você vai ver nessa parte o porque isso (e minha grande preguiça) limitou o nosso vagabot.
+Sabe quando seu colega de trabalho enche teu saco pra usar o html semântico? quando eu reclamo quando vejo um código React cheio de div em vez de usar os componentes nativos como inputs e checkbox? Então uma das razõoes disso é que querendo ou não seu projeto web vai ser indexado, seja pela google pra te avaliar no algoritimo de busca deles, seja a openai varrendo a internet e desdenhando de propriedade intelectual, seja só eu fazendo automações para pagar as contas. Você vai ver nessa parte o porque isso (e minha grande preguiça) me fizeram ter que descobrir como hackear o linkedin, tudo para obter um link.
 
 Para pegar as postagens precisamos fazer uma busca usando a barra de busca do linkedin, selecionar o tipo de busca e copiar os links dos conteúdos encontrados, talvez mais tarde possamos fazer uma análise se a postagem é ou não sobre uma vaga, mas entenderam a idéia certo?
 
@@ -651,17 +651,15 @@ Utilizando o inspector do browser eu descobri algumas coisas:
 
 Porém precisei dar uma de hacker pra descobrir como gerar os links corretos, pois o redirect é gerado ao clicar nos elementos, eles não possuem tags claras de para onde irão redirecionar. Inagino inclusive que isso deve causar alguma complexidade por parte das ferramentas de acessibilidade, gostaria de ver um estudo das redes sociais e o uso de leitores de tela nos navegadores. 
 
-O que me entregou as peças que eu queria foi no componente da div, a qual possuia uma propriedade chamada `data-urn`, me parecia uma forma de identificar a qual post aquele componente pertencia, pesquisando um pouco descobri que era algo similar a isso conmo é apontado [neste post do stack overflow](https://stackoverflow.com/questions/4913343/what-is-the-difference-between-uri-url-and-urn#4913371), como mostra essa captura de tela
+O que me entregou as peças que eu queria foi no componente da div, a qual possuia uma propriedade chamada `data-urn`, me parecia uma forma de identificar a qual post aquele componente pertencia, pesquisando um pouco descobri que era algo similar a isso conmo é apontado [neste post do stack overflow](https://stackoverflow.com/questions/4913343/what-is-the-difference-between-uri-url-and-urn#4913371). 
 
 O urn em questão estava nesse padrão aqui `urn:li:activity:{ID_NUMERICO}` como mostra essa captura de tela
 
 ![image](captura-data-urn.png)
 
-Depois disso deccidi ver se achava esse cara em outro lugar, tentei enviar o post a um amigo como compartilhamento e não deu outra, lá no card do chat estava o nosso urn, dai foi fácil descobrir como gerar a url para um post através de um urn
+Depois disso decidi ver se achava esse cara em outro lugar, tentei enviar o post a um amigo como compartilhamento e não deu outra, lá no card do chat estava o nosso urn, dai foi fácil descobrir como gerar a url para um post através de um urn
 
 ![image](captura-chat-sharing.png)
-
-Depois de algumas tentativas e erro eu consegui descobrir como gerar a url de um post de forma absoluta para que esta não sofra interferência por exemplo se o usuário mudar de nome. Parece fácil mas basicamente foi tentativa e erro de fazer ações que de alguma forma gerassem link para a postagem e inspecionar os elemento para ver se conseguia achar o nosso candidato.
 
 Após algum ajuste gerei esse código aqui que por meio do Beatfulsoap extrai dados do html, gerando esse código final:
 
