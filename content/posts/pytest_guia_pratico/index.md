@@ -3,7 +3,7 @@ title = 'Pytest & fixtures: guia prático'
 date = 2024-05-14T20:58:21-03:00
 description ="Um guia de como usar pytest e fixtures ao seu favor"
 tags = ["python", "pytest", "tests", "unittest", "fixtures", "sqlite"]
-cover = ""
+cover = "cover.jpg"
 +++
 
 # Afinal pra quê testes?
