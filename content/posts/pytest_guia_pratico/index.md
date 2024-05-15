@@ -1,9 +1,8 @@
 +++
-title = 'Pytest: guia prático'
-date = 2024-04-27T20:58:21-03:00
-draft = true
-description ="Um guia com o que eu uso no meu dia-a-dia"
-tags = ["python", "pytest", "tests", "unittest"]
+title = 'Pytest & fixtures: guia prático'
+date = 2024-05-14T20:58:21-03:00
+description ="Um guia de como usar pytest e fixtures ao seu favor"
+tags = ["python", "pytest", "tests", "unittest", "fixtures", "sqlite"]
 cover = ""
 +++
 
@@ -13,7 +12,7 @@ Desenvolver software nunca foi fácil, não basta saber programar, tem que domin
 
 Uma das formas de garantir e comprovar o funcionasmento de um software é por meio de testes, e uma forma de aprimorar a qualidade daquilo que está sendo desenvolvido é por meio de testes automatizados, pois além de ajudarem a entender as funcionalidades, estes testes podem servir como evidência de funcionamento, bem como garantia de funcionamento e de retrocompatibilidade , além de controle de qualidade.
 
-O python , da forma mais comun que conhecemos (CPython) traz no seu kit de ferramentas uma blibioteca chamada unittest, a qual nos permite escrever testes para os nossos projetos python. Mas hoje vou mostrar a vocês o que faço no meu dia-a-dia na Lojacorr utilizando o pytest, uma blibioteca popular e amigavél do python para testes automatizados, bem como alguns truques e macetes que aprendi recentemente.
+O python , da forma mais comun que conhecemos (CPython) traz no seu kit de ferramentas uma blibioteca chamada unittest, a qual nos permite escrever testes para os nossos projetos python. Mas hoje vou falar um pouco sobre pytest uma blibioteca popular e amigavél do python para testes automatizados, bem como alguns truques e macetes que aprendi recentemente usando fixtures , um recurso do pytest que nos permie modularizar melhor nossos testes.
 
 # Tá mais porquê não o unittest?
 
@@ -35,15 +34,15 @@ Como a idéia é apresentar alguns cenários diferentes do que podemos fazer com
 
 # Fixtures
 
-Decidio os cenãrios que iremos aprender a testar , vou precisar explicar agora a ferramenta principal provida pelo pytest que iremos usar para atingir nossos objetios, fixtures.
+Decidio os cenãrios que iremos aprender a testar , vou precisar explicar agora a ferramenta principal provida pelo pytest que iremos usar para atingir nossos objetios, as fixtures fixtures.
 
-Parafraseando a documentação do pytest, fixtures tratam-se de uma forma de prover contextos definidos, reutilizaveis e consistentes entre os testes, podendo ser informações de anbiente , como credenciais de banco de dados ou conteúdo como expor datasets entre testes
+Parafraseando a [documentação do pytest](https://docs.pytest.org/en/7.1.x/how-to/fixtures.html), fixtures tratam-se de uma forma de prover contextos definidos, reutilizaveis e consistentes entre os testes, podendo ser informações de anbiente , como credenciais de banco de dados ou conteúdo como expor datasets entre testes
 
 Para definir uma fixture , o pytest pede que escreva uma função utilizando a annotation @pytest.fixtrure, a qual irá disponibilizar o retorno dessa função como argumento para nossos testes poderem consumir ela de forma implicita.
 
 Tanbém podemos usar de definição de contexto e yelds para definir meios de "destruição" de uma fixture, assim podemos por exemplo usar uma fixture para criar a conexão com um banco de dados e no final do contexto, podemos encerrar essa conexão e realizar um drop das tabelas criadaas, uma ferramenta muito poderosa se usada com cuidado.
 
-por fim o que eu acho mais interessante é que fixtures podem consumir e serem consumidas por outros fixtures, muito interessante para simular side effects em testes
+por fim fixtures podem consumir e serem consumidas por outros fixtures, muito interessante para simular side effects em testes
 
 # Cenário um: Uma fixture ordinária
 
@@ -214,7 +213,6 @@ Para essa demonstração irei implementar uma tabela simples usando sqlite em me
 Seguindo ainda com o serviço de delivery, precisamos agora gerenciar os veículos da nossa empresa, visto que precisamos fazer o cálculo de estimativa de entrega com base na disponibilidade de entregadores e veículos.
 
 Para isso iremos implementar uma estrutura simples SQL que nos permita ter uma tabela de veículos.
-
 
 Nesta tabela teremos a lista de veículos da empresa com a placa do veículo, e o status atual do veículo que pode ser 3:
 1. Disponivél para entrega 
@@ -394,7 +392,7 @@ def create_veichile_database(create_database):
 Nas fixtures de create_database e create_veichile_database utilizamos o escopo de sessão, para que a limpeza de estado seja feita após o termino dos testes, vale ressaltar que em vez de retornar o valor assumido pela fixture, usamos o yeld, assim tudo que ocorrer após o yeld será o cleanup da fixture, podemos fazer o drop da tabela, bem como encerrar a conexão, aida que esta seja estabelecida em memória no nosso exemplo
 
 
-Por fim escreveremos nosso teste o qual expõe como eviêncioa o reaproveitamento de estado, no primeiro iremos criar um veículo, no segundo iremos consultar este veículo criado no teste anterior e atualizar o status, inicialmente não recomendo esse tipo de abordagem , pois obriga o teste a ser sequêncial e não permite que cada um seja executado de forma independente, gerando assim side-effects, então use com caltela
+Por fim escreveremos nosso teste o qual expõe como eviência o reaproveitamento de estado, no primeiro iremos criar um veículo, no segundo iremos consultar este veículo criado no teste anterior e atualizar o status, inicialmente não recomendo esse tipo de abordagem , pois obriga o teste a ser sequêncial e não permite que cada um seja executado de forma independente, gerando assim side-effects, então use com caltela
 
 
 ```python
@@ -436,4 +434,8 @@ def test_update_veichile_status(create_veichile_database):
 
 Basta agora rodar o comando para executar nossos testes , concluir nosso commit, fechar nosso card no jira e dizer pro chefe que conseguimos fazer 80% de cobertura de testes em nosso projetos
 
-Vlw , Flw
+# Conclusões
+
+Escrever testes não é uma tarefa simples, seu sofgtware sempre vai precisar estar desacoplado e estruturado de forma que possa testar partes. Ainda que nestes exemplos eu demonstrei uma implementação de teste statefull, esse tipo de prática deve ser evitado, ao testar mutabilidade certifique-se de apagar os dados gerados nas etapas anteriores, para que cada suite de teste seja independente e seus testes se tornem mais eficazes.
+
+Por hoje é só...
