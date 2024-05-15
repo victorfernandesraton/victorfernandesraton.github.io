@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS veichiles (
 ```
 Dessa forma toda vez que um veículo for acionado o mesmo mudará seu status, assim como saberemos em tempo real quais veículos estão disponivéis
 
-Assim implementamos nossa classe de serviço a qual de fato iremos testar, mas para poder evr com mais detalhes o projeto, veja [este link]()
+Assim implementamos nossa classe de serviço a qual de fato iremos testar, mas para poder evr com mais detalhes o projeto, veja [este link](https://github.com/victorfernandesraton/pytest-fixture-experiment)
 
 ```python
 from datetime import datetime
