@@ -1,7 +1,7 @@
 +++
 title = 'Pytest: guia prático'
 date = 2024-04-27T20:58:21-03:00
-draft = false
+draft = true
 description ="Um guia com o que eu uso no meu dia-a-dia"
 tags = ["python", "pytest", "tests", "unittest"]
 cover = ""
@@ -211,26 +211,12 @@ Tendo isso em mente eu vou demonstrar como utilizar o controle de ciclo de vida 
 
 Para essa demonstração irei implementar uma tabela simples usando sqlite em memória mesmo, sem ORM, mas nbada que não possa ser adaptado para o seu cenário de banco de dados e CI/CD.
 
-Seguindo ainda com o serviço de delivery, precisamos agora gerenciar os veículos e as entrregas da nossa empresa, visto que precisamos fazer o cálculo de estimativa de entrega com base na disponibilidade de entregadores e veículos.
+Seguindo ainda com o serviço de delivery, precisamos agora gerenciar os veículos da nossa empresa, visto que precisamos fazer o cálculo de estimativa de entrega com base na disponibilidade de entregadores e veículos.
 
-Para isso iremos implementar uma estrutura simples SQL que nos permita ter 3 tabelas.
+Para isso iremos implementar uma estrutura simples SQL que nos permita ter uma tabela de veículos.
 
-A primeira tabela irá conter a lista de pedidos, com a cidade destino e a data de criação e o valor do pedido, além de um código de rastreio, iremos gerar o seguinte SQL:
 
-```sql
-CREATE IF NOT EXISTS TABLE delivery (
-    id INTEGER PRIMARY KEY,
-    ammount REAL,
-    destiny_citty TEXT NOT NULL,
-    min_days INT NOT NULL DEFAULT 1,
-    max_days INT NOT NULL DEFAULT 0,
-    created_at NUMERIC,
-    updated_at NUMERIC,
-)
-
-```
-
-Em seguida teremos a lista de veículos da empresa com a placa do veículo, e o status atual do veículo que pode ser 3:
+Nesta tabela teremos a lista de veículos da empresa com a placa do veículo, e o status atual do veículo que pode ser 3:
 1. Disponivél para entrega 
 2. Realizando entrega
 3. Em manutenção
@@ -245,24 +231,209 @@ CREATE TABLE IF NOT EXISTS veichiles (
 )
 
 ```
-Por fim uma tabela que vamos chamar de checkin onde registraremos quando o veículo sai e quando o veículo chega
+Dessa forma toda vez que um veículo for acionado o mesmo mudará seu status, assim como saberemos em tempo real quais veículos estão disponivéis
 
-```sql
-CREATE TABLE IF NOT EXISTS checkouts (
-    id INTEGER PRIMARY KEY,
-    veichile_id INTEGER NOT NULL,
-    delivery_id INTEGER NOT NULL,
-    is_incoming INTEGER NOT NULL DEFAULT 1,
-    created_at NUMERIC,
-    updated_at NUMERIC,
-    FOREIGN KEY(veichile_id) REFERENCES veichiles(id),
-    FOREIGN KEY(delivery_id) REFERENCES delivery(id),
-) 
+Assim implementamos nossa classe de serviço a qual de fato iremos testar, mas para poder evr com mais detalhes o projeto, veja [este link]()
+
+```python
+from datetime import datetime
+from sqlite3 import Connection
+
+from delivery.domain.models import VeichileModel, VeichileStatus
+from delivery.repository import VeichileRepository
+
+
+class VeichileStorageSqlite(VeichileRepository):
+    def __init__(self, conn: Connection, table_name: str = "veichile"):
+        self.conn = conn
+        self.table_name = table_name
+
+    def create_table(self):
+        with self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                f"""
+                CREATE TABLE IF NOT EXISTS {self.table_name} (
+                    id INTEGER PRIMARY KEY,
+                    plate TEXT NOT NULL UNIQUE,
+                    status INT NOT NULL DEFAULT 1,
+                    created_at NUMERIC,
+                    updated_at NUMERIC
+                )
+                """
+            )
+
+    def drop_table(self):
+        with self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                f"""
+                DROP TABLE {self.table_name}
+                """
+            )
+
+    def create_veichile(self, veichile: VeichileModel) -> VeichileModel:
+        created_at = datetime.now().timestamp()
+        with self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                """
+                    INSERT INTO veichile (plate, status, created_at, updated_at)
+                    VALUES (?, ?, ?, ?)
+                """,
+                (veichile.plate, veichile.status.value, created_at, created_at),
+            )
+            veichile_id = cursor.lastrowid
+            return VeichileModel(
+                id=veichile_id,
+                plate=veichile.plate,
+                status=veichile.status,
+                created_at=datetime.fromtimestamp(created_at),
+                updated_at=datetime.fromtimestamp(created_at),
+            )
+
+    def get_veichile_by_id(self, veichile_id: int) -> VeichileModel | None:
+        with self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute("SELECT * FROM veichile WHERE id = ?", (veichile_id,))
+            if cursor.rowcount == 0:
+                return None
+            row = cursor.fetchone()
+            if not row:
+                return None
+            print(row)
+            return VeichileModel(
+                id=row[0],
+                plate=row[1],
+                status=VeichileStatus(row[2]),
+                created_at=datetime.fromtimestamp(row[3]),
+                updated_at=datetime.fromtimestamp(row[4]),
+            )
+
+    def update_veichile_status(
+        self, veichile_id: int, status: VeichileStatus
+    ) -> VeichileModel | None:
+
+        old_veichile = self.get_veichile_by_id(veichile_id)
+        if not old_veichile:
+            return None
+
+        now = datetime.now().timestamp()
+        with self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                """
+                UPDATE veichile
+                SET status = ?, updated_at = ?
+                WHERE id = ?
+            """,
+                (status.value, now, veichile_id),
+            )
+            if cursor.rowcount == 0:
+                return None
+
+            update_veichile = self.get_veichile_by_id(veichile_id)
+            return update_veichile
+```
+
+Em seguida iremos implementar as fixtures, uma para gerar a conexão e outra para apagar a tabela após o uso
+
+
+```python
+import sqlite3
+from datetime import date
+
+import pytest
+from holidays import country_holidays
+from holidays.countries import BR
+from holidays.holiday_base import HolidayBase
+
+from delivery.storage import VeichileStorageSqlite
+
+
+class CustonNordesteCalendar(BR):
+    def _populate(self, year):
+        super()._populate(year)
+        self[date(year, 6, 24)] = "Véspera de São João"
+        self[date(year, 6, 25)] = "São João"
+
+
+@pytest.fixture(scope="module")
+def default_holidays():
+    calendar = country_holidays("BR")
+    return calendar
+
+
+@pytest.fixture(scope="module")
+def custon_holidays(default_holidays):
+    return default_holidays + CustonNordesteCalendar()
+
+
+@pytest.fixture(scope="session")
+def create_database():
+    db_name = ":memory:"
+    conn = sqlite3.connect(db_name)
+
+    yield conn
+
+    conn.close()
+
+
+@pytest.fixture(scope="session")
+def create_veichile_database(create_database):
+    conn = create_database
+    db = VeichileStorageSqlite(conn)
+    db.create_table()
+
+    yield db
+    db.drop_table()
 
 ```
 
-O sistema será bloqueante , portanto ao sair para uma entrega, é registrado a data de estimativa da entrega gerada pela ferramenrta anterior.
 
-Por hora é algo rudimentar e não será feito o calculo de previsão de entrega ainda, apenas armazenado os dados, porém não será permitido relaizar a saida de um caminhão que não esteja disponivél, assim toda vez que for criado um checkout de saída, deve-se verificar o registo do ultimo checkout pro caminhão em questão se foi um checkout de entrada e se o status dele está como disponivél, bem como toda vez que for realizado uma entrada ou saída, será mudado o status do veículo.
+Nas fixtures de create_database e create_veichile_database utilizamos o escopo de sessão, para que a limpeza de estado seja feita após o termino dos testes, vale ressaltar que em vez de retornar o valor assumido pela fixture, usamos o yeld, assim tudo que ocorrer após o yeld será o cleanup da fixture, podemos fazer o drop da tabela, bem como encerrar a conexão, aida que esta seja estabelecida em memória no nosso exemplo
 
-Esse tipo de funcionalidade irá criar dependencia de estado nos testes, assim como ao encerrar os testes queremos apagar a base de dados, no caso do Sqlite podemos simplesmente  apagar o arquivo e rodar o script de criação das tabelas de novo, e para isso usaremos os escopos das fixtures e controle de ciclo de vida, interessante não?
+
+Por fim escreveremos nosso teste o qual expõe como eviêncioa o reaproveitamento de estado, no primeiro iremos criar um veículo, no segundo iremos consultar este veículo criado no teste anterior e atualizar o status, inicialmente não recomendo esse tipo de abordagem , pois obriga o teste a ser sequêncial e não permite que cada um seja executado de forma independente, gerando assim side-effects, então use com caltela
+
+
+```python
+from unittest.case import TestCase
+
+from delivery.domain.models import VeichileModel, VeichileStatus
+
+_test = TestCase()
+
+
+def test_insert_one_veichile(create_veichile_database):
+    database = create_veichile_database
+    search_veichile = database.get_veichile_by_id(1)
+    _test.assertIsNone(search_veichile)
+    veichile = VeichileModel(
+        id=1,
+        plate="CNC-1212",
+        status=VeichileStatus.AVAILABLE,
+    )
+    created_veichile = database.create_veichile(veichile)
+    _test.assertEqual(created_veichile.id, 1)
+
+
+def test_update_veichile_status(create_veichile_database):
+    database = create_veichile_database
+    search_veichile = database.get_veichile_by_id(1)
+    _test.assertEqual(search_veichile.status, VeichileStatus.AVAILABLE)
+    updated_veichile = database.update_veichile_status(
+        search_veichile.id, VeichileStatus.UNAVAILABLE
+    )
+
+    get_updated_veichile = database.get_veichile_by_id(1)
+
+    _test.assertEqual(updated_veichile.id, search_veichile.id)
+    _test.assertNotEqual(updated_veichile.status, search_veichile.status)
+    _test.assertEqual(updated_veichile.status, VeichileStatus.UNAVAILABLE)
+    _test.assertEqual(get_updated_veichile.status, VeichileStatus.UNAVAILABLE)
+```
+
+Basta agora rodar o comando para executar nossos testes , concluir nosso commit, fechar nosso card no jira e dizer pro chefe que conseguimos fazer 80% de cobertura de testes em nosso projetos
+
+Vlw , Flw
