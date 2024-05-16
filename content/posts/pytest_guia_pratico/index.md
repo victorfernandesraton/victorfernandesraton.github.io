@@ -294,7 +294,6 @@ class VeichileStorageSqlite(VeichileRepository):
             row = cursor.fetchone()
             if not row:
                 return None
-            print(row)
             return VeichileModel(
                 id=row[0],
                 plate=row[1],
