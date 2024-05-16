@@ -329,7 +329,7 @@ class VeichileStorageSqlite(VeichileRepository):
             return update_veichile
 ```
 
-Em seguida iremos implementar as fixtures, uma para gerar a conexão e outra para apagar a tabela após o uso, dessa forma , adicionando elas no mesmo arquivo das fixtures que criamos anteriormente, claro isso pode ser quebrado desde que , as fixtures sejam ao menos importadas no arquivo de conftest.py da suite de teste desejada, entenda mais sobre [aqui](https://pytest-with-eric.com/pytest-conftest/)
+Em seguida iremos implementar as fixtures, uma para gerar a conexão e outra para apagar a tabela após o uso, dessa forma , adicionando elas no mesmo arquivo das fixtures que criamos anteriormente, claro isso pode ser quebrado desde que , as fixtures sejam ao menos importadas no arquivo de conftest.py da suite de teste desejada, entenda mais sobre [aqui](https://medium.com/@BuzonXXXX/pytest-conftest-py-44903c4c5046)
 
 
 ```python
