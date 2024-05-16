@@ -16,9 +16,9 @@ O python , da forma mais comun que conhecemos (CPython) traz no seu kit de ferra
 
 # Tá mais porquê não o unittest?
 
-A blibioteca padrão unittest é eficaz naquilo que ela propõe em seu nome, permitir o desenvolvimento de testes unitários, seu código é simples e a mesma está inclusa na blibioteca padrão do python, se está desenvolvendo algo simples o qual testes unitários são mais que suficiente para a validação do seu software, não vejo porquê usar outra opção. 
+A blibioteca padrão unittest é eficaz naquilo que ela propõe em seu nome, permitir o desenvolvimento de testes unitários, seu código é simples. Se está desenvolvendo algo simples o qual testes unitários são mais que suficiente para a validação do seu software, não vejo porquê usar outra opção. 
 
-Todavia, mesmo sendo adepto de um anbiente mais simplificado existe um conjunto de features no pytest que são uma mão na roda, a primeira delas é o discovery que o pytest consegue fazer de forma mais eficaz, o segundo é o uso de fixtures, um recurso bem interessante que na minha interpretação servem para nos auxiliar a fazer algumas coisas:
+Todavia, mesmo sendo adepto de um anbiente mais simplificado existe um conjunto de features no pytest que são uma mão na roda, a primeira delas é o discovery de testes que o pytest consegue fazer de forma mais eficaz, o segundo é o uso de fixtures, um recurso bem interessante que na minha interpretação servem para nos auxiliar a fazer algumas coisas:
 
 - Manipular dados compartilhados entre testes (Meio que uma forma de shared mocks)
 - Permitir gerenciar side-effects em etapas de testes.
@@ -38,21 +38,21 @@ Decidio os cenãrios que iremos aprender a testar , vou precisar explicar agora 
 
 Parafraseando a [documentação do pytest](https://docs.pytest.org/en/7.1.x/how-to/fixtures.html), fixtures tratam-se de uma forma de prover contextos definidos, reutilizaveis e consistentes entre os testes, podendo ser informações de anbiente , como credenciais de banco de dados ou conteúdo como expor datasets entre testes
 
-Para definir uma fixture , o pytest pede que escreva uma função utilizando a annotation @pytest.fixtrure, a qual irá disponibilizar o retorno dessa função como argumento para nossos testes poderem consumir ela de forma implicita.
+Para definir uma fixture , o pytest pede que escreva uma função que esteja "decorada", [Como explico neste post](/posts/decorator_python) por  `@pytest.fixture`, a qual irá disponibilizar o retorno dessa função como argumento para nossos testes poderem consumir ela de forma implicita.
 
-Tanbém podemos usar de definição de contexto e yelds para definir meios de "destruição" de uma fixture, assim podemos por exemplo usar uma fixture para criar a conexão com um banco de dados e no final do contexto, podemos encerrar essa conexão e realizar um drop das tabelas criadaas, uma ferramenta muito poderosa se usada com cuidado.
+Tanbém podemos usar de definição de escopo (argumento `scope`) e `yelds` para definir meios de "destruição" de uma fixture, assim podemos por exemplo usar uma fixture para criar a conexão com um banco de dados e no final do contexto, podemos encerrar essa conexão e realizar um drop das tabelas criadaas, uma ferramenta muito poderosa se usada com cuidado.
 
 por fim fixtures podem consumir e serem consumidas por outros fixtures, muito interessante para simular side effects em testes
 
 # Cenário um: Uma fixture ordinária
 
-Imagine que estamos desenvolvendo uma aplicação de estimativa de entregas para empresas do nordeste, essa ferramenta gera o cáculo de estimativa usando dias úteis, porém como uma empresa nordestina , ela considera os festejos juninos como feriado afinal as estradas ficam congestionadas e há a tradição de se dar folga aos funcionários por respeito às tradições locais. Para isso iremos desenvolver em python essa funcionalidade por meio da blibioteca python-holidays, que nos permite gerar calendários de feriados compativeis com o module datetime nativo do python, assim este serviço de estimativa será implementado em uma cloud function para economizar (afinal é algo que faz sentido ser processado por demanda)
+Imagine que estamos desenvolvendo uma aplicação de estimativa de entregas para empresas do nordeste, essa ferramenta gera o cáculo de estimativa usando dias úteis, porém como uma empresa nordestina, ela considera os festejos juninos como feriado afinal as estradas ficam congestionadas e há a tradição de se dar folga aos funcionários por respeito às tradições locais. Para isso iremos desenvolver em python essa funcionalidade por meio da blibioteca [python-holidays](https://pypi.org/project/holidays/0.48/), que nos permite gerar calendários de feriados compativeis com o module datetime nativo do python, assim este serviço de estimativa será implementado em uma cloud function para economizar (afinal é algo que faz sentido ser processado por demanda)
 
 Todavia queremos dar a liberdade no futuro de se definir o calendário a ser utilizazdo por meio de um outro serviço, para que fique dinâmico, permitindo ajustes conforme muda por exemplo a legislação e o calendário de feriados, assim, para nossos testes unitários não podemos então definir hardcoded o calendário, mas podemos usar fixture para definir um calendário global para nossa suite de testes.
 
 O projeto se encontra [aqui](https://github.com/victorfernandesraton/pytest-fixture-experiment)
 
-Sem mais delongas vamos ao código de nossa funcionalidade
+# Sem mais delongas vamos ao código de nossa funcionalidade
 
 ```python
 # /delivery/estimative_delivery_service.py
@@ -132,7 +132,6 @@ from delivery import EstimativeDeliveryService
 _test = TestCase()
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_ordinary_day_with_default_calendar(default_holidays):
     service = EstimativeDeliveryService(default_holidays)
     result = service.estimate_delivery(date(2024, 5, 10), 5, 8)
@@ -147,7 +146,6 @@ def test_calculate_delivery_in_ordinary_day_with_default_calendar(default_holida
         _test.assertIn(item, _expcted_result)
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_ordinary_day_with_custon_calendar(custon_holidays):
     service = EstimativeDeliveryService(custon_holidays)
     result = service.estimate_delivery(date(2024, 5, 10), 5, 8)
@@ -162,7 +160,6 @@ def test_calculate_delivery_in_ordinary_day_with_custon_calendar(custon_holidays
         _test.assertIn(item, _expcted_result)
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_special_holidays_with_default_calendar(
     default_holidays,
 ):
@@ -179,7 +176,6 @@ def test_calculate_delivery_in_special_holidays_with_default_calendar(
         _test.assertIn(item, _expcted_result)
 
 
-@pytest.mark.delivery
 def test_calculate_delivery_in_special_holidays_with_custon_calendar(custon_holidays):
     service = EstimativeDeliveryService(custon_holidays)
     result = service.estimate_delivery(date(2024, 6, 20), 5, 8)
@@ -198,7 +194,6 @@ def test_calculate_delivery_in_special_holidays_with_custon_calendar(custon_holi
 
 Com os testes  `test_calculate_delivery_in_ordinary_day_*` conseguimos provar que em dias ordináros nosso serviço retorna as datas de forma igual, porém para `test_calculate_delivery_in_special_holidays_*` provamos que há uma diferença nos dias retornados pois definimos que 24 e 24 de junho serão feriados
 
-Outra feature demonstrada nesse código é que podemos agrupar nossos testes por meio da annotation `pytest.mark.<name>` m, neste caso `pytest.mark.delivery` para marcar essas funções para uso de delivery
 
 # Cenário 2: Criando controle de ciclo de vida em fixtures
 
@@ -231,9 +226,9 @@ CREATE TABLE IF NOT EXISTS veichiles (
 ```
 Dessa forma toda vez que um veículo for acionado o mesmo mudará seu status, assim como saberemos em tempo real quais veículos estão disponivéis
 
-Assim implementamos nossa classe de serviço a qual de fato iremos testar, mas para poder evr com mais detalhes o projeto, veja [este link](https://github.com/victorfernandesraton/pytest-fixture-experiment)
-
+Assim implementamos nossa classe de serviço a qual de fato iremos testar.
 ```python
+# delivery/storage/sqlite/veichile_sqlite_storage.py
 from datetime import datetime
 from sqlite3 import Connection
 
@@ -334,10 +329,11 @@ class VeichileStorageSqlite(VeichileRepository):
             return update_veichile
 ```
 
-Em seguida iremos implementar as fixtures, uma para gerar a conexão e outra para apagar a tabela após o uso
+Em seguida iremos implementar as fixtures, uma para gerar a conexão e outra para apagar a tabela após o uso, dessa forma , adicionando elas no mesmo arquivo das fixtures que criamos anteriormente, claro isso pode ser quebrado desde que , as fixtures sejam ao menos importadas no arquivo de conftest.py da suite de teste desejada, entenda mais sobre [aqui](https://pytest-with-eric.com/pytest-conftest/)
 
 
 ```python
+# /tests/delivery/conftest.py
 import sqlite3
 from datetime import date
 
@@ -389,13 +385,14 @@ def create_veichile_database(create_database):
 ```
 
 
-Nas fixtures de create_database e create_veichile_database utilizamos o escopo de sessão, para que a limpeza de estado seja feita após o termino dos testes, vale ressaltar que em vez de retornar o valor assumido pela fixture, usamos o yeld, assim tudo que ocorrer após o yeld será o cleanup da fixture, podemos fazer o drop da tabela, bem como encerrar a conexão, aida que esta seja estabelecida em memória no nosso exemplo
+Nas fixtures de `create_database` e `create_veichile_database` utilizamos o escopo de sessão, para que a limpeza de estado seja feita após o termino dos testes, vale ressaltar que em vez de retornar o valor assumido pela fixture, usamos o yeld, assim tudo que ocorrer após o yeld será o cleanup da fixture, podemos fazer o drop da tabela, bem como encerrar a conexão, aida que esta seja estabelecida em memória no nosso exemplo
 
 
 Por fim escreveremos nosso teste o qual expõe como eviência o reaproveitamento de estado, no primeiro iremos criar um veículo, no segundo iremos consultar este veículo criado no teste anterior e atualizar o status, inicialmente não recomendo esse tipo de abordagem , pois obriga o teste a ser sequêncial e não permite que cada um seja executado de forma independente, gerando assim side-effects, então use com caltela
 
 
 ```python
+# tests/delivery/test_veichile_database.py
 from unittest.case import TestCase
 
 from delivery.domain.models import VeichileModel, VeichileStatus
@@ -438,4 +435,8 @@ Basta agora rodar o comando para executar nossos testes , concluir nosso commit,
 
 Escrever testes não é uma tarefa simples, seu sofgtware sempre vai precisar estar desacoplado e estruturado de forma que possa testar partes. Ainda que nestes exemplos eu demonstrei uma implementação de teste statefull, esse tipo de prática deve ser evitado, ao testar mutabilidade certifique-se de apagar os dados gerados nas etapas anteriores, para que cada suite de teste seja independente e seus testes se tornem mais eficazes.
 
-Por hoje é só...
+No final do dia, conhecer sua ferramenta e seus objetivos é o que vai te tornar um dev mais eficaz e produtivo (Além de doses cavalares de café/energético)
+
+Ufa! Acho que já deu por hoje, tenha um ótimo dia
+
+![image](meme-good-day.jpg)
