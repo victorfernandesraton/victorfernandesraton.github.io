@@ -482,9 +482,6 @@ header {
     justify-content: center;
     z-index: 1;
 
-    @media(min-width: 768px) {
-        padding: 0 0;
-    }
 
     box-shadow: 0.15rem solid var(--rose);
 }
@@ -645,6 +642,11 @@ nav .hamburger-button .hamburger-open {
     -ms-flex-direction: column;
     flex-direction: column;
     gap: 1rem;
+}
+
+.home-list .see-more {
+    color: var(--rose);
+
 }
 
 .list-content .title {
