@@ -23,3 +23,6 @@
 
 [videoNotSuport]
     other = "Your browsser not support video tag"
+
+[seeMore]
+    other = "See more >>"

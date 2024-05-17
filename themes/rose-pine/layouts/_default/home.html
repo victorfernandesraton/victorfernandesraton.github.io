@@ -6,22 +6,18 @@
 
 <article class="home-list">
     <h1 class="text-lg bold">{{ i18n "whatIdoing" }}</h1>
+    {{ with .Site.GetPage "/posts" }}
+
     <ul class="list-default">
-        {{ range first 3 site.RegularPages}}
+        {{ range first 3 .Pages}}
         <li>
             {{ .Render "summary" }}
         </li>
+
         {{ end }}
+        <a class="text-lg bold see-more" href="{{ .RelPermalink }}">{{ i18n "seeMore" }}</a>
     </ul>
-    <h2 class="text-lg bold">{{ i18n "myJobs" }}</h2>
-    {{ with .Site.GetPage "experiences"}}
-        <ul class="list-default">
-            {{ range .Pages  }}
-                <li>
-                    {{ .Render "summary" }}
-                </li>
-            {{ end }}
-        </ul>
-    {{end}}
+
+    {{ end }}
 </article>
 {{ end }}
