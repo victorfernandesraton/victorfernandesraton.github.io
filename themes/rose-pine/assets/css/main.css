@@ -289,9 +289,8 @@ footer {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin: 2rem 0 4rem 0;
+    margin-bottom: 4rem;
     row-gap: 1rem;
-
 }
 
 .single-article img {
