@@ -2,7 +2,7 @@
 title = 'Vscode/Vscodium feature killer'
 description = 'A feature que (ainda) não consegui no neovim'
 date = 2024-06-29T17:39:00-03:00
-deaft = true
+draft = true
 tags = ["python", "antiads", "vscodium", "vscode", "tool"]
 +++
 
@@ -18,7 +18,6 @@ O primeiro passo foi descobrir onde obter itinerários atualizados, o mais atual
 
 Mas eu sou dev , processar um PDF não deve ser dificíl né?
 
-[Meme mydumbass stupid ideia]
 
 # Configurando o anbiente
 
@@ -98,7 +97,7 @@ print(len(content))
 
 Agora é só criar breakpoints e debugar o que precisamos.
 
-[Print de debug do vscode]
+![image](./vscode-debug.png)
 
 Mas agora vem a parte séria, inspirado por [este vídeo](https://www.youtube.com/watch?v=1p7xa_BHYDs) do [mCoding]https://www.youtube.com/channel/UCaiL2GDNpLYH6Wokkk1VNcg), decidi fazer algo usando `itertools`
 
@@ -124,6 +123,7 @@ import pdfplumber
 
 
 class SourceExtractor:
+    
     @staticmethod
     def get_file_content_by_url(
         url: str = "https://www.integrasalvador.com.br/wp-content/themes/integra/img/ITINERARIO_ONIBUS.pdf",

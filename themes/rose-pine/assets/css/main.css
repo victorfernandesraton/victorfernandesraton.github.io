@@ -383,7 +383,6 @@ article.single-article a:hover {
 
 .summary {
     border-radius: 0.1rem;
-    background-color: var(--overlay);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
