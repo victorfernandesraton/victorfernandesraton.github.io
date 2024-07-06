@@ -2,6 +2,7 @@
     <a id="logo" href="{{ .Site.BaseURL | relLangURL }}" aria-label="Go to homepage">
         {{ partialCached "logo.html" . }}
     </a>
+
     {{ if .Site.Menus.main }}
 
     <input class="checkbox-menu" type="checkbox" id="toggle-menu" name="toggle-menu" />

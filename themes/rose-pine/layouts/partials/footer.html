@@ -9,7 +9,7 @@
 <p> {{ i18n "followmeon" }}:</p>
 <ul class="social-list">
     {{ range .Site.Params.social }}
-    <li><a href="{{ .url }}" target="_blank">{{ .name }}</a></li>
+    <li><a href="{{ .url }}" rel="me" target="_blank">{{ .name }}</a></li>
     {{ end }}
 </ul>
 
