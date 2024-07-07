@@ -3,6 +3,6 @@ title = 'Home'
 date = 2023-01-01T08:00:00-07:00
 draft = false
 +++
-# Bem-vindo ao meu caos pessoal 
+# Bem-vindo ao meu caos pessoal
 
-Olá pessoal, eu sou Victor Raton, um desenvolvedor full-stack desde 2019, um defensor ferrenho do código aberto e um excelente criador de bugs em JavaScript.
+Pessoa albina | Usuário convicto de tecnologias estavéis | Desenvolvedor de software por ~~falta~~ de opção | Criador de bugs em Python, Go, Javascript nas horas vagas | Promotor de tretas idiotas
