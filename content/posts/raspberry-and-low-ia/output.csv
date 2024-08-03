@@ -1,0 +1,170 @@
+model,question,start,end,response,duration,total_duration,prompt_eval_duration
+tinydolphin:latest,Who is Victor Fernandes Baião Raton?,32865.337604874,32878.149387384," Victor Fernandes Baião Raton is a Brazilian film director and screenwriter, known for directing the 1960 film ""The Enchanted Island"".",12.811782509998011,12757987720,2386970000
+tinydolphin:latest,"Implement a python script who using requests lib and pass page as query params, also using Bearer token in request",32878.149513072,32935.759192418," ```python
+import requests
+from urllib.parse import quote_plus
+import json
+import requests
+import base64
+import io
+import ssl
+
+def get_token(username, password):
+    # Use a trusted CA to validate the user credentials
+    server = ""https://example.com""
+    username_encode = quote_plus(username)
+    password_encode = <PASSWORD>
+    payload = {""username"": username_encode, ""password"": password_encode}
+    
+    # Create an HTTPSHandler for our server and use it to make the request
+    context = ssl.create_default_context()
+    with context:
+        response = requests.post(server + ""/api/auth"", json=payload)
+        
+        # Check if we got a valid response back
+        if response.status_code == 200:
+            return base64.b64decode(response.text).decode()
+        else:
+            print(""Invalid username or password. Please try again."")
+            
+def get_page(url, query_params):
+    # Convert the parameters to url-safe base64 encoded string
+    params = ""?"".join([f""{key}={encode(value)}"" for key, value in query_params.items()])
+    
+    # Use a trusted CA to validate the server's signature
+    server = ""https://example.com""
+    signature = base64.b64decode(get_token(username, password) + ""="").decode()
+    
+    # Create an HTTPSHandler for our server and use it to make the request
+    context = ssl.create_default_context()
+    with context:
+        response = requests.get(url + params, headers={""Authorization"": f""Bearer {signature}""})
+        
+        # Check if we got a valid response back
+        if response.status_code == 200:
+            return response.content
+        else:
+            print(""Invalid authentication credentials. Please try again."")
+            
+def main():
+    # Get the login credentials
+    username = input(""Enter your username: "")
+    password = get_token(username, ""test"")
+    
+    # Get the page URL
+    url = f""https://example.com/api/products?page={1}""
+    
+    # Construct query parameters
+    query_params = {
+        ""page"": 2,
+        ""sorting"": ""popularity DESC"",
+        ""filters"": {
+            ""category"": [""electronics""]
+        }
+    }
+    
+    # Make the GET request with the constructed query parameters and get the content of the page
+    response = get_page(url, query_params)
+    
+    # Extract relevant products from the JSON response and print them
+    if response is not None:
+        data = json.loads(response)
+        print(data)
+        
+if __name__ == ""__main__"":
+    main()```",57.60967934600194,57554328326,1705922000
+tinydolphin:latest,"Dado o polinômio P(x)=3x3−5x2+2x−7P(x)=3x3−5x2+2x−7, qual é o valor de P(2)P(2)?",32935.759379396,32951.586716112," Para calcular a raiz do polinômio f(x) = 3x³ - 5x² + 2x - 7, primeiro note que:
+
+P(x) = 3x³ - 5x² + 2x - 7
+
+P(2) = 3(2)³ - 5(2)² + 2(2) - 7
+P(2) = 6(4) - 18 - 7
+P(2) = 60 - 18 - 7
+P(2) = 42
+
+O valor de P(2) é 42.",15.82733671599999,15775535774,3579615000
+qwen2:0.5b,Who is Victor Fernandes Baião Raton?,32951.586816146,32973.791349134,"Victor Fernandes Baotrin Raton (b. 10 September 1932) é um atleta brasileiro e um ex motorista automobilístico, mais conhecido por ter sido o primeiro piloto a ganhar uma corrida de carros de caminhos em Roma, Italia. Ele também é considerado um dos melhores pilotos de corrida do mundo.
+
+Ele foi criado em São Paulo, Brasil, onde seu pai, Victor Fernandes Baotrin, era um motorista de corrida e proprietário de um automóvel especializado. 
+Raton se destacou como piloto com habilidade técnica excepcional e experiência sob pressão, uma característica que lhe permitia se adaptar às condições mais frágeis do caminho.
+
+Com sua vitória em Roma, Raton tornou-se o primeiro brasileiro a ganhar um corrida de carros de caminhos. 
+
+Depois de terminar seu carreira como piloto, Raton dedicou-se ao automobilismo e também participou de várias competições internacionais.
+
+Raton é recordado por sua habilidade no campo do motorismo, uma vez que ganhou a corrida em Roma sem usar um motor. Ele também teve o sucesso no Campeonato Brasileiro de automobilismo.
+
+Ele morreu em 30 de setembro de 2017, vítima de um acidente交通事故, na cidade de São Paulo.
+
+Raton é lembrado e admirado por sua resistência, determinação e atitude. Ele também se destacou como um exemplo de carreira profissional de motorismo em branco e independente, tendo acreditado que o caminho para as conquistas de sucesso não vem diretamente do carro.",22.20453298799839,22130932865,482060000
+qwen2:0.5b,"Implement a python script who using requests lib and pass page as query params, also using Bearer token in request",32973.791554277,32983.145881152,"Here is an example of how you can use `requests` library to make HTTP requests with parameters in Python:
+
+```python
+import requests
+
+# 假设我们有一个包含URL和参数的键对，例如：
+url = 'https://www.example.com/api/v1'
+
+# 通过键对设置请求参数。例如，我们可以设置一个JSON字符串为键对。
+params = {
+    ""name"": ""John"",
+    ""age"": 30,
+    ""city"": ""New York""
+}
+
+response = requests.get(url, params=params)
+
+# 如果你想要发送POST请求，则需要在requests模块中添加一个POST方法
+response = requests.post(url, json={})
+
+print(response.json())
+```
+
+请注意，你需要将上述代码中的键对和参数的键对替换为你的实际需求。另外，为了使用Bearer token进行请求，你还需要确保在API调用之前设置Bearer token。",9.35432687499997,9239374140,607494000
+qwen2:0.5b,"Dado o polinômio P(x)=3x3−5x2+2x−7P(x)=3x3−5x2+2x−7, qual é o valor de P(2)P(2)?",32983.145963803,32990.926471632,"O valor do polinômio P(x) é 3x^3 - 5x^2 + 2x - 7. Então, a equação P(x) = 0 será igual à função p(x). A função p(x) pode ser expressa de maneira simplificada como:
+
+P(x) = x^3 - 5x^2 + 2x - 7
+
+Então, P(2) = 2^3 - 5*2^2 + 2*2 - 7 = 8.
+
+Portanto, o valor do polinômio P(x) é igual a 8.",7.780507829003909,7438384578,1301429000
+tinyllama:latest,Who is Victor Fernandes Baião Raton?,32990.926576979,33006.362377874,"Victor Fernandez Baiao Raton is a Brazilian football player who currently plays for Guangzhou Evergrande in the Chinese Super League (CSL). He has also represented his country at various international competitions, including the 2018 World Cup and the Copa América Centenary Football Tournament.",15.435800895000284,15339797077,2627323000
+tinyllama:latest,"Implement a python script who using requests lib and pass page as query params, also using Bearer token in request",33006.362496095,33041.98885774,"Sure! Here's an example of how to implement the desired functionality using Python and requests library:
+
+1. First, we will install the necessary dependencies by running the following command in your terminal/command prompt:
+   ```bash
+   pip3 install requests
+   ```
+
+2. Create a new file named ""my_script.py"" and paste the code below into it. Make sure to save and exit the file before running it. The script will use Python's built-in `requests` library to make HTTP requests using a JSON payload, and pass in the necessary parameters as query strings. We'll be using Bearer token authentication in this example.
+
+```python
+import json
+from urllib.parse import urlencode
+import requests
+
+# Example of URL for making API request
+url = ""https://example.com/api/v1/path""
+
+# Create JSON payload with query params and bearer token
+params = {'param1': 'value1', 'param2': 'value2'}  # Replace this with your own parameters
+body = json.dumps(params)
+headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f""Bearer {my_bearer_token}""  # Add your Bearer token here
+}
+
+# Make API request with `requests` library
+response = requests.post(url, params=params, data=body, headers=headers)
+print(""Response:"", response.text)
+```
+
+3. Run the script by running the following command in your terminal/command prompt:
+   ```bash
+   python my_script.py
+   ```
+
+4. The script should now make an HTTP POST request with a JSON payload and pass in the necessary parameters and Bearer token as query params. You can view the response by printing it to the console or saving it into a file for further analysis.",35.62636164500145,35521082220,2056460000
+tinyllama:latest,"Dado o polinômio P(x)=3x3−5x2+2x−7P(x)=3x3−5x2+2x−7, qual é o valor de P(2)P(2)?",33041.988940565,33059.708055933,"Dado o polinômio da derivada P(x) da função f(x) = 3x3−5x2+2x−7 em x=2, a sua derivata é P'(2). P(2) é também definido como o valor da derivada. No caso de P(2),
+P(2)=-9/6=-0.6(-2)+18. Então, a seguir ao polinômio 3x3−5x2+2x−7,
+P(2) = (3/6)(2) + 18 = -18/6. Assim que P'(2) é o valor de P(2), P(2) é também o valor de P(2).",17.719115367995983,17666503967,3866812000
