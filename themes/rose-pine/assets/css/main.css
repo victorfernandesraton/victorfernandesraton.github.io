@@ -314,19 +314,34 @@ article.single-article h1 {
     /* 30px */
     line-height: 2.25rem;
     /* 36px */
+    color: var(--rose);
+}
+
+article.single-article h1,
+h2,
+h3,
+h4,
+h5 {
     font-weight: 700;
 }
 
-article.single-article h1 {
-    color: var(--iris);
+article.single-article h2 {
+    font-size: 1.5rem;
+    /* 24px */
+    line-height: 2rem;
+    /* 32px */
+
+    color: var(--shiny);
 }
 
-article.single-article h2 {
-    font-size: 1.125rem;
-    /* 30px */
+article.single-article h3 {
+    font-size: 1.25rem;
+    /* 20px */
     line-height: 1.75rem;
-    /* 36px */
-    color: var(--foan);
+    /* 28px */
+    color: var(--love);
+
+
 }
 
 article.single-article a:hover {

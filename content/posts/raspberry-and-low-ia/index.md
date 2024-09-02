@@ -244,7 +244,7 @@ if __name__ == "__main__":
 Primeiro vamos estabelecer o nosso "controle", fazendo as perguntas ao chatgpt 4o mini em janela anônima sem estar logado eu obtive os seguintes resultados para nossas perguntas:
 
 
-# Who is Victor Fernandes Baião Raton?
+## Who is Victor Fernandes Baião Raton?
 
 ```markdown
 
@@ -318,41 +318,25 @@ Replace `'https://api.example.com/data'` with your actual API endpoint, and `'yo
 ## Dado o polinômio P(x)=3x3−5x2+2x−7P(x)=3x3−5x2+2x−7, qual é o valor de P(2)P(2)?
 
 ```markdown
-Para encontrar o valor de \( P(2) \) para o polinômio \( P(x) = 3x^3 - 5x^2 + 2x - 7 \), basta substituir \( x \) por 2 na expressão do polinômio e calcular.
+Para encontrar o valor de `P(2)` para o polinômio P(x) = 3x^3 - 5x^2 + 2x - 7, basta substituir  x por 2 na expressão do polinômio e calcular.
 
 Vamos fazer isso passo a passo:
 
-1. Substitua \( x \) por 2:
-   \[
-   P(2) = 3(2)^3 - 5(2)^2 + 2(2) - 7
-   \]
+1. Substitua (x) por 2:
+   P(2) = 3(2)³ - 5(2)² + 2(2) - 7
 
 2. Calcule cada termo separadamente:
-   \[
-   2^3 = 8 \implies 3 \times 8 = 24
-   \]
-   \[
-   2^2 = 4 \implies 5 \times 4 = 20
-   \]
-   \[
-   2 \times 2 = 4
-   \]
+   2³ = 8 implies 3 times 8 = 24
+   2² = 4 implies 5 times 4 = 20
+   2 times 2 = 4
 
 3. Substitua e simplifique:
-   \[
    P(2) = 24 - 20 + 4 - 7
-   \]
-   \[
    P(2) = 4 + 4 - 7
-   \]
-   \[
    P(2) = 8 - 7
-   \]
-   \[
    P(2) = 1
-   \]
 
-Portanto, o valor de \( P(2) \) é 1.
+Portanto, o valor de P(2) é 1.
 ```
 
 Agora sem mais delongas vamos executar o nosso script , a fins de registro esses são os valores de uso de recurso do dispositivo em idle:
