@@ -16,11 +16,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
     </label>
-    <ul class="navigation-list" id="flayout-menu">
+    <ul class="navigation-list" id="layout-menu">
         {{ range .Site.Menus.main }}
         <li class="">
-            <a tabindex=”-1″ aria-label="Link to {{ .Name }} session" class="text-lg bold" href="{{ .URL }}"
-                title="{{ i18n " pageTitle" . }}">
+            <a aria-label="Link to {{ .Name }} session" class="text-lg bold" href="{{ .URL }}"
+                title='{{ i18n "pageTitle" . }}'>
                 {{ .Name }}
             </a>
         </li>
