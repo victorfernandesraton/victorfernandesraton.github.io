@@ -387,7 +387,7 @@ article.single-article a:hover {
     border-radius: 0.1rem;
     display: flex;
     margin-bottom: 0.5rem;
-    flex-direction: column;
+    flex-direction: column-reverse;
     column-gap: 1rem;
     text-decoration: none;
 
@@ -395,7 +395,7 @@ article.single-article a:hover {
 
 @media (min-width: 768px) {
     .summary {
-        flex-direction: row-reverse;
+        flex-direction: row;
         justify-content: space-between;
     }
 }
