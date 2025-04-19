@@ -2,9 +2,17 @@
 <section class="list-content">
     <h1 class="title text-2xl bold">{{ i18n (.Title) }} ({{ (len .Data.Pages) }})</h1>
     <ul class="list-default">
+
+        {{ $pages := slice }}
+
         {{ range .Pages }}
+        {{ $start := .Params.start_date }}
+        {{ $date := cond (not (eq $start nil)) $start .Date }}
+        {{ $pages = $pages | append (dict "page" . "sortDate" $date) }}
+        {{ end }}
+        {{ range sort $pages "sortDate" "desc" }}
         <li>
-            {{ .Render "summary" }}
+            {{ .page.Render "summary" }}
             {{ end }}
         </li>
     </ul>

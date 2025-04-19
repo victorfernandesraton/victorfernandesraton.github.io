@@ -1,9 +1,9 @@
 +++
-title = "Engenheiro de Software | GlobalHITSS | Tribunal de Justiça do Estado de Minas Gerais"
-position = "Desenvolvedor Analista"
+title = "Engenheiro de Software | HITSS | Tribunal de Justiça do Estado de Minas Gerais"
+position = "Engenheiro de Software"
 start_date = 2024-06-10
 end_date = 2025-04-01
-business = "globalhitss"
+business = "HITSS"
 tags = ["python", "django", "djangorestframework", "postgres", "selenium", "rpa", "webscraping", "electron.js", "archteture", "data science", "AI", "llm", "nextjs", "ollama"]
 +++
 Atuei como engenheiro responsavél por criar uma solução de orquestração e distribuição de RPA's e Automações multiplataforma, com suporte á Java, Python e Nodejs.
