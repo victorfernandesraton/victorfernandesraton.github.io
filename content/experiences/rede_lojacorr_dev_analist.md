@@ -2,6 +2,7 @@
 title = "Desenvolvedor Analista | Lojacorr"
 position = "Desenvolvedor Analista"
 start_date = 2023-03-01
+end_date = 2024-05-01
 business = "Lojacorr"
 tags = ["python", "django", "djangorestframework", "postgres", "selenium", "rpa", "webscraping", "aws lambda", "archteture", "data science"]
 +++
