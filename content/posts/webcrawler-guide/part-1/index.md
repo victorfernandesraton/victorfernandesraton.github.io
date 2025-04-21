@@ -2,8 +2,8 @@
 title = 'Guia de webcrawler parte 1 - O que é webcrawler'
 description = 'Pegar dados ou engatinhar sobre Apps?'
 date = 2025-04-01T00:00:00-03:00
-draft = true
 tags = ["python", "elixir", "wikipedia"]
+cover = 'cover.png'
 +++
 
 ## Disclaimer
