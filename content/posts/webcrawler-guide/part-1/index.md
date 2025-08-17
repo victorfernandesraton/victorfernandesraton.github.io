@@ -10,6 +10,16 @@ cover = 'cover.png'
 
 Arte não tem preço , o intuito aqui não é dizer que filme X ou Y vale mais ou menos com base no preço, mas como fã de arte e do ecosistema do Jovem ~Velho~ Nerd , e como pessoa que acha muito dahora o trabalho do Anderson Gaveta, eu gosto de entender as coisas desse mundo.
 
+## Política da boa vizinhança (17/08/2025)
+
+A Web é como seu bairro/cidade, seja um bom vizinho.
+
+Apesar do artigo abaixo demonstrar como extrair dados de um site, precisamos entender quem em eras nefastas do que chamamos de internet, alimentadas pelo Hype de AI e LLM, devemos manter a política de boa vizinhança.
+
+Devido a demanda da industria por escanear indevidamente todo o conteúdo postado, instituições que por muitos anos mantiveram seu trabalho disponivél de forma pública e gratuita, estão sobre ataque constante de robôs e raspagem de dados originados por big techs e adjacentes, os quais violam licenças e termos de distribuição com licençás copyleft, principalmente Creative Commons.
+
+webscrapper ou webcrawler deve ser a última opção, seja um bom vizinho , não faz mal perguntar ao dono do conteúdo quais os termos para uso deste, se ele possui uma API , e até combinar horários e consultas periódicas.
+
 # Um pouco de storytelling...
 
 Era fim de carnaval, eu estava levemente acoolizado em casa e altamente entediado, assistindo a festa do Oscar com a vitória de "Ainda Estou Aqui" e fazendo vários nadas, quando vi um debate idiota no Twiiter (Me recuso a chamar de X) sobre implicações de uso de dinheiro da Lei Ruanet no financiamento do filme.
