@@ -4,6 +4,7 @@ description = 'A história até aqui, a história a partir daqui'
 date = 2024-06-15T18:02:00-03:00
 tags = ["planing", "projects"]
 cover = "cover.png"
+draft = true
 +++
 
 # O glorioso plano de 5 meses
