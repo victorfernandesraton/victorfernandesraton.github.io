@@ -31,7 +31,7 @@ export default function (
             <a href={url} aria-label={`Go to ${title}`}>
               <img
                 class="image"
-                src={`./${cover}`}
+                src={cover}
                 alt={`Cover for ${title} post`}
               />
             </a>

@@ -6,6 +6,8 @@ import mila from "npm:markdown-it-link-attributes";
 import inline from "lume/plugins/inline.ts";
 import markdownItMedia from "npm:@gotfeedback/markdown-it-media";
 import multilanguage from "lume/plugins/multilanguage.ts";
+import transformImages from "lume/plugins/transform_images.ts";
+
 
 const site = lume({}, {
   markdown: {
@@ -22,6 +24,8 @@ site.use(multilanguage({
   defaultLanguage: "pt",
 }));
 site.use(nav());
+
+site.use(transformImages(/* Options */));
 site.use(inline());
 
 site.data("sitename", "vraton.dev");
