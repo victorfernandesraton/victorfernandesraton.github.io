@@ -3,7 +3,7 @@ title = 'O vagabot está morto, a culpa é do python'
 description = 'Migrando de python para Go por falta de paciência'
 date = 2024-06-17T18:02:00-03:00
 tags = ["python", "golang", "selenium", "chromedp"]
-layout = 'post.tsx'
+
 
 
 cover = 'cover.jpeg'

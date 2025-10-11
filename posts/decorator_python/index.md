@@ -5,7 +5,7 @@ draft = false
 description ='Decorators: O que são, aonde vivem e o que comen'
 tags = ["python", "designpattern", "decorators"]
 cover = 'cover.jpg'
-layout = 'post.tsx'
+
 +++
 # O que são decorators
 

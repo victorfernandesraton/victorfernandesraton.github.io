@@ -4,7 +4,6 @@ description = 'Como contribuir com open source usando meus limitados conheciment
 date = 2023-09-30T00:00:00-03:00
 cover = "cover.png"
 tags = ["python","web", "web-scrapping", "spyder" ]
-layout = 'post.tsx'
 +++
 
 # O projeto

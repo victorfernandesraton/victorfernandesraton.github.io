@@ -5,7 +5,7 @@ draft = false
 description ="De 64GB a 1TB no Raspberry PI 5"
 tags = ["raspberry", "linux", "cli", "hardware", "homelab"]
 cover = "cover.jpg"
-layout = 'post.tsx'
+
 
 +++
 

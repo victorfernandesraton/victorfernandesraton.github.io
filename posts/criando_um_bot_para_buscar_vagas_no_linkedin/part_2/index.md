@@ -4,7 +4,7 @@ description = 'Fazendo scrapping e extraindo dados'
 date = 2024-04-13T18:00:00-03:00
 tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "urn" ]
 cover = "cover.jpg"
-layout = 'post.tsx'
+
 +++
 
 # No episódio anterior...

@@ -4,7 +4,7 @@ description = 'Como atualizar os pacotes do seu NixOS'
 date = 2023-09-25T00:00:00-03:00
 cover = "/images/nixos-rose-pine.png"
 tags = ["so", "nix", "nixos"]
-layout = 'post.tsx'
+
 +++
 
 Neste rápido e não verboso guia eu vou mostrar como eu faço para atualizar o meu NixOS, atualmente na versão 23.05

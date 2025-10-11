@@ -5,7 +5,7 @@ date = 2025-04-01T00:00:00-03:00
 
 tags = ["python", "elixir", "wikipedia"]
 cover = 'cover.png'
-layout = 'post.tsx'
+
 +++
 
 ## Disclaimer

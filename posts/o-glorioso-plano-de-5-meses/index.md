@@ -5,7 +5,7 @@ date = 2024-06-15T18:02:00-03:00
 tags = ["planing", "projects"]
 cover = "cover.png"
 draft = true
-layout = 'post.tsx'
+
 
 +++
 

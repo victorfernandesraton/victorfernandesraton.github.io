@@ -4,7 +4,7 @@ description = 'print("hello world")'
 date = 2023-05-15T00:00:00-03:00
 updatedAt = 2024-06-29T18:24:00-03:00
 cover = "profile.webp"
-layout = 'post.tsx'
+
 
 tags = ["personal", "profile", "about"]
 +++

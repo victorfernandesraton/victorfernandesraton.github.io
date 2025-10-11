@@ -3,8 +3,6 @@ title = 'Vscode/Vscodium feature killer'
 description = 'A feature que (ainda) não consegui no neovim'
 date = 2024-06-29T17:39:00-03:00
 draft = true
-layout = 'post.tsx'
-
 tags = ["python", "antiads", "vscodium", "vscode", "tool"]
 +++
 

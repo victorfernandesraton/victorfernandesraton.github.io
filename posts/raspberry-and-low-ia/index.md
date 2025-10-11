@@ -5,7 +5,7 @@ draft = false
 description = 'Usando modelos LLM em um Raspberry Pi 5 com apenas 4GB de RAM' 
 tags = ['os' , 'raspberry', 'debian', 'casaos', 'llm', 'ollama']
 cover = 'cover.jpg'
-layout = 'post.tsx'
+
 +++
 
 # Voltando a um mês na maquina do tempo

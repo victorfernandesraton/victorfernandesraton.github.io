@@ -4,7 +4,7 @@ description = 'Aprimorando a performance e corrigindo meu install cagado'
 date = 2025-05-17T00:00:00-03:00
 tags = ["debian", "os", "fstab"]
 cover = 'cover.png'
-layout = 'post.tsx'
+
 +++
 
 # DISCLAIMER

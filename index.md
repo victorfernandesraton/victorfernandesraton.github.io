@@ -3,7 +3,6 @@ title = 'Home'
 date = 2023-01-01T08:00:00-07:00
 draft = false
 id = 'index'
-layout = 'index.tsx'
 +++
 # Bem-vindo ao meu caos pessoal
 

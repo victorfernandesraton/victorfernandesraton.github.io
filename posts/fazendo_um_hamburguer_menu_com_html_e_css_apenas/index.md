@@ -5,7 +5,7 @@ draft = false
 description = 'Usando HTML e CSS apenas podemos reproduzir certos comportamentos de interatividade'
 tags = ['web', 'html', 'css', 'react', 'ui']
 cover = "cover.jpg"
-layout = 'post.tsx'
+
 +++
 
 # O que é um hamburguer menu

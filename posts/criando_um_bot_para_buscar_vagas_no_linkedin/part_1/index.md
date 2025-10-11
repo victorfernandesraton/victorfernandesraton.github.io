@@ -4,7 +4,7 @@ description = 'Implementando uma forma de logar no LinkedIn usando Python e Sele
 date = 2024-03-14T00:00:00-03:00
 tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "poetry", "docker" ]
 cover = "cover.webp"
-layout = 'post.tsx'
+
 +++
 
 # Disclaimer
