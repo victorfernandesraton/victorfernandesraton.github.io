@@ -2,7 +2,7 @@ export default function (
   { title, search ,menus, comp, lang, alternates, result = ''}: Lume.Data,
 ) { 
 
-    const recent =search.pages(`lang=${lang} type=post ${result}`, "date=desc", 3) 
+    const recent =search.pages(result) 
 
     return (
     <>
@@ -13,6 +13,8 @@ export default function (
         </head>
         <comp.Navbar  />
         <body>
+
+          <title>{title}</title>
           <ol>
             {recent.map((page) => (
               <li>

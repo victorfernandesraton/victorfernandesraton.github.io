@@ -4,8 +4,6 @@ export default function (
 ) { 
 
     const recent =search.pages(`lang=${lang} type=post`, "date=desc") 
-    const tags =search.values<string>('tags', `lang=${lang} type=post`)
-
     return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
@@ -24,14 +22,6 @@ export default function (
               </li>
             ))}
           </ol>
-
-          <ul>
-            {tags.map((page) => (
-              <li>
-                <a href={page}>{page}</a>
-              </li>
-            ))}
-          </ul>
         </body>
       </html>
     </>
