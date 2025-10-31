@@ -22,6 +22,8 @@ export default function (
               </li>
             ))}
           </ol>
+
+          <comp.Footer />
         </body>
       </html>
     </>

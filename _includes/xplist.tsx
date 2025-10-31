@@ -1,9 +1,10 @@
 
+
 export default function (
   { title, children, search ,nav, comp, lang, alternates}: Lume.Data,
 ) { 
 
-    const recent =search.pages(`lang=${lang} type=post`, "date=desc") 
+    const recent =search.pages(`lang=${lang} type=xp`, "start_date=desc end_date=desc") 
     return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
