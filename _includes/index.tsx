@@ -3,6 +3,7 @@ export default function (
 ) { 
 
     const recent =search.pages(`lang=${lang} type=post`, "date=desc", 3) 
+    const xp = search.pages(`lang=${lang} type=xp`, "date=desc", 3)
 
     return (
     <>
@@ -16,6 +17,14 @@ export default function (
           <div>{children}</div>
           <ol>
             {recent.map((page) => (
+              <li>
+                <a href={page.url}>{page.title}</a>
+              </li>
+            ))}
+          </ol>
+
+          <ol>
+            {xp.map((page) => (
               <li>
                 <a href={page.url}>{page.title}</a>
               </li>
