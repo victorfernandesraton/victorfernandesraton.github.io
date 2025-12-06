@@ -1,8 +1,0 @@
-baseURL = 'https://example.org/'
-title = 'My New Hugo Site'
-
-
-[module]
-  [module.hugoVersion]
-    extended = false
-    min = "0.116.0"
