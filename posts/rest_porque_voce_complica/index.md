@@ -1,10 +1,10 @@
----
++++
 title = 'REST API: Porquê você complica?'
 description = 'Qauis erros e complicações podemos evitar ao escrever uma API REST'
 date = 2025-12-06T02:12:00-03:00
 tags = ["python", "api", "rest", "http"]
-draft = true
----
+draft = false
++++
 
 # Esta apresentação NÃO é sobre: 
 
