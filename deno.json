@@ -1,4 +1,7 @@
 {
+  "fmt": {
+    "exclude": ["./**/*.md"]
+  },
   "nodeModulesDir": "auto",
   "imports": {
     "@gotfeedback/markdown-it-media": "npm:@gotfeedback/markdown-it-media@^1.0.1",
@@ -10,6 +13,11 @@
     "lume": {
       "description": "Run Lume command",
       "command": "deno run -P=lume lume/cli.ts"
+    },
+
+    "compile": {
+      "description": "Run compile",
+      "command": "deno compile -P=lume lume/cli.ts"
     },
     "build": {
       "description": "Build the site for production",
@@ -28,20 +36,22 @@
         "cdn.jsdelivr.net:443",
         "0.0.0.0:3000"
       ],
-      "ffi": ["./node_modules/.deno/@img+sharp-linux-x64@0.34.5/node_modules/@img/sharp-linux-x64/lib/sharp-linux-x64.node"],
+      "ffi": [
+        "./node_modules/.deno/@img+sharp-linux-x64@0.34.5/node_modules/@img/sharp-linux-x64/lib/sharp-linux-x64.node"
+      ],
       "read": [
-          "./",
-          "/proc/self/exe",
-          "/usr/bin/ldd"
+        "./",
+        "/proc/self/exe",
+        "/usr/bin/ldd"
       ],
       "write": [
-          "./_site"
+        "./_site",
+        "./_cache"
       ],
       "sys": [
-          "networkInterfaces"
+        "networkInterfaces"
       ],
       "env": true
-
     }
   },
   "compilerOptions": {

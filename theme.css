@@ -1,35 +1,36 @@
 /* google-fonts */
 /* code-hightlight */
+[data-webui-theme="everforest-dark"] {
+  --red: #e67e80;
+  --orange: #e69875;
+  --yellow: #dbbc7f;
+  --green: #a7c080;
+  --blue: #7fbbb3;
+  --aqua: #83c092;
+  --purple: #d699b6;
+  --fg: #d3c6aa;
+  --statusline1: #a7c080;
+  --statusline2: #d3c6aa;
+  --statusline3: #e67e80;
+  --gray0: #7a8478;
+  --gray1: #859289;
+  --gray2: #9da9a0;
+
+  --bg-dim: #232a2e;
+  --bg0: #2d353b;
+  --bg1: #343f44;
+  --bg2: #3d484d;
+  --bg3: #475258;
+  --bg4: #4f585e;
+  --bg5: #56635f;
+  --bg-red: #4c3743;
+  --bg-visual: #493b40;
+  --bg-yellow: #45443c;
+  --bg-green: #3c4841;
+  --bg-blue: #384b55;
+}
 :root {
-
-    --red: #e67e80;
-    --orange: #e69875;
-    --yellow: #dbbc7f;
-    --green: #a7c080;
-    --blue: #7fbbb3;
-    --aqua: #83c092;
-    --purple: #d699b6;
-    --fg: #d3c6aa;
-    --statusline1: #a7c080;
-    --statusline2: #d3c6aa;
-    --statusline3: #e67e80;
-    --gray0: #7a8478;
-    --gray1: #859289;
-    --gray2: #9da9a0;
-
-    --bg-dim: #232a2e;
-    --bg0: #2d353b;
-    --bg1: #343f44;
-    --bg2: #3d484d;
-    --bg3: #475258;
-    --bg4: #4f585e;
-    --bg5: #56635f;
-    --bg-red: #4c3743;
-    --bg-visual: #493b40;
-    --bg-yellow: #45443c;
-    --bg-green: #3c4841;
-    --bg-blue: #384b55;
-    background-color: var(--bg0);
+  background-color: var(--bg0);
 }
 body {
   font-family: display;
@@ -59,3 +60,71 @@ h3 {
 h3 {
   color: var(--orange);
 }
+nav {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+nav ul {
+  text-align: center;
+  display: flex;
+}
+
+main , article{
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 900px;
+}
+article img {
+    margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 0;
+  max-width: 100%;
+  height: auto;
+
+}
+.single-header {
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 900px;
+}
+
+.single-header .cover {
+    width: 100%;
+    height: 10rem;
+    object-fit: cover;
+    mask-image: -webkit-gradient(linear,left bottom,left top,from(transparent),to(#000));
+    mask-image: linear-gradient(to top,transparent 0%,#000 100%);
+}
+
+/* Blur‑then‑sharp image styles */
+.blurred-img {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+.blurred-img img.low {
+    filter: blur(20px);
+    transition: opacity 0.3s ease;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.blurred-img img.high {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.blurred-img img.high.loaded {
+    opacity: 1;
+}
+

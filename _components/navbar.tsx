@@ -1,8 +1,7 @@
 export default function (
-  { nav, alternates, lang }: Lume.Data,
+  { nav, lang }: Lume.Data,
   {}: Lume.Helpers,
 ) {
-  const langList = alternates?.filter((item) => item.lang !== lang) ?? [];
   const index = nav.menu("/");
   return (
     <nav>

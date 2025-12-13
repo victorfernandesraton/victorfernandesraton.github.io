@@ -1,5 +1,5 @@
 export default function (
-  { title, children, search, nav, comp, lang, alternates }: Lume.Data,
+  { title, children, search, nav, comp, lang, alternates, theme }: Lume.Data,
 ) {
   const recent = search.pages(
     `lang=${lang} type=xp`,
@@ -8,14 +8,16 @@ export default function (
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
-      <html>
-        <head>
-          <title>{title}</title>
-                    <link rel="stylesheet" href="/theme.css" />
+      <head>
+        <title>{title}</title>
+        <link rel="stylesheet" href="/theme.css" />
+      </head>
+      <html data-webui-theme={theme}>
 
-        </head>
-        <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
+
+        <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
+        <main>
           {children}
           <ol>
             {recent.map((page) => (
@@ -24,9 +26,12 @@ export default function (
               </li>
             ))}
           </ol>
-        </body>
+          </main>
 
         <comp.Footer />
+        </body>
+
+
       </html>
     </>
   );

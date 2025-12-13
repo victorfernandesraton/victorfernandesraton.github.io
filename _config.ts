@@ -2,9 +2,9 @@ import lume from "lume/mod.ts";
 import jsx from "lume/plugins/jsx.ts";
 import nav from "lume/plugins/nav.ts";
 import favicon from "lume/plugins/favicon.ts";
-import mila from "npm:markdown-it-link-attributes";
+import mila from "markdown-it-link-attributes";
 import inline from "lume/plugins/inline.ts";
-import markdownItMedia from "npm:@gotfeedback/markdown-it-media";
+import markdownItMedia from "@gotfeedback/markdown-it-media";
 import transformImages from "lume/plugins/transform_images.ts";
 import googleFonts from "lume/plugins/google_fonts.ts";
 import highlight from "lume/plugins/code_highlight.ts";
@@ -38,6 +38,7 @@ site.use(googleFonts({
 }));
 
 site.data("sitename", "vraton.dev");
+site.data("theme", "everforest-dark");
 site.use(jsx());
 site.use(favicon());
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);

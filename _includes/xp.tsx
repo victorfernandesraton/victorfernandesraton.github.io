@@ -11,19 +11,19 @@ export default function (
     alternates,
     lang,
     nav,
+    theme,
   } = data;
 
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
-      <header>
+      <head>
         <title>
           {`${sitename} - ${title}`}
-                    <link rel="stylesheet" href="/theme.css" />
-
+          <link rel="stylesheet" href="/theme.css" />
         </title>
-      </header>
-      <html>
+      </head>
+      <html data-webui-theme={theme}>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
           <h1>{title}</h1>
@@ -35,7 +35,9 @@ export default function (
               </li>
             ))}
           </ul>
+          <main>
           {children}
+          </main>
 
           <comp.Footer />
         </body>

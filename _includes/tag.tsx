@@ -1,19 +1,20 @@
 export default function (
-  { title, search, menus, comp, lang, alternates, result = "" }: Lume.Data,
+  { title, search, comp, result = "", theme }: Lume.Data,
 ) {
   const recent = search.pages(result);
 
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
-      <html>
+      <html data-webui-theme={theme}>
         <head>
           <title>{title}</title>
-                    <link rel="stylesheet" href="/theme.css" />
-
+          <link rel="stylesheet" href="/theme.css" />
         </head>
-        <comp.Navbar />
         <body>
+
+        <comp.Navbar />
+        <main>
           <title>{title}</title>
           <ol>
             {recent.map((page) => (
@@ -22,8 +23,10 @@ export default function (
               </li>
             ))}
           </ol>
+          </main>
 
           <comp.Footer />
+
         </body>
       </html>
     </>

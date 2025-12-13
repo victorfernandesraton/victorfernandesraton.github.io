@@ -5,3 +5,8 @@ transformImages:
     matches: cover
     suffix: -big
     format: webp
+
+  - resize: [20]
+    matches: cover
+    suffix: -small
+    format: webp
