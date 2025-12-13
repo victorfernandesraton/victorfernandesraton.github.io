@@ -2,21 +2,46 @@
   "nodeModulesDir": "auto",
   "imports": {
     "@gotfeedback/markdown-it-media": "npm:@gotfeedback/markdown-it-media@^1.0.1",
-    "lume/": "https://deno.land/x/lume@v3.0.11/",
-    "lume/jsx-runtime": "https://deno.land/x/ssx@v0.1.12/jsx-runtime.ts",
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.1.2/",
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.13/jsx-runtime.ts",
     "markdown-it-link-attributes": "npm:markdown-it-link-attributes@^4.0.1"
   },
   "tasks": {
-    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-    "build": "deno task lume",
-    "serve": "deno task lume -s"
+    "lume": {
+      "description": "Run Lume command",
+      "command": "deno run -P=lume lume/cli.ts"
+    },
+    "build": {
+      "description": "Build the site for production",
+      "command": "deno task lume"
+    },
+    "serve": {
+      "description": "Run and serve the site for development",
+      "command": "deno task lume -s"
+    }
   },
   "permissions": {
     "lume": {
       "net": [
         "fonts.googleapis.com:443",
-        "fonts.gstatic.com:443"
-      ]
+        "fonts.gstatic.com:443",
+        "cdn.jsdelivr.net:443",
+        "0.0.0.0:3000"
+      ],
+      "ffi": ["./node_modules/.deno/@img+sharp-linux-x64@0.34.5/node_modules/@img/sharp-linux-x64/lib/sharp-linux-x64.node"],
+      "read": [
+          "./",
+          "/proc/self/exe",
+          "/usr/bin/ldd"
+      ],
+      "write": [
+          "./_site"
+      ],
+      "sys": [
+          "networkInterfaces"
+      ],
+      "env": true
+
     }
   },
   "compilerOptions": {
@@ -32,12 +57,13 @@
   ],
   "lint": {
     "plugins": [
-      "https://deno.land/x/lume@v3.0.11/lint.ts"
+      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.1.2/lint.ts"
     ],
     "rules": {
       "exclude": [
         "no-import-prefix"
       ]
     }
-  }
+  },
+  "lock": false
 }

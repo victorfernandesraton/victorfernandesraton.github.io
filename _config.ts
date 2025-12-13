@@ -7,7 +7,6 @@ import inline from "lume/plugins/inline.ts";
 import markdownItMedia from "npm:@gotfeedback/markdown-it-media";
 import transformImages from "lume/plugins/transform_images.ts";
 import googleFonts from "lume/plugins/google_fonts.ts";
-import tailwindcss from "lume/plugins/tailwindcss.ts";
 import highlight from "lume/plugins/code_highlight.ts";
 
 const site = lume({}, {
@@ -42,7 +41,6 @@ site.data("sitename", "vraton.dev");
 site.use(jsx());
 site.use(favicon());
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);
-site.use(tailwindcss(/* Options */));
 site.add("./theme.css");
 
 site.use(transformImages(/* Options */));
