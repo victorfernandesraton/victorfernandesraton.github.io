@@ -36,7 +36,7 @@ export default function (
             ))}
           </ul>
           <main>
-          {children}
+            {children}
           </main>
 
           <comp.Footer />

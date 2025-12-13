@@ -25,12 +25,12 @@ export default function (
       {{ __html: "<!DOCTYPE html>" }}
 
       <html data-webui-theme={theme}>
-      <head>
-        <title>
-          {`${sitename} - ${title}`}
-        </title>
-        <link rel="stylesheet" href="/theme.css" />
-      </head>
+        <head>
+          <title>
+            {`${sitename} - ${title}`}
+          </title>
+          <link rel="stylesheet" href="/theme.css" />
+        </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
           <div class="single-header">

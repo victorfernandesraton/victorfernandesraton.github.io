@@ -12,21 +12,19 @@ export default function (
           <link rel="stylesheet" href="/theme.css" />
         </head>
         <body>
-
-        <comp.Navbar />
-        <main>
-          <title>{title}</title>
-          <ol>
-            {recent.map((page) => (
-              <li>
-                <a href={page.url}>{page.title}</a>
-              </li>
-            ))}
-          </ol>
+          <comp.Navbar />
+          <main>
+            <title>{title}</title>
+            <ol>
+              {recent.map((page) => (
+                <li>
+                  <a href={page.url}>{page.title}</a>
+                </li>
+              ))}
+            </ol>
           </main>
 
           <comp.Footer />
-
         </body>
       </html>
     </>
