@@ -10,15 +10,14 @@ import googleFonts from "lume/plugins/google_fonts.ts";
 import highlight from "lume/plugins/code_highlight.ts";
 import gzip from "lume/plugins/gzip.ts";
 
-
-const site = lume({server: {debugBar: false}}, {
+const site = lume({ server: { debugBar: false } }, {
   markdown: {
     plugins: [mila, [markdownItMedia, { controls: true }]],
   },
 });
 site.use(highlight({
   theme: {
-    name: "atom-one-dark", // The theme name to download
+    name: "agate", // The theme name to download
     cssFile: "/theme.css", // The destination filename
     placeholder: "/* code-hightlight */", // Optional placeholder to replace with the theme code
   },
@@ -27,6 +26,15 @@ site.use(highlight({
 site.ignore("README.md", "github/");
 
 site.use(nav());
+site.data("fullDate", function(date: Date, location: string = "pt-BR", timeZone = 'America/Bahia'): string {
+    const formatter = new Intl.DateTimeFormat(location,{
+        dateStyle: 'full',
+        timeStyle: 'short',
+        hour12: false,
+        timeZone
+    })
+    return formatter.format(date)
+})
 
 site.use(googleFonts({
   fonts: {

@@ -13,26 +13,31 @@ export default function (
     lang,
     cover,
     nav,
+    date,
     theme,
+    fullDate,
   } = data;
 
   const upCover = cover ? cover.split(".")[0] : undefined;
   const coverRes = upCover + "-big" + "." + "webp";
   const coverFallback = upCover + "-small" + "." + "webp";
+  const createdAt = new Date(date)
 
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
 
-      <html data-webui-theme={theme}>
+      <html data-webui-theme={theme} lang={lang ?? "pt-BR"}>
         <head>
           <title>
             {`${sitename} - ${title}`}
           </title>
           <link rel="stylesheet" href="/theme.css" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          <meta name="description" content={description}/>
-
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta name="description" content={description} />
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
@@ -58,6 +63,7 @@ export default function (
             )}
             <h1>{title}</h1>
             <h2>{description}</h2>
+            <h3>{fullDate(createdAt)}</h3>
             <ul>
               {tags.map((item, index) => (
                 <li key={index}>

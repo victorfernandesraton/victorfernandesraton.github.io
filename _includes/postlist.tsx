@@ -12,7 +12,7 @@ export default function (
       <html data-webui-theme={theme}>
         <body>
           <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
-          <main class='list'>
+          <main class="list">
             {children}
             <ol>
               {recent.map((page) => (

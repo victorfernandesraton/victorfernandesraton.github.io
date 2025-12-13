@@ -88,13 +88,13 @@ article img {
 }
 
 footer, .intro {
-    text-align: center;
+  text-align: center;
 }
 
 .intro ol, .list ol, .list ul {
-    list-style-type: none;
-    margin-left: 0;             /* Removes outer margin */
-    padding-left: 0;
+  list-style-type: none;
+  margin-left: 0; /* Removes outer margin */
+  padding-left: 0;
 }
 
 .single-header {

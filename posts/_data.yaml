@@ -13,3 +13,8 @@ transformImages:
 
   - resize: [900]
     format: [webp, png, jpg]
+metas:
+  site: vraton's site
+  fediverse: "@v_raton@fosstodon.org"
+  lang: pt
+  generator: true
