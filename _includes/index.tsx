@@ -11,10 +11,11 @@ export default function (
         <head>
           <title>{title}</title>
           <link rel="stylesheet" href="/theme.css" />
+          <link ref="preconnect" href="http://localhost:3000" />
         </head>
         <body>
           <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
-          <main style="text-align: center">
+          <main class="intro">
             <div>{children}</div>
             <ol>
               {recent.map((page) => (

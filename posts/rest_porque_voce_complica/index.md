@@ -322,7 +322,7 @@ questões de performance, principalmente aqueles que realizam a contagem de
 items, porém o `Items-Returned` é uma ótima forma de saber se a lista retornou
 sem item algum (vazia).
 
-```
+```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 Total-Count: 1000               # Total de itens no banco de dados

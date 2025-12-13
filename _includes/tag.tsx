@@ -13,7 +13,7 @@ export default function (
         </head>
         <body>
           <comp.Navbar />
-          <main>
+          <main class="list">
             <title>{title}</title>
             <ol>
               {recent.map((page) => (

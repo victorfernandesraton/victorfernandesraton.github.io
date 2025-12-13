@@ -10,12 +10,15 @@ export default function (
       {{ __html: "<!DOCTYPE html>" }}
       <head>
         <title>{title}</title>
-        <link rel="stylesheet" href="/theme.css" />
+        <link rel="stylesheet" href="/theme.css" role="text" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        
       </head>
-      <html data-webui-theme={theme}>
+      <html data-webui-theme={theme} >
         <body>
           <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
-          <main>
+          <main class="list">
             {children}
             <ol>
               {recent.map((page) => (

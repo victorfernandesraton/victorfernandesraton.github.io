@@ -1,1 +1,6 @@
 layout: index.tsx
+metas:
+  site: vraton's site
+  fediverse: "@v_raton@fosstodon.org"
+  lang: pt
+  generator: true

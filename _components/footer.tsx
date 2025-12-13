@@ -1,9 +1,9 @@
 export default function () {
   const year = new Date().getFullYear();
   return (
-    <footer style="text-align: center">
+    <footer>
       <p>Developed with &#128156; by victorfernandesraton</p>
-      <a className="powered-by" href="https://lume.land">
+      <a class="powered-by" href="https://lume.land">
         <p>Powered by</p>
         <img
           src="https://raw.githubusercontent.com/lumeland/logo/1eac98cb08ab69c428328246f591ab31731ebd7e/lume-dark.svg"

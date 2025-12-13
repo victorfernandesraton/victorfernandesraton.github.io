@@ -8,6 +8,7 @@
     "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.1.2/",
     "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.13/jsx-runtime.ts",
     "markdown-it-link-attributes": "npm:markdown-it-link-attributes@^4.0.1"
+    
   },
   "tasks": {
     "lume": {

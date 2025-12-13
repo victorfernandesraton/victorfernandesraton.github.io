@@ -86,6 +86,17 @@ article img {
   max-width: 100%;
   height: auto;
 }
+
+footer, .intro {
+    text-align: center;
+}
+
+.intro ol, .list ol, .list ul {
+    list-style-type: none;
+    margin-left: 0;             /* Removes outer margin */
+    padding-left: 0;
+}
+
 .single-header {
   margin: 0 auto;
   padding-left: 1rem;

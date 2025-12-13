@@ -1,7 +1,7 @@
 type: post
 layout: post.tsx
 transformImages:
-  - resize: [2000]
+  - resize: [900]
     matches: cover
     suffix: -big
     format: webp
@@ -10,3 +10,6 @@ transformImages:
     matches: cover
     suffix: -small
     format: webp
+
+  - resize: [900]
+    format: [webp, png, jpg]

@@ -140,8 +140,7 @@ modelos são seguros, portanto, SIGA POR SUA CONTA E RISCO.
 # O tal do ollama
 
 Não vou te poupar o trabalho de ver o guia de download recomendado e de ler o
-help do cli do ollama, basta seguir o guia de instalação para linux
-[neste link](https://ollama.com/download/linux), recomendo executar o comando
+help do cli do ollama, basta seguir [o guia de instalação do Ollama para linux](https://ollama.com/download/linux), recomendo executar o comando
 como sudo
 
 Pesquisando por essa plataforma não muito amigavél, conseguimos encontrar os
@@ -226,8 +225,7 @@ Obtivemos uma saida meio estranha, mas ao menos alguma resposta:
 O ollama sempre responde informações sobre o modelo e o tempo de duração e
 evaluation, o que é interessante para nosso benchmark
 
-Podemos saber mais sobre a api do ollama
-[aqui](https://github.com/ollama/ollama/blob/main/docs/api.md)
+Podemos saber mais sobre a api do ollama [na Documentação da API do Ollama](https://github.com/ollama/ollama/blob/main/docs/api.md)
 
 # Escrevendo um benchmark simples
 
@@ -468,7 +466,7 @@ eficiente
 
 # Analisando os resultados
 
-Após olhar os dados gerados pelo nosso script [aqui](./output.csv), chegamos ás
+Após olhar os [dados gerados pelo nosso script](./output.csv), chegamos ás
 seguintes definições
 
 - O tinydolphin e tinyllama tiveram desmpenhos melhores, mas o tinyllama se

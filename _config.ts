@@ -8,8 +8,10 @@ import markdownItMedia from "@gotfeedback/markdown-it-media";
 import transformImages from "lume/plugins/transform_images.ts";
 import googleFonts from "lume/plugins/google_fonts.ts";
 import highlight from "lume/plugins/code_highlight.ts";
+import gzip from "lume/plugins/gzip.ts";
 
-const site = lume({}, {
+
+const site = lume({server: {debugBar: false}}, {
   markdown: {
     plugins: [mila, [markdownItMedia, { controls: true }]],
   },
@@ -47,6 +49,7 @@ site.add("./theme.css");
 site.use(transformImages(/* Options */));
 
 site.use(inline());
+site.use(gzip());
 // font logo  - Universe 75 Black
 // font title - Univers LT 49 Light Ultra Condensed
 // font links and extra -  Roadgeek 2005 Series F or D

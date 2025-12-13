@@ -30,10 +30,13 @@ export default function (
             {`${sitename} - ${title}`}
           </title>
           <link rel="stylesheet" href="/theme.css" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <meta name="description" content={description}/>
+
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
-          <div class="single-header">
+          <main class="single-header">
             {cover && (
               <a href={url} aria-label={`Go to ${title}`}>
                 <div class="blurred-img cover">
@@ -41,12 +44,14 @@ export default function (
                     class="low"
                     src={coverFallback}
                     alt={`Cover for ${title} post (placeholder)`}
+                    fetchpriority="high"
                   />
                   <img
                     class="high cover"
                     src={coverRes}
                     alt={`Cover for ${title} post`}
                     onload="this.classList.add('loaded'); this.previousElementSibling.style.opacity=0;"
+                    fetchpriority="low"
                   />
                 </div>
               </a>
@@ -60,7 +65,7 @@ export default function (
                 </li>
               ))}
             </ul>
-          </div>
+          </main>
           <article>
             {children}
           </article>
