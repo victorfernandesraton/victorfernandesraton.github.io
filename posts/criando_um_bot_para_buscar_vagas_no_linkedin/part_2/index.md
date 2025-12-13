@@ -4,24 +4,36 @@ description = 'Fazendo scrapping e extraindo dados'
 date = 2024-04-13T18:00:00-03:00
 tags = ["python","linkedin", "web-scrapping", "selenium", "selenium-grid", "urn" ]
 cover = "cover.jpg"
-
 +++
 
 # No episódio anterior...
 
-Como vimos antes [aqui](/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/), conseguimos criar uma estrutura básica de como gerenciar mais de um processo usando selenium pra logar no linkedin e docker+selenium-grid para gerir essa bagunça organizada, nas agora temos que ir além, nosso desafio hoje é apenas mostrar como fazer scrapping e interagir com as páginas, fora toda a ciência tosca e esforço que tive que fazer para "hackear" os links do linkedin, nosso objetivo hoje se resume em 3:
+Como vimos antes
+[aqui](/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/), conseguimos
+criar uma estrutura básica de como gerenciar mais de um processo usando selenium
+pra logar no linkedin e docker+selenium-grid para gerir essa bagunça organizada,
+nas agora temos que ir além, nosso desafio hoje é apenas mostrar como fazer
+scrapping e interagir com as páginas, fora toda a ciência tosca e esforço que
+tive que fazer para "hackear" os links do linkedin, nosso objetivo hoje se
+resume em 3:
 
 1. Refatorar o vagabot para que use mais composição e menos herança
 1. Conseguir fazer uma busca no linkedin
-2. Conseguir pegar postagems com essa busca
-3. Persistir essas postagens usando Sqlite
+1. Conseguir pegar postagems com essa busca
+1. Persistir essas postagens usando Sqlite
 
 Então bora lá ver até onde essa confusão irá nos levar hoje.
 
 # A grande refatoração
 
-Decidi fazer algumas mudanças para minimizar o uso de herança de forma desnecessária em prol do uso de composição
-A refatoração se deu em separar o que antes chamavamos de `LinkedinWorkflow` em duas coisas, um serviço que nos permite gerir um browser , vamos chamá-lo de `BrowserService` onde teremos concentrado tudo referente ao browser e o selenium , enquanto teremos o `LinkedinWorkflow` sendo usado para definir métodos abstratos da nossa api para que nossos workflows sejam componentes fechados e isolados, de forma que possamos encadear execuções de workflows com o mesmo browser
+Decidi fazer algumas mudanças para minimizar o uso de herança de forma
+desnecessária em prol do uso de composição A refatoração se deu em separar o que
+antes chamavamos de `LinkedinWorkflow` em duas coisas, um serviço que nos
+permite gerir um browser , vamos chamá-lo de `BrowserService` onde teremos
+concentrado tudo referente ao browser e o selenium , enquanto teremos o
+`LinkedinWorkflow` sendo usado para definir métodos abstratos da nossa api para
+que nossos workflows sejam componentes fechados e isolados, de forma que
+possamos encadear execuções de workflows com o mesmo browser
 
 No fnal do dia escrevemos o serviço de browser dessa forma
 
@@ -122,7 +134,11 @@ class LinkedinWorkflow:
     def execute(self, *args, **kwargs): ...
 ```
 
-Com essa mudança da api , podemos deasenhar um entrypoint de script um pouco mais detalhado e com a responsabilidade mais clara. Parafrazeando o grande Tio Bob (Ribert C. Martin) em Còdigo Limpo, se tem um lugar do seu código que pode ficar sujo é o módulo de inicialização. E ao contrário de muitos que movem a poeira pra baixo do tapete nosso código ficou assim:
+Com essa mudança da api , podemos deasenhar um entrypoint de script um pouco
+mais detalhado e com a responsabilidade mais clara. Parafrazeando o grande Tio
+Bob (Ribert C. Martin) em Còdigo Limpo, se tem um lugar do seu código que pode
+ficar sujo é o módulo de inicialização. E ao contrário de muitos que movem a
+poeira pra baixo do tapete nosso código ficou assim:
 
 ```python
 # script.py
@@ -211,14 +227,24 @@ if __name__ == "__main__":
     main()
 ```
 
-Dei tanbém uma mexida melhor nos logs e em alguns detalhes de baixo nivél, mas por agora temos isso ai....
-
+Dei tanbém uma mexida melhor nos logs e em alguns detalhes de baixo nivél, mas
+por agora temos isso ai....
 
 # Buscando as postagens
 
-Sabe quando seu colega de trabalho enche teu saco pra usar o html semântico? quando eu reclamo quando vejo um código React cheio de div em vez de usar os componentes nativos como inputs e checkbox? Então uma das razõoes disso é que querendo ou não seu projeto web vai ser indexado, seja pela google pra te avaliar no algoritimo de busca deles, seja a openai varrendo a internet e desdenhando de propriedade intelectual, seja só eu fazendo automações para pagar as contas. Você vai ver nessa parte o porque isso (e minha grande preguiça) me fizeram ter que descobrir como hackear o linkedin, tudo para obter um link.
+Sabe quando seu colega de trabalho enche teu saco pra usar o html semântico?
+quando eu reclamo quando vejo um código React cheio de div em vez de usar os
+componentes nativos como inputs e checkbox? Então uma das razõoes disso é que
+querendo ou não seu projeto web vai ser indexado, seja pela google pra te
+avaliar no algoritimo de busca deles, seja a openai varrendo a internet e
+desdenhando de propriedade intelectual, seja só eu fazendo automações para pagar
+as contas. Você vai ver nessa parte o porque isso (e minha grande preguiça) me
+fizeram ter que descobrir como hackear o linkedin, tudo para obter um link.
 
-Para pegar as postagens precisamos fazer uma busca usando a barra de busca do linkedin, selecionar o tipo de busca e copiar os links dos conteúdos encontrados, talvez mais tarde possamos fazer uma análise se a postagem é ou não sobre uma vaga, mas entenderam a idéia certo?
+Para pegar as postagens precisamos fazer uma busca usando a barra de busca do
+linkedin, selecionar o tipo de busca e copiar os links dos conteúdos
+encontrados, talvez mais tarde possamos fazer uma análise se a postagem é ou não
+sobre uma vaga, mas entenderam a idéia certo?
 
 Aqui está a masterpice de código que fiz
 
@@ -271,15 +297,32 @@ class LinkedinGetPosts(LinkedinWorkflow):
         return result
 ```
 
-essa classe é bem simples e condensa o que vimos antes na [parte 1]({{<ref "/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/index.md">}}), usamos a tag `SEARCH_INPUT_XPATH` para definir o xpath daquela barra de navegação do linkedin, digitamos o texto que queremos e apertamos o que seria o ENTER pra ele fazer a busca. Mas devido ao comportamento estranho dos botões de menu para selecionar o tipo de postagen (afinal são botões com eventos específicos sendo invocados) eu preferi ajustar a url diretamente para busca , porém mantive a busca em texto com imput para evitar ser pego como bot pelo próprio linkedin 
+essa classe é bem simples e condensa o que vimos antes na [parte 1]({{<ref
+"/posts/criando_um_bot_para_buscar_vagas_no_linkedin/part_1/index.md">}}),
+usamos a tag `SEARCH_INPUT_XPATH` para definir o xpath daquela barra de
+navegação do linkedin, digitamos o texto que queremos e apertamos o que seria o
+ENTER pra ele fazer a busca. Mas devido ao comportamento estranho dos botões de
+menu para selecionar o tipo de postagen (afinal são botões com eventos
+específicos sendo invocados) eu preferi ajustar a url diretamente para busca ,
+porém mantive a busca em texto com imput para evitar ser pego como bot pelo
+próprio linkedin
 
+depois pegamos todas as postagens , isto é o conteúdo em html inteiro e
+separamos, usamos novamente a magial do xapth com `POSTS_LIST_XPATH` e aqui veio
+nossa primeira limitação
 
-depois pegamos todas as postagens , isto é o conteúdo em html inteiro e separamos, usamos novamente a magial do xapth com `POSTS_LIST_XPATH`
-e aqui veio nossa primeira limitação
+Como o linkedin usa o sistema de paginação por meio dee scroll infinito, eu
+penso que podemos no futuro implementar o método de fazer isso e limitar até
+quantas páginas vamos ter, mas por hora pegar os 10 primeiros itens que são
+retornados é o suficiente, o evento de scroll não é tão trivial de implementar
+pois depende muito de encontrar uma forma de saber quando parar de fazer o
+scroll, esperar o carregamento e fazer este de novo, tenho algumas hipoteses de
+como fazer isso usando a funcionalidade do selenium de fazer scroll até um
+elemento específico, mas por hora eu acho suficiente extrair apenas os 10
+primeiros posts.
 
-Como o linkedin usa o sistema de paginação por meio dee scroll infinito, eu penso que podemos no futuro implementar o método de fazer isso e limitar até quantas páginas vamos ter, mas por hora pegar os 10 primeiros itens que são retornados é o suficiente, o evento de scroll não é tão trivial de implementar pois depende muito de encontrar uma forma de saber quando parar de fazer o scroll, esperar o carregamento e fazer este de novo, tenho algumas hipoteses de como fazer isso usando a funcionalidade do selenium de fazer scroll até um elemento específico, mas por hora eu acho suficiente extrair apenas os 10 primeiros posts.
-
-Com essa brincadeira toda pronta já até podemos testar nosso cli com o comando abaixo
+Com essa brincadeira toda pronta já até podemos testar nosso cli com o comando
+abaixo
 
 ```python
 python script.py -h
@@ -290,16 +333,31 @@ Agora podemos fazer um experimento de buscar vagas de java nas postagens
 ```python
 python script.py search-posts -q "VAGAS + JAVA"
 ```
-Com isso conseguimos fazer o nosso bot buscar postagens no linkedin e retornar a string html do componente de postagem
 
+Com isso conseguimos fazer o nosso bot buscar postagens no linkedin e retornar a
+string html do componente de postagem
 
 # Persistindo dados em sqlite
 
-Agora que conseguimos extrair dados vamos criar uma estrutura para persistir esses dados, a minha idéia é primeiro criar entidades para definir os dados como objeto por meio de dataclass, que nos permite uma facilidade melhor e instanciação dinâmica, bem como vamos criar uma camada de persistência do zero usando sqlite. O principal motivo para o uso do sqlite é que ele é um banco em arquivo, fora que podemos usar ele com a runtime padrão do python no debian que tem suporte nativo ao sqlite3, ou seja , não precisamos de dependencia, até pq vamos escrever query na mão.
+Agora que conseguimos extrair dados vamos criar uma estrutura para persistir
+esses dados, a minha idéia é primeiro criar entidades para definir os dados como
+objeto por meio de dataclass, que nos permite uma facilidade melhor e
+instanciação dinâmica, bem como vamos criar uma camada de persistência do zero
+usando sqlite. O principal motivo para o uso do sqlite é que ele é um banco em
+arquivo, fora que podemos usar ele com a runtime padrão do python no debian que
+tem suporte nativo ao sqlite3, ou seja , não precisamos de dependencia, até pq
+vamos escrever query na mão.
 
 ## Entendendo dataclass
 
-Parafrazeando a [PEP-557](https://peps.python.org/pep-0557/) dataclass são estruturas de tuplas nomeadas com valores padrão (default), ou seja uma forma de criar algo similar a uma struct em go , uma espécie de plain object que irá nos ajudar a lhedar com os dados, eu particulamente gosto de usar dataclass para definir esse tipo de coisa pois assim fica mais fácil o plugin do mypy me ajudar como tanbém consigo fazer transformadores, dto, parses (chame como quiser) usando as blibiotecas nativas do python de uma forma legivél, ou seja, só pra não ter que ficar mexendo com dict diretamente, ~~ninguém merece~~
+Parafrazeando a [PEP-557](https://peps.python.org/pep-0557/) dataclass são
+estruturas de tuplas nomeadas com valores padrão (default), ou seja uma forma de
+criar algo similar a uma struct em go , uma espécie de plain object que irá nos
+ajudar a lhedar com os dados, eu particulamente gosto de usar dataclass para
+definir esse tipo de coisa pois assim fica mais fácil o plugin do mypy me ajudar
+como tanbém consigo fazer transformadores, dto, parses (chame como quiser)
+usando as blibiotecas nativas do python de uma forma legivél, ou seja, só pra
+não ter que ficar mexendo com dict diretamente, ~~ninguém merece~~
 
 Dito isso vamos definir nossas entidades
 
@@ -344,19 +402,26 @@ class Author:
     id: str = field(default_factory=lambda: str(uuid.uuid1()))
 ```
 
-Esse código por si só é bem autoexplicativo: 
+Esse código por si só é bem autoexplicativo:
+
 - Usamos enuns para definir status , pois é muito mais typing friendly;
-- Usamos factories de field para gerar uma string de UUID 
+- Usamos factories de field para gerar uma string de UUID
 - Usamos a sintaxe padrão do dataclass para definir valores default
-- Usamos a propriedade `frozen` para criar objetos imutavéis, o que pro nosso caso é bem interessante
-- Usamos a propriedade `order` para gerar métodos de comparação, lá na frente isso vai ser importante quando formos implementar outras coisas
+- Usamos a propriedade `frozen` para criar objetos imutavéis, o que pro nosso
+  caso é bem interessante
+- Usamos a propriedade `order` para gerar métodos de comparação, lá na frente
+  isso vai ser importante quando formos implementar outras coisas
 
 ## Abstraindo o Sqlite em estruturas de repositórios
 
-Agora vamos implementar uma estrutura de repository que o sqlite consiga lhedar (e nós tanbém). nessa etapa eu poderia separar a implementaçào da interface, o que inclusive recomendo que faça nos seus projetos em nome da sua sanidade, mas como eu pretenddo descartar futuramente o sqlite, vou fazer tudo em um lugar só , mas estejam avisados, nada de misturar classe concreta com definição de interface.
+Agora vamos implementar uma estrutura de repository que o sqlite consiga lhedar
+(e nós tanbém). nessa etapa eu poderia separar a implementaçào da interface, o
+que inclusive recomendo que faça nos seus projetos em nome da sua sanidade, mas
+como eu pretenddo descartar futuramente o sqlite, vou fazer tudo em um lugar só
+, mas estejam avisados, nada de misturar classe concreta com definição de
+interface.
 
 ```python
-
 # vagabot/repository/repository.py
 from abc import abstractmethod
 from sqlite3 import Connection
@@ -370,9 +435,14 @@ class SqliteRepository:
     @abstractmethod
     def create_table_ddl(self):
         pass
-
 ```
-Esse é o nosso repository, ignorando um pouco as possivéis issues de memória aqui, eu fiz dessa forma para que cada repository seja responsavél pela tabela que este maneja, nem sempre um repository vai ser responsavél pela tabela, e a parte de gerar o script de sql ficaria melhor gerida por meio de migrations, mas como aqui é algo que vai ser descartados e apenas para testes, vamos deixar como estar
+
+Esse é o nosso repository, ignorando um pouco as possivéis issues de memória
+aqui, eu fiz dessa forma para que cada repository seja responsavél pela tabela
+que este maneja, nem sempre um repository vai ser responsavél pela tabela, e a
+parte de gerar o script de sql ficaria melhor gerida por meio de migrations, mas
+como aqui é algo que vai ser descartados e apenas para testes, vamos deixar como
+estar
 
 Agora é só implementar nossos repositórios:
 
@@ -636,33 +706,58 @@ class PostRepository(SqliteRepository):
         self.conn.close()
 ```
 
-Esse código é bem autoexplicativo, com apenas o conhecimento básico de SQL e de python você consegue vizualizar o que está acontecendo, eu tanbém desenvolvi testes usando pytest e fixtures, mas vou deixar isso pra um post separado posterior que estou preparando...
+Esse código é bem autoexplicativo, com apenas o conhecimento básico de SQL e de
+python você consegue vizualizar o que está acontecendo, eu tanbém desenvolvi
+testes usando pytest e fixtures, mas vou deixar isso pra um post separado
+posterior que estou preparando...
 
 ## Bela sopa
 
-Vamos parar agora organizar um parser, o qual irá transformar o html do linkedin nessa estrutura de dados, usaremos a blibioteca Beatfulsoap, muito comun no mundo de web scrapping, mas resumindo , ela nos permite navegar por uma estrutura de html a partir de um objeto python, mas para isso precisamos entender o que estamos buscando num post do linkedin como fiz isso em off eu defini a estrutura de dados antes , mas o meu processo se deu , ao rodar o script de busca de postagens, eu usei o famigerado print para pegar o conteúdo html de uma postagem e salvei num arquivo, mas usei o inspecionar do chrome/brave para descobrir algumas coisas que eu queria.
+Vamos parar agora organizar um parser, o qual irá transformar o html do linkedin
+nessa estrutura de dados, usaremos a blibioteca Beatfulsoap, muito comun no
+mundo de web scrapping, mas resumindo , ela nos permite navegar por uma
+estrutura de html a partir de um objeto python, mas para isso precisamos
+entender o que estamos buscando num post do linkedin como fiz isso em off eu
+defini a estrutura de dados antes , mas o meu processo se deu , ao rodar o
+script de busca de postagens, eu usei o famigerado print para pegar o conteúdo
+html de uma postagem e salvei num arquivo, mas usei o inspecionar do
+chrome/brave para descobrir algumas coisas que eu queria.
 
 Utilizando o inspector do browser eu descobri algumas coisas:
 
 - Podemos pegar o nome e a descrição do autor com seletores de css:
-    - li div.update-components-actor div .update-components-actor__title
-    - li div.update-components-actor div .update-components-actor__description
-- A melhor forma de conseguir o link do perfil do usuário seria pegar o link que existe no avatar 
+  - li div.update-components-actor div .update-components-actor__title
+  - li div.update-components-actor div .update-components-actor__description
+- A melhor forma de conseguir o link do perfil do usuário seria pegar o link que
+  existe no avatar
 - Extrair o texto da postagem (esse foi simples)
 
-Porém precisei dar uma de hacker pra descobrir como gerar os links corretos, pois o redirect é gerado ao clicar nos elementos, eles não possuem tags claras de para onde irão redirecionar. Inagino inclusive que isso deve causar alguma complexidade por parte das ferramentas de acessibilidade, gostaria de ver um estudo das redes sociais e o uso de leitores de tela nos navegadores. 
+Porém precisei dar uma de hacker pra descobrir como gerar os links corretos,
+pois o redirect é gerado ao clicar nos elementos, eles não possuem tags claras
+de para onde irão redirecionar. Inagino inclusive que isso deve causar alguma
+complexidade por parte das ferramentas de acessibilidade, gostaria de ver um
+estudo das redes sociais e o uso de leitores de tela nos navegadores.
 
-O que me entregou as peças que eu queria foi no componente da div, a qual possuia uma propriedade chamada `data-urn`, me parecia uma forma de identificar a qual post aquele componente pertencia, pesquisando um pouco descobri que era algo similar a isso conmo é apontado [neste post do stack overflow](https://stackoverflow.com/questions/4913343/what-is-the-difference-between-uri-url-and-urn#4913371). 
+O que me entregou as peças que eu queria foi no componente da div, a qual
+possuia uma propriedade chamada `data-urn`, me parecia uma forma de identificar
+a qual post aquele componente pertencia, pesquisando um pouco descobri que era
+algo similar a isso conmo é apontado
+[neste post do stack overflow](https://stackoverflow.com/questions/4913343/what-is-the-difference-between-uri-url-and-urn#4913371).
 
-O urn em questão estava nesse padrão aqui `urn:li:activity:{ID_NUMERICO}` como mostra essa captura de tela
+O urn em questão estava nesse padrão aqui `urn:li:activity:{ID_NUMERICO}` como
+mostra essa captura de tela
 
 ![image](captura-data-urn.png)
 
-Depois disso decidi ver se achava esse cara em outro lugar, tentei enviar o post a um amigo como compartilhamento e não deu outra, lá no card do chat estava o nosso urn, dai foi fácil descobrir como gerar a url para um post através de um urn
+Depois disso decidi ver se achava esse cara em outro lugar, tentei enviar o post
+a um amigo como compartilhamento e não deu outra, lá no card do chat estava o
+nosso urn, dai foi fácil descobrir como gerar a url para um post através de um
+urn
 
 ![image](captura-chat-sharing.png)
 
-Após algum ajuste gerei esse código aqui que por meio do Beatfulsoap extrai dados do html, gerando esse código final:
+Após algum ajuste gerei esse código aqui que por meio do Beatfulsoap extrai
+dados do html, gerando esse código final:
 
 ```python
 from typing import List
@@ -727,8 +822,8 @@ class PostsFromSearchExtractor:
         return result
 ```
 
-Agora que conseguimos extrair dados, transformar em objetos , basta mudar nosso script main para ter suporte a persistir os dados e pronto.
-
+Agora que conseguimos extrair dados, transformar em objetos , basta mudar nosso
+script main para ter suporte a persistir os dados e pronto.
 
 ```python
 # script.py
@@ -827,7 +922,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Agora basta atualizar nosso arquivo de .env para ter suporte ao sqlie con `DB_FILENAME=./db/vagabot.db` e testar o bot de novo.
+Agora basta atualizar nosso arquivo de .env para ter suporte ao sqlie con
+`DB_FILENAME=./db/vagabot.db` e testar o bot de novo.
 
 Acho que por hoje já deu...
-

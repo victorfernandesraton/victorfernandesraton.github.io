@@ -1,19 +1,19 @@
 export default function (
-  { title, search ,menus, comp, lang, alternates, result = ''}: Lume.Data,
-) { 
+  { title, search, menus, comp, lang, alternates, result = "" }: Lume.Data,
+) {
+  const recent = search.pages(result);
 
-    const recent =search.pages(result) 
-
-    return (
+  return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
       <html>
         <head>
           <title>{title}</title>
-        </head>
-        <comp.Navbar  />
-        <body>
+                    <link rel="stylesheet" href="/theme.css" />
 
+        </head>
+        <comp.Navbar />
+        <body>
           <title>{title}</title>
           <ol>
             {recent.map((page) => (

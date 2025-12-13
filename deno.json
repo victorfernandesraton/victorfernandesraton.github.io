@@ -1,5 +1,5 @@
 {
-    "nodeModulesDir": "auto",
+  "nodeModulesDir": "auto",
   "imports": {
     "@gotfeedback/markdown-it-media": "npm:@gotfeedback/markdown-it-media@^1.0.1",
     "lume/": "https://deno.land/x/lume@v3.0.11/",
@@ -10,6 +10,14 @@
     "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
     "build": "deno task lume",
     "serve": "deno task lume -s"
+  },
+  "permissions": {
+    "lume": {
+      "net": [
+        "fonts.googleapis.com:443",
+        "fonts.gstatic.com:443"
+      ]
+    }
   },
   "compilerOptions": {
     "types": [

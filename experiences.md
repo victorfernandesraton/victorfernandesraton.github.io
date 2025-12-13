@@ -5,6 +5,8 @@ draft = false
 id = 'index'
 layout = "xplist.tsx"
 +++
+
 # Minhas experiências
 
-Tudo que eu fiz até aqui em âmbito profissional, de blibiotecas abandonadas a projetos flopados
+Tudo que eu fiz até aqui em âmbito profissional, de blibiotecas abandonadas a
+projetos flopados

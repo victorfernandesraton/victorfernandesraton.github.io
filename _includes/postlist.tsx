@@ -1,20 +1,19 @@
-
 export default function (
-  { title, children, search ,nav, comp, lang, alternates}: Lume.Data,
-) { 
-
-    const recent =search.pages(`lang=${lang} type=post`, "date=desc") 
-    return (
+  { title, children, search, nav, comp, lang, alternates }: Lume.Data,
+) {
+  const recent = search.pages(`lang=${lang} type=post`, "date=desc");
+  return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
       <html>
         <head>
           <title>{title}</title>
+          <link rel="stylesheet" href="/theme.css" />
+
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
-
-        {children}
+          {children}
           <ol>
             {recent.map((page) => (
               <li>
@@ -24,7 +23,7 @@ export default function (
           </ol>
         </body>
 
-          <comp.Footer />
+        <comp.Footer />
       </html>
     </>
   );

@@ -1,2 +1,7 @@
 type: post
 layout: post.tsx
+transformImages:
+  - resize: [2000]
+    matches: cover
+    suffix: -big
+    format: webp

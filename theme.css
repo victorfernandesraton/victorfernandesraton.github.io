@@ -1,0 +1,61 @@
+/* google-fonts */
+/* code-hightlight */
+:root {
+
+    --red: #e67e80;
+    --orange: #e69875;
+    --yellow: #dbbc7f;
+    --green: #a7c080;
+    --blue: #7fbbb3;
+    --aqua: #83c092;
+    --purple: #d699b6;
+    --fg: #d3c6aa;
+    --statusline1: #a7c080;
+    --statusline2: #d3c6aa;
+    --statusline3: #e67e80;
+    --gray0: #7a8478;
+    --gray1: #859289;
+    --gray2: #9da9a0;
+
+    --bg-dim: #232a2e;
+    --bg0: #2d353b;
+    --bg1: #343f44;
+    --bg2: #3d484d;
+    --bg3: #475258;
+    --bg4: #4f585e;
+    --bg5: #56635f;
+    --bg-red: #4c3743;
+    --bg-visual: #493b40;
+    --bg-yellow: #45443c;
+    --bg-green: #3c4841;
+    --bg-blue: #384b55;
+    background-color: var(--bg0);
+}
+body {
+  font-family: display;
+  color: var(--fg);
+}
+
+a {
+  color: var(--blue);
+}
+
+h1, h2, h3 {
+  font-family: title;
+}
+
+h1 {
+  color: var(--green);
+}
+
+h2 {
+  color: var(--aqua);
+}
+
+h3 {
+  color: var(--yellow);
+}
+
+h3 {
+  color: var(--orange);
+}

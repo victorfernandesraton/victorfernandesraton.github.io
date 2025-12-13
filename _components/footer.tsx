@@ -1,25 +1,14 @@
-// <p> {{ i18n "followmeon" }}:</p>
-// <ul class="social-list">
-//     {{ range .Site.Params.social }}
-//     <li><a href="{{ .url }}" rel="me" target="_blank">{{ .name }}</a></li>
-//     {{ end }}
-// </ul>
-
-export default function() {
+export default function () {
+    const year = new Date().getFullYear()
   return (
     <footer>
       <p>Developed with &#128156; by victorfernandesraton</p>
       <a className="powered-by" href="https://gohugo.io/">
-        <p>Powered by</p>
-        <img
-          width="76px"
-          alt="Hugo logo with formed by each letter for HUGO inside a colorfull hexagon, for H using pink ,U as blue, G is green and O is yellow"
-          src="https://raw.githubusercontent.com/gohugoio/gohugoioTheme/master/static/images/hugo-logo-wide.svg?sanitize=true"
-        />
+        <p>Powered by</p> <img src="lume.svg" width="50" alt="Description of image" />
       </a>
 
       <div>
-        <a href="https://vraton.dev">raton.dev</a> © 2025 by{" "}
+        <a href="https://vraton.dev">raton.dev</a> © {year} by{" "}
         <a href="https://fosstodon.org/@v_raton">Victor Raton</a>{" "}
         is licensed under{" "}
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">

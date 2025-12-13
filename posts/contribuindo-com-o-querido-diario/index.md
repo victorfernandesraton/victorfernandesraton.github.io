@@ -8,47 +8,75 @@ tags = ["python","web", "web-scrapping", "spyder" ]
 
 # O projeto
 
-Conheci o projeto Querido Diário na Python Nordeste de 2023 em Salvadoer, só conheci mesmo , pois por conta de burrice minha em pedir o almoço pelo iFood um pouco tarde , acabei não assistindo a palestra (No dia que eu escrevi isto ainda não foram publicado as palestras da PyNE23)
+Conheci o projeto Querido Diário na Python Nordeste de 2023 em Salvadoer, só
+conheci mesmo , pois por conta de burrice minha em pedir o almoço pelo iFood um
+pouco tarde , acabei não assistindo a palestra (No dia que eu escrevi isto ainda
+não foram publicado as palestras da PyNE23)
 
-Mas fiquei encucado com essa coisa de open knowledge, sério eu , o chato do "use open source", não fazia ideia do que era isso.
+Mas fiquei encucado com essa coisa de open knowledge, sério eu , o chato do "use
+open source", não fazia ideia do que era isso.
 
-Explicando (e não explicando) Open knowledge é uma iniciativa muito massa que consisteem trabalho voluntario com o objetivo de afiar os conhecimentos a medida que traga mais transparencia aos dados governamentas, que por sua vez irão possibilitar uma fácil análise de informações para as políticas publicas. Saiba mais sobre [Open knowledge](https://ok.org.br/) e [Querido Diário](https://queridodiario.ok.org.br/) 
+Explicando (e não explicando) Open knowledge é uma iniciativa muito massa que
+consisteem trabalho voluntario com o objetivo de afiar os conhecimentos a medida
+que traga mais transparencia aos dados governamentas, que por sua vez irão
+possibilitar uma fácil análise de informações para as políticas publicas. Saiba
+mais sobre [Open knowledge](https://ok.org.br/) e
+[Querido Diário](https://queridodiario.ok.org.br/)
 
-Achei o projeto muito interessante, principalmente a parte da arquitetura, e mais impressionante ainda como é que eles fazuam para conseguir raspar dados de N sites com N formas de se interagir, dai nada melhor do que fazer para aprender
+Achei o projeto muito interessante, principalmente a parte da arquitetura, e
+mais impressionante ainda como é que eles fazuam para conseguir raspar dados de
+N sites com N formas de se interagir, dai nada melhor do que fazer para aprender
 
 ![image](qd-arch.png)
 
-Então eu, o idiota que vos fala decidi usar meu não tão vasto conhecimento em extraćão e webcrawler de dados para adicionar o Diário Oficial da cidade dos meus pais Maragogipe , município do reconcavo Baiano
+Então eu, o idiota que vos fala decidi usar meu não tão vasto conhecimento em
+extraćão e webcrawler de dados para adicionar o Diário Oficial da cidade dos
+meus pais Maragogipe , município do reconcavo Baiano
 
 # Acesso ao site
 
-Primeiro tentei descobrir se realmente havia uma versão digializada dos Diários Oficiais do muniípio de Maragogipe. Pesquisando no DuckDuckGo eu encontrei este site [aqui](https://sai.io.org.br/ba/maragojipe/Site/DiarioOficial).
+Primeiro tentei descobrir se realmente havia uma versão digializada dos Diários
+Oficiais do muniípio de Maragogipe. Pesquisando no DuckDuckGo eu encontrei este
+site [aqui](https://sai.io.org.br/ba/maragojipe/Site/DiarioOficial).
 
-Dai decidi verificar no site do Querido Diário se já havia sido cadastrado antes.
+Dai decidi verificar no site do Querido Diário se já havia sido cadastrado
+antes.
 
 ![image](screenshot-qd-maragojipe.png)
 
-Como mostra captura de tela abaixo, eles possuem o link do diário oficial , mas não conseguem extrair o conteúdo, verificando o link, percebi que o mesmo estava errado.
+Como mostra captura de tela abaixo, eles possuem o link do diário oficial , mas
+não conseguem extrair o conteúdo, verificando o link, percebi que o mesmo estava
+errado.
 
 ![image](screenshot-qd-error.png)
 
-Sem críticas ao projeto neste caso, pois acredito que algo mantido de forma voluntária tem a dificuldade em lhedar quando esse tipo de coisa muda, dependendo do trabalho ativo de alguém para notifica r esse tipo de coisa.
+Sem críticas ao projeto neste caso, pois acredito que algo mantido de forma
+voluntária tem a dificuldade em lhedar quando esse tipo de coisa muda,
+dependendo do trabalho ativo de alguém para notifica r esse tipo de coisa.
 
-Então sabemos o site , sabemos que temos arquivos recentes disponivéis , verificamos que temos tanbêm os arquivos diários (por publicação) em PDF e os resumos mensais em JSON e PDF
+Então sabemos o site , sabemos que temos arquivos recentes disponivéis ,
+verificamos que temos tanbêm os arquivos diários (por publicação) em PDF e os
+resumos mensais em JSON e PDF
 
 # Instalando o projeto
 
-Eu inicialmente não iria explicar o processo de instalação, apenas deixaria um link para o repositório, pois lá existe todas as instruções. Porêm, não sei se tem algo haver com a distro que uso (Atuaslmente NixOS-23.05) ou se é algo referente a versão do Python (testei com 3.10 e 3.8), mas houve um erro durante o processo de instalação.
+Eu inicialmente não iria explicar o processo de instalação, apenas deixaria um
+link para o repositório, pois lá existe todas as instruções. Porêm, não sei se
+tem algo haver com a distro que uso (Atuaslmente NixOS-23.05) ou se é algo
+referente a versão do Python (testei com 3.10 e 3.8), mas houve um erro durante
+o processo de instalação.
 
 No geral para instalar é bem simples:
 
-1. SEMPRE verifique a versão do python, não estava explicita no projeto, mas por causa de uma das instruções em caso de falha, chuto que seja 3.6 ou +.
+1. SEMPRE verifique a versão do python, não estava explicita no projeto, mas por
+   causa de uma das instruções em caso de falha, chuto que seja 3.6 ou +.
 
 ```bash
 python --version
 ```
 
-2. SEMPRE crie um anbiente virtual de desenvolvimento (principalmente se estiver num Debian da vida)
+2. SEMPRE crie um anbiente virtual de desenvolvimento (principalmente se estiver
+   num Debian da vida)
 
 ```bash
 python -m venv .venv
@@ -74,41 +102,63 @@ pre-commit install
 
 # Desenvolvendo a solução
 
-Antes de mais nada eu decidi dar uma explorada no site em questão, neste caso o diário oficial de Maragogipe que é mantido pela plataforma SAI/IMAP.
+Antes de mais nada eu decidi dar uma explorada no site em questão, neste caso o
+diário oficial de Maragogipe que é mantido pela plataforma SAI/IMAP.
 
-Ao navegar pelo site de primeira eu percebi que não seria fácil extrair os conteúdos da página pois estavam agrupados os diários oficiais por arcodeôns mensais, ou seja eu teria que desenvolver uma estrutura que extraisse os dados da página, logo eu decidi análisar os daods enviados ao preencher uma pesquisa.
+Ao navegar pelo site de primeira eu percebi que não seria fácil extrair os
+conteúdos da página pois estavam agrupados os diários oficiais por arcodeôns
+mensais, ou seja eu teria que desenvolver uma estrutura que extraisse os dados
+da página, logo eu decidi análisar os daods enviados ao preencher uma pesquisa.
 
 ![image](site-maragojipe.png)
 
 ![image](request-post.png)
 
-Como pode ver, basicamente ao preencher um formulário o diário oficial manda uma requisição post com algumas informações, ao transpor a requisição pro insominia ela ficaria mais ou menos assim:
+Como pode ver, basicamente ao preencher um formulário o diário oficial manda uma
+requisição post com algumas informações, ao transpor a requisição pro insominia
+ela ficaria mais ou menos assim:
 
 ![image](insominia-test.png)
 
 ALgumas coisas que descobrir ao futucar a url:
 
 - Podemos remover os parâmetros em branco ou com ""
-- Ao mudar o campo `diarioOficial.tipoFormato` para o valor 1 , teremos a resposta em json, assim como 2 teremos a resposta em xml
-- Podemos usar os campos `diarioOficial.dataInicial` e `diarioOficial.dataFinal` para definir períodos
-- Precisamos sempre preencher o ano para que ele consiga trazer os diários oficiais para o mesmo ano, assim teremos que paginar as requisições por ano
+- Ao mudar o campo `diarioOficial.tipoFormato` para o valor 1 , teremos a
+  resposta em json, assim como 2 teremos a resposta em xml
+- Podemos usar os campos `diarioOficial.dataInicial` e `diarioOficial.dataFinal`
+  para definir períodos
+- Precisamos sempre preencher o ano para que ele consiga trazer os diários
+  oficiais para o mesmo ano, assim teremos que paginar as requisições por ano
 
 # Gerando as urls de download
 
-Primeiramente eu percebi que precisariamos gerar a url de download com base no dôminio do site, porém , como descobri posteriormente este dôminio poderia variar de duas formas, pois alguins estados contrataram a plataforma para mais de um município, enquanto outros contrataram por município, assim gerando dois tipos de dôminio:
+Primeiramente eu percebi que precisariamos gerar a url de download com base no
+dôminio do site, porém , como descobri posteriormente este dôminio poderia
+variar de duas formas, pois alguins estados contrataram a plataforma para mais
+de um município, enquanto outros contrataram por município, assim gerando dois
+tipos de dôminio:
 
-- Dôminios com subpath , onde teremos o subpath estado/município, ex: https://sai.io.org.br/ba/maragojipe/Site/DiarioOficial
-- Dôminios sem subpath , apenas para o municípo: https://www.igaci.al.gov.br/site/diariooficial
+- Dôminios com subpath , onde teremos o subpath estado/município, ex:
+  https://sai.io.org.br/ba/maragojipe/Site/DiarioOficial
+- Dôminios sem subpath , apenas para o municípo:
+  https://www.igaci.al.gov.br/site/diariooficial
 
-Dessa forma precisei investigar um pouco mais as requisições até descobrir que poderia usar o mesmo dôminio para gerar o link de download dos diários, dessa forma pude compor o link dessa forma:
+Dessa forma precisei investigar um pouco mais as requisições até descobrir que
+poderia usar o mesmo dôminio para gerar o link de download dos diários, dessa
+forma pude compor o link dessa forma:
 
 ```python
 file_url = f"https://sai.io.org.br/Handler.ashx?f=diario&query={edition_number}&c={client_id}&m=0"
 ```
-onde `edition_number` é o número da ediçĩo oficial e o `client_id` é o id do município no sistema SAI/IMAP extraido do própio site do município
+
+onde `edition_number` é o número da ediçĩo oficial e o `client_id` é o id do
+município no sistema SAI/IMAP extraido do própio site do município
 
 # Resultado final
-Juntando todas essas informações e alguns ajustes de review de código , foi gerado o seguinte código base para a implementação do uso dos portais SAI/IMAP
+
+Juntando todas essas informações e alguns ajustes de review de código , foi
+gerado o seguinte código base para a implementação do uso dos portais SAI/IMAP
+
 ```python
 #data_collection/gazette/spiders/base/sai.py
 import datetime as dt
@@ -190,11 +240,10 @@ class SaiGazetteSpider(BaseGazetteSpider):
                 is_extra_edition=False,
                 power="executive_legislative",
             )
-
 ```
 
-Como trata-se de um site e uma implementação qu:w
-e pode funcionar para vários municípios eu criei esta classe base, dessa forma posso usar ela dessa forma:
+Como trata-se de um site e uma implementação qu:w e pode funcionar para vários
+municípios eu criei esta classe base, dessa forma posso usar ela dessa forma:
 
 ```python
 from gazette.spiders.base.sai import SaiGazetteSpider
@@ -204,15 +253,25 @@ class BaMaragogipeSpider(SaiGazetteSpider):
     TERRITORY_ID = "2920601"
     name = "ba_maragogipe"
     base_url = "https://sai.io.org.br/ba/maragojipe"
-
 ```
 
 # Considerações finais
 
-Primeiramente ressaltar a importância do projeto, pode parecer bobo, mas criar um projeto de uma grande esclaa para fazer valer tem seus desafios, por exemplo, ao desenvolver a solução acima eu me deparei com dados faltantes, mas até nesse ponto o pessoal da Open Knowledge tem uma solução onde podemos reportar estes casos, os quais serão encaminhados para pessoas responsáveis que possam nos auxiliar , e em alguns casos oferencendo suporte jurídico.
+Primeiramente ressaltar a importância do projeto, pode parecer bobo, mas criar
+um projeto de uma grande esclaa para fazer valer tem seus desafios, por exemplo,
+ao desenvolver a solução acima eu me deparei com dados faltantes, mas até nesse
+ponto o pessoal da Open Knowledge tem uma solução onde podemos reportar estes
+casos, os quais serão encaminhados para pessoas responsáveis que possam nos
+auxiliar , e em alguns casos oferencendo suporte jurídico.
 
-Ainda que de forma simplificada, não é difícil atuar com raspadores de dados usando soluções em Python, até mesmo eu mais acostumado com Javascript tive poucos problemas, mas nada que 10 min pesquisando no duckduckgo não resolvesse.
+Ainda que de forma simplificada, não é difícil atuar com raspadores de dados
+usando soluções em Python, até mesmo eu mais acostumado com Javascript tive
+poucos problemas, mas nada que 10 min pesquisando no duckduckgo não resolvesse.
 
-E sim penso que o uso de IA e ferramentas generativas como Copilot e ChatGPT poderiam tornar meu trabalho mais simples , mas , é escavando, futucando, cutucando as onças com vara-curta que podemos evoluir profissionalmente e tecnicamente. Então se está a procura de um projeto open source com uma comunidade ativa e que PRECISA de muitas mãos, dá uma olhada no Querido Diário.
+E sim penso que o uso de IA e ferramentas generativas como Copilot e ChatGPT
+poderiam tornar meu trabalho mais simples , mas , é escavando, futucando,
+cutucando as onças com vara-curta que podemos evoluir profissionalmente e
+tecnicamente. Então se está a procura de um projeto open source com uma
+comunidade ativa e que PRECISA de muitas mãos, dá uma olhada no Querido Diário.
 
 Beijos de luz e fico por aqui

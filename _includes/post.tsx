@@ -15,6 +15,8 @@ export default function (
     nav,
   } = data;
 
+  const upCover = cover ? cover.split(".")[0] : undefined;
+  const coverRes = upCover + "-big" + "." + "webp";
 
   return (
     <>
@@ -23,6 +25,7 @@ export default function (
         <title>
           {`${sitename} - ${title}`}
         </title>
+        <link rel="stylesheet" href="/theme.css" />
       </header>
       <html>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
@@ -31,7 +34,7 @@ export default function (
             <a href={url} aria-label={`Go to ${title}`}>
               <img
                 class="image"
-                src={cover}
+                src={coverRes}
                 alt={`Cover for ${title} post`}
               />
             </a>

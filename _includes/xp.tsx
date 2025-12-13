@@ -1,4 +1,3 @@
-
 export default function (
   data: Lume.Data,
 ) {
@@ -14,19 +13,19 @@ export default function (
     nav,
   } = data;
 
-
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
       <header>
         <title>
           {`${sitename} - ${title}`}
+                    <link rel="stylesheet" href="/theme.css" />
+
         </title>
       </header>
       <html>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
-         
           <h1>{title}</h1>
           <h2>{description}</h2>
           <ul>
