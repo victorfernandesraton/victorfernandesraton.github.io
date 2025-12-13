@@ -1,6 +1,6 @@
 +++
 title = 'REST API: Porquê você complica?'
-description = 'Qauis erros e complicações podemos evitar ao escrever uma API REST'
+description = 'Fazendo uma API REST descomplicada'
 date = 2025-12-06T02:12:00-03:00
 tags = ["python", "api", "rest", "http"]
 draft = false
@@ -14,6 +14,12 @@ draft = false
 
 Porém se possui interesse nessses temas, recomendo muito o curso [FastAPI do Zero](https://fastapidozero.dunossauro.com/estavel/) publicado pelo [Eduardo Mendes](https://dunossauro.com).
 
+# Esta apresentação é sobre
+
+- Formas de simplificar a implementação e consumo de API REST por meio de boas práticas.
+- Independente de tecnologia, ecosistema e linguagem.
+- Otimizações para facilitar sua vida na hroa de lidar com automações e deploys orquestrados 
+
 # A web , REST API e Hipermidia
 
 Se você atua na área de tecnologia como desenvolvedor de sofware para a web, já deve estar familiarizado com o termo API(Application Progaming Interface - Interface de Programação de Aplicação), que pode ser toda e quaisquer aplicação que tem como objetivo interfacear de forrma programavél algum recurso, indo de consulta a base de dados a acesso a recursos de hardware como GPU.
@@ -24,9 +30,23 @@ Porém pensando em aplicações web, uma API REST(ful) - Representational State 
 
 Uma aplicação REST que contemple todos os princípios referentes á ideopotência, que é a capacidade de representar todos os esttados necessários de forma semântica, usando os verbos adequados (GET, POST, PUT, PATCH, DELETE...) bem como respeitando os principíos de se manter sem estados entre requisições, ser cacheavél e possuir mensagens expresivas em caso de falha é denominada de RESTful, porém podemos usar o termo em questão de forma análoga ao próprio conceito de REST API em linhas gerais.
 
+# Exemplo prático e resumido
+
+Uma API REST é como um restaurante, onde o estabelecimento é o `servidor`, o `cliente` por sua vez está implicito no nome.
+
+- Para saber quais pratos estão disponivéis, você lê o cardápio, assim como um método GET no endpointt `/cardapio` pode retornar uma lista.
+- Ao pedir mais informações ao garçon sobre o prato em questão , seria como usar o método GET no endpoint `cardapio/12` para saber os detalhes do item 12 do cardápio
+- Para realizar um pedido ao garçon para a sua mesa, seria como usar o método POST no endpoint /pedido, enviado no corpo da requisição um objetto com o número da sua mesa e os items do cardápio.
+- Para pedir uma mudança em um item no prato, seria equivalente ao usar o método PATCH.
+- Para mudar o pedido por completo , ou pedir (com educação) para mudar o seu pedido é como usar o método PUT
+- Para cancelar o pedido , podemos usar o DELETE
+- O método OPTIONS seria equivalente a verificar se o restaurante está servindo aquele prato.
+- O método HEAD seria equivalente a avaliar o preço da refeição e se você tem alguma alergia ao prato em questão.
+- Se o restuarante possui pulseiras de identificação entregues na hora da reserva, seria o equivalente ao utilizar tokens de autenticação.
+
 Um exeplo de API REST aberta ao público seria a API [OMDb](https://www.omdbapi.com/), Open Movie Databse 
 
-# Cabeçarios HTTP (Headers)
+## Cabeçarios HTTP (Headers)
 
 Cabeçarios são informações extras que podem ser enviadas , bem como recebidas por uma ou para uma API REST, nestes em formatos de texto (string) detalhamos informações e metaddos no geral sobre o conteúdo trafegado, coisas como informar a origem da aplicação, realizar o envio de chaves de autentcação e até mesmo informar a aplicação cliente a política de cache do recurso.
 
@@ -35,7 +55,7 @@ Exemplos de cabeçários comuns
 ![image](Screenshot_20251212_103814.webp)
 
 
-# HATEOS (Hypermidia as a the Engine of the Application State)
+## HATEOS (Hypermidia as a the Engine of the Application State)
 
 Nesta conversa, o termo Hipermidia, mais precisamente o acrônomo Hypermedia as the engine of application state (HATEOAS), seria uma forma de implementação de arquitetura para REST API que por meio das hipermidias, torna a consulta e navegação pelos recursos mais dinâmica, conseguindo comunicar por meio de metadados e padrões, formas de navegação e integração entre os recursos disponibilizados.
 
@@ -57,7 +77,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, *
 
 ---
 
-# **JSON:API**
+## **JSON:API**
 
 ```json
 {
@@ -86,7 +106,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, *
 
 ---
 
-# **Siren**
+## **Siren**
 
 ```json
 {
@@ -115,7 +135,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, *
 
 ---
 
-# **Hydra (JSON-LD)**
+## **Hydra (JSON-LD)**
 
 ```json
 {
@@ -138,7 +158,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, *
 
 ---
 
-# **Collection+JSON**
+## **Collection+JSON**
 
 ```json
 {
@@ -175,7 +195,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, *
 
 ---
 
-# **UBER (Uber Hypermedia)**
+## **UBER (Uber Hypermedia)**
 
 ```json
 {
@@ -200,7 +220,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, *
 ```
 
 
-# HATEOS é complicado, mas não deveria ser
+## HATEOS é complicado, mas não deveria ser
 
 A principal dificuldade dos formatos comuns para HATEOS gira em torno da dificuldade de serialização:
 
@@ -212,7 +232,7 @@ A serialização mal otimizada pode dificultar a performance de aplicações din
 
 Outro problema menos evidente seria a obrigatoriedade de manter implementações sequênciais de problemas que seriam resolvidos de uma forma melhor por meio concorrência/paralelismo
 
-# Como resolver o problema
+### Como resolver o problema
 
 A solução para as dificuldades geradas pela implementação de uma arquitetura HATEOS consiste em atender os seguintes pré-requisitos
 
@@ -256,13 +276,15 @@ Link: <https://api.exemplo.com/items?page=2>; rel="next",
 
 Considerando cenários de requisições de criação de dados , principalmente de objetos únicos, podemos usar o header `Location` caso este possua algum endpoint de consulta por meio de id de referência que seja único e ideopotente.
 
-# Demonstração e estatística
+## Demonstração e estatística
 
 Iremos demonstrar por meio de uma aplicação genérica Python de consumo de uma feed de um banco local em SQLite o impacto na paginação realizada por uma aplicação cliente em Javascript, usaremos o NodeJS como cliente, simulando uma aplicação cliente que tenha suporte a eventLoop e stream de dados , que se aproxima muito da realidade de um APP Nativo escrito em React/Flutter bem como um app Web usando quaisquer tecnologia.
 
 Não usaremos ferramentas de teste de carga , afinal nosso objetivo não é avaliar a performance do servidor em si, teremos o monitoramento do uso de recursos do lado servidor, bem como do lado de cliente, contabilizando o uso de CPU e RAM por parte do processo executado, pela diferença do total disponibilizado por este no inicio subtraido ao total de uso de recursos no final.
 
 A suite de testes do lado cliente será sequencial, ainda que internamente os testes serão paralelizados
+
+# Status e healthcheck
 
 
 # Referências
