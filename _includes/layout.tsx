@@ -6,6 +6,8 @@ export default ({ title, children, theme }: Lume.Data) => (
       <head>
         <title>{title}</title>
         <link rel="stylesheet" href="/theme.css" />
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
       </head>
       <body>
         {children}

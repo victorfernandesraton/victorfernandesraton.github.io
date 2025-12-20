@@ -29,9 +29,18 @@ site.ignore("README.md", "github/");
 site.use(nav());
 site.data("fullDate", function(date: Date, location: string = "pt-BR", timeZone = 'America/Bahia'): string {
     const formatter = new Intl.DateTimeFormat(location,{
-        dateStyle: 'full',
+        dateStyle: 'medium',
         timeStyle: 'short',
         hour12: false,
+        timeZone
+    })
+    return formatter.format(date)
+})
+
+site.data("monthYear", function(date: Date, location: string = "pt-BR", timeZone = 'America/Bahia'): string {
+    const formatter = new Intl.DateTimeFormat(location,{
+        year: "numeric",
+        month: "short",
         timeZone
     })
     return formatter.format(date)

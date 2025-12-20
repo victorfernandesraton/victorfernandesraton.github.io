@@ -21,6 +21,7 @@ export default function (
         <head>
           <title>{title}</title>
           <link rel="stylesheet" href="/theme.css" />
+          <meta name="viewport" content="width=device-width,initial-scale=1"/>
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>

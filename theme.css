@@ -35,6 +35,23 @@
 body {
   font-family: display;
   color: var(--fg);
+  min-height: 100vh;
+  margin: 0;
+}
+
+.intro > article {
+    text-align: start;
+}
+
+.intro ol li, .list ol li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        align-items: start;
+    }
 }
 
 a {
@@ -97,8 +114,9 @@ footer, .intro {
   text-align: center;
 }
 
+
+
 footer {
-    position: absolute;
     padding-bottom: 2rem;
     justify-self: center;
 }
@@ -128,7 +146,7 @@ ul.tags {
 
 .single-header .cover {
   width: 100%;
-  height: 10rem;
+  height: 15rem;
   object-fit: cover;
   mask-image: -webkit-gradient(
     linear,
