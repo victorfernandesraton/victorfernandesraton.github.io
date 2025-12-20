@@ -3,7 +3,7 @@ title = 'REST API: Porquê você complica?'
 description = 'Fazendo uma API REST detalhada'
 date = 2025-12-06T02:12:00-03:00
 tags = ["api", "rest", "http"]
-draft = false
+draft = true
 +++
 
 # Esta apresentação NÃO é sobre:
