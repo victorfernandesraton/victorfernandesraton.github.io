@@ -2,6 +2,7 @@ export default function (
   data: Lume.Data,
 ) {
   const {
+    page,
     title,
     children,
     tags,
@@ -18,7 +19,7 @@ export default function (
     fullDate,
   } = data;
 
-  const upCover = cover ? cover.split(".")[0] : undefined;
+  const upCover = cover ? page.data.url + "/" + cover.split(".")[0] : undefined;
   const coverRes = upCover + "-big" + "." + "webp";
   const coverFallback = upCover + "-small" + "." + "webp";
   const createdAt = new Date(date)
@@ -38,6 +39,9 @@ export default function (
             content="width=device-width, initial-scale=1.0"
           />
           <meta name="description" content={description} />
+          {coverFallback && (
+              <meta itemprop="image" content={`${url}/${coverFallback}`} />
+          )}
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
@@ -64,7 +68,7 @@ export default function (
             <h1>{title}</h1>
             <h2>{description}</h2>
             <h3>{fullDate(createdAt)}</h3>
-            <ul>
+            <ul class="tags">
               {tags.map((item, index) => (
                 <li key={index}>
                   <a href={`/tag/${item}`}>{item}</a>

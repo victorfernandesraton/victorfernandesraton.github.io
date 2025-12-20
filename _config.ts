@@ -9,6 +9,7 @@ import transformImages from "lume/plugins/transform_images.ts";
 import googleFonts from "lume/plugins/google_fonts.ts";
 import highlight from "lume/plugins/code_highlight.ts";
 import gzip from "lume/plugins/gzip.ts";
+import feed from "lume/plugins/feed.ts";
 
 const site = lume({ server: { debugBar: false } }, {
   markdown: {
@@ -58,6 +59,34 @@ site.use(transformImages(/* Options */));
 
 site.use(inline());
 site.use(gzip());
+site.use(feed({
+  output: ["/posts.rss", "/posts.json"],
+  query: "type=post",
+  info: {
+    title: "=site.title",
+    description: "=site.description",
+  },
+  items: {
+    title: "=title",
+    description: "=description",
+    published: "=date",
+    image:"$ img.high attr(src)"
+  },
+}));
+
+site.use(feed({
+  output: ["/experiences.rss", "/experiences.json"],
+  query: "type=xp",
+  info: {
+    title: "=site.title",
+    description: "=site.description",
+  },
+  items: {
+    title: "=title",
+    description: "=posittion",
+    published: "=end_date",
+  },
+}));
 // font logo  - Universe 75 Black
 // font title - Univers LT 49 Light Ultra Condensed
 // font links and extra -  Roadgeek 2005 Series F or D

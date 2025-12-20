@@ -71,6 +71,12 @@ nav {
 nav ul {
   text-align: center;
   display: flex;
+  max-width: 900px;
+  flex-direction: row;
+  list-style: none;
+  justify-content: flex-start;
+  grid-gap: 1rem;
+  padding: 0;
 }
 
 main, article {
@@ -90,6 +96,22 @@ article img {
 footer, .intro {
   text-align: center;
 }
+
+footer {
+    position: absolute;
+    padding-bottom: 2rem;
+    justify-self: center;
+}
+ul.tags {
+    display: flex;
+    max-width: 900px;
+    flex-direction: row;
+    list-style: none;
+    justify-content: flex-start;
+    grid-gap: 1rem;
+    padding: 0;
+}
+
 
 .intro ol, .list ol, .list ul {
   list-style-type: none;

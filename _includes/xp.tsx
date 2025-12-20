@@ -17,15 +17,15 @@ export default function (
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
-      <head>
-        <title>
-          {`${sitename} - ${title}`}
-          <link rel="stylesheet" href="/theme.css" />
-        </title>
-      </head>
       <html data-webui-theme={theme}>
+        <head>
+          <title>{title}</title>
+          <link rel="stylesheet" href="/theme.css" />
+        </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
+
+          <main class="list">
           <h1>{title}</h1>
           <h2>{description}</h2>
           <ul>
@@ -35,7 +35,6 @@ export default function (
               </li>
             ))}
           </ul>
-          <main>
             {children}
           </main>
 
