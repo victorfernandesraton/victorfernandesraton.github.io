@@ -1,7 +1,7 @@
 export default function (
   { title, children, search, comp, lang, alternates, nav, theme, fullDate, page, monthYear }: Lume.Data,
 ) {
-  const recent = search.pages(`lang=${lang} type=post draft=false`, "date=desc", 3);
+  const recent = search.pages(`lang=${lang} type=post`, "date=desc", 3);
   const xp = search.pages(`lang=${lang} type=xp`, "start_date=desc end_date=desc", 3);
 
   return (
