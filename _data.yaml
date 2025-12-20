@@ -4,6 +4,8 @@ metas:
   fediverse: "@v_raton@fosstodon.org"
   lang: pt
   generator: true
+  color: black
+  robots: true
 social:
   mastodon: "@v_raton@fosstodon.org"
   codeeberg: "https://codeberg.org/v_raton"

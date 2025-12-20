@@ -10,8 +10,9 @@ import googleFonts from "lume/plugins/google_fonts.ts";
 import highlight from "lume/plugins/code_highlight.ts";
 import gzip from "lume/plugins/gzip.ts";
 import feed from "lume/plugins/feed.ts";
+import metas from "lume/plugins/metas.ts";
 
-const site = lume({ server: { debugBar: false } }, {
+const site = lume({ server: { debugBar: true } }, {
   markdown: {
     plugins: [mila, [markdownItMedia, { controls: true }]],
   },
@@ -66,8 +67,10 @@ site.add("./theme.css");
 
 site.use(transformImages(/* Options */));
 
+site.use(metas())
 site.use(inline());
 site.use(gzip());
+
 site.use(feed({
   output: ["/posts.rss", "/posts.json"],
   query: "type=post",
@@ -96,6 +99,7 @@ site.use(feed({
     published: "=end_date",
   },
 }));
+
 // font logo  - Universe 75 Black
 // font title - Univers LT 49 Light Ultra Condensed
 // font links and extra -  Roadgeek 2005 Series F or D

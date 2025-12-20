@@ -1,2 +1,9 @@
 type: xp
 layout: xp.tsx
+metas:
+  site: vraton's site
+  fediverse: "@v_raton@fosstodon.org"
+  lang: pt
+  generator: true
+  title: "=title"
+  description: "=description"

@@ -18,3 +18,5 @@ metas:
   fediverse: "@v_raton@fosstodon.org"
   lang: pt
   generator: true
+  title: "=title"
+  description: "=description"
