@@ -187,3 +187,7 @@ ul.tags {
 .blurred-img img.high.loaded {
   opacity: 1;
 }
+
+article video {
+    max-width: 100%;
+}
