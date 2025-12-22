@@ -105,6 +105,7 @@ main, article {
   padding-left: 1rem;
   padding-right: 1rem;
   max-width: 900px;
+  word-wrap: break-word;
 }
 article img {
   margin-left: auto;
@@ -132,6 +133,7 @@ ul.tags {
     justify-content: flex-start;
     grid-gap: 1rem;
     padding: 0;
+    flex-wrap: wrap;
 }
 
 
