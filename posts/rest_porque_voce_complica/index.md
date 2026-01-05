@@ -3,7 +3,7 @@ title = 'REST API: Porquê você complica?'
 description = 'Fazendo uma API REST detalhada'
 date = 2025-12-06T02:12:00-03:00
 tags = ["api", "rest", "http"]
-draft = true
+draft = false 
 +++
 
 # Esta apresentação NÃO é sobre:
@@ -340,6 +340,27 @@ Considerando cenários de requisições de criação de dados , principalmente d
 objetos únicos, podemos usar o header `Location` caso este possua algum endpoint
 de consulta por meio de id de referência que seja único e ideopotente.
 
+Outro ponto importante é que nem sempre poderemos configurar o domínio, nossa API pode estar limitada por um API Getway ou ferramenta de DNS, nesses casos é recomendado o uso de links relativos, isso cria um ônus para o cliente concatenar ao dôminio original, mas este é disponiblizado no header Host.
+
+Dessa forma o exemplo que utilizamos anteriormente é capaz de evoluir para esse modelo
+
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+Total-Count: 1000               # Total de itens no banco de dados
+Total-Pages: 100                # Total de páginas (se você já calculou)
+Items-Per-Page: 10              # Itens por página
+Current-Page: 1                 # Página atual
+Items-Returned: 1              # Total de itens retornados na página atual
+Link: </items?page=2>; rel="next",
+      </items?page=100>; rel="last",
+      </items?page=1>; rel="first"
+      </items?page=1>; rel="prev"
+```
+
+O uso de contadores deve ser moderado, visto que em bases grandes de dados , ou com mudanças constantes, essa operação pode custar muito recurso, nesses casos cabe ao desenvolvedor responsavél, avaliar as necessidades e capacidades do projeto.
+
 # Status Code
 
 StatusCode são números de 3 dígitos entregues numa requisição http como forma de comunicar o retorno para uma requisição de forma imediata, sem precisar de serialização ou informações adicionais para tomar decisões básicas.
@@ -370,7 +391,7 @@ Podemos dividir os status code em 5 faixas.
     - 502: Bad Getway: Quando um servidor de Getway falha em achar ou realizar a conexão ocasionada pelo servidor de origem, normalmente associado a timeout entre o getway e o servidor consumido por este.
     - 503: Service Unavailable, mostado quando há uma falha temporária, em conjunto com uma página de erro amigavél se possivél para explicar de forma breve a falha, em cassos de serviços como aplicação, é recomendado devolver o Header Retry-After com informações de qunado está previsto a voltar o recurso. Era muito comun no período de transição para a Web 2.0 (Twiter lá por 2010 e o famigerado "Rails não escala")
 
-## Dicas e macetes
+## Dicas e macetes para uso coerente de status code
 
 - Quando uma operação como DELETE puder ser revertida por meio de um endpoint simples, ao realizar o DELETE trazer a url de undo nos headers.
 - Evite escrever headers costumizados que podem ser sobreescritos por proxy, como headers referente a timeout
