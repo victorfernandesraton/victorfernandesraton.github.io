@@ -32,7 +32,7 @@ export default function (
           <ul>
             {tags.map((item, index) => (
               <li key={index}>
-                <a href={`/tag/${item}`}>{item}</a>
+                <a href={`/tag/${item}/`}>{item}</a>
               </li>
             ))}
           </ul>
