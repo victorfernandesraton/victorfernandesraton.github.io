@@ -79,6 +79,44 @@ Uma API REST é como um restaurante, onde o estabelecimento é o `servidor`, o
 Um exeplo de API REST aberta ao público seria a API
 [OMDb](https://www.omdbapi.com/), Open Movie Databse
 
+# Componentes de uma requisição HTTP
+
+Dado que o principal objetivo de uma requisição HTTP, diz respeito a capacidade de comunicar dados entre servidor e cliente, podemos dividir esses dados em dois grupos:
+
+- informações de infraestrutura e estado: são informações referentes a requisição que comunicam de forma genérica e imediata o estado atual de um servidor ou de um dado solicitado a este. Podemos dizer que neste grupo encontra-se os códigos de estado (Status Code) e o cabeçário.
+- informações de resultado: trata-se da informação retornada pelo servidor, chamamos normalmente isso de corpo de resposta ou response body da requisição. Este pode estar codificado em vários formatos, os mais comuns são `application/json`, `application/plaintext` para dados em texto plano bem como `application/media` para multimídia.
+
+## Status Code
+
+StatusCode são números de 3 dígitos entregues numa requisição http como forma de comunicar o retorno para uma requisição de forma imediata, sem precisar de serialização ou informações adicionais para tomar decisões básicas.
+
+É importante que estes sejam usados de forma consistente, ao passo que clientes automatizados como frameworks possam consumir sua API sem muito workarround
+
+Podemos dividir os status code em 5 faixas.
+
+1. **1xx**: status de informação, usados para comunicar algum tipo de informação a respeito do servidor.
+    - 100: continue, muito usado quando se quer evitar o envio de um payload muito grande mas precisa verificar se o servidor está disponivél
+        - Um caso de uso curioso que eu vi isso em prática foi em fila de geração de PDF de apólices em sistemas de seguradora.
+2. **2xx**: status de sucesso (é o que esperamos que aconteça no caminho feliz), representa uma operação bem sucedida.
+    - 200: Ok, simplesmente Ok
+    - 201: Content created, um puxão de orelha nos devs que deveriam usar mais esse status, principalmente quando uma operação resulta em algum tipo de dado criado, como vimos, métodos POST e PUT.
+    - 202: Accepted, quando uma requisição é aceita , porém o resultado será mandado depois, isso é crucial quando se faz http polling, que é o processo de ficar verificando no servidor até a informação está pronta , quando retorna um status 200, muito comun em sistemas de fila de impressão mais antigos ou de fila de arquivos gerados em background.
+    - 204: No content, a operação deu certo, mas não tem body algum a ser retornado, porém os headers são úteis e se necessário, deve ser atualizado cache, em casos de DELETE é o ideal a ser usado na maioria dos cenários*
+3. **3xx**: status de redirecionamento, servem para informar os possivéis motivos de dados terem sido migrados
+    - 301: Moved Permanently, siginifica que o conteúdo foi movido de url, a nova será disponibilizada no response.
+    - 302: Found, siginifica que o conteúdo foi achado e movido temporariamente, pode representar uma nova url e um novo método.
+    - 307: Temporary Redirect, semântica igual ao 302, porém significa que o método HTTP não deve ser mudado no redirect, apenas a url.
+4. **4xx**: status de erros causados pelo cliente ~~culpa do frontend~~, quando algum dado enviado ou requisição feita pelo lado cliente é inconsistente.
+    - 404: Não encontrado, para rota ou conteúdo não encontrado, origem do meme 404: Not Found
+    - 401: Não autenticado, siginifica que o usuário não forneceu a informação que determina que ele foi autenticado em algum momento, usado como identificador de endpoints protegidos, ou seja , endpoints disponivéis apenas para usuários autenticados.
+    - 403: Forbidden, siginifica que o usuário, independente de autenticado ou não, não possui acesso a informação devida.
+    - 418: I'm a teapot (Eu sou uma chaleira), servidor se recusa a fazer café.
+5. **5xx**: status de erro causados pelo servidor ~~culpa sua~~, usado principalmente para erros de mecanismos internos/
+    - 500: Internal Server Error, quando seu servidor tem um erro de execução , runtime ou um erro não tratavél, em ambiente de desenvolvimento e nos logs, normalmente consta a stacktrace que ocasionou a falha.
+    - 502: Bad Getway: Quando um servidor de Getway falha em achar ou realizar a conexão ocasionada pelo servidor de origem, normalmente associado a timeout entre o getway e o servidor consumido por este.
+    - 503: Service Unavailable, mostado quando há uma falha temporária, em conjunto com uma página de erro amigavél se possivél para explicar de forma breve a falha, em cassos de serviços como aplicação, é recomendado devolver o Header Retry-After com informações de qunado está previsto a voltar o recurso. Era muito comun no período de transição para a Web 2.0 (Twiter lá por 2010 e o famigerado "Rails não escala")
+
+
 ## Cabeçarios HTTP (Headers)
 
 Cabeçarios são informações extras que podem ser enviadas , bem como recebidas
@@ -90,6 +128,8 @@ informar a aplicação cliente a política de cache do recurso.
 Exemplos de cabeçários comuns
 
 ![image](Screenshot_20251212_103814.webp)
+
+# Um caso de otimização por meio de uso de dados
 
 ## HATEOS (Hypermidia as a the Engine of the Application State)
 
@@ -361,37 +401,7 @@ Link: </items?page=2>; rel="next",
 
 O uso de contadores deve ser moderado, visto que em bases grandes de dados , ou com mudanças constantes, essa operação pode custar muito recurso, nesses casos cabe ao desenvolvedor responsavél, avaliar as necessidades e capacidades do projeto.
 
-# Status Code
-
-StatusCode são números de 3 dígitos entregues numa requisição http como forma de comunicar o retorno para uma requisição de forma imediata, sem precisar de serialização ou informações adicionais para tomar decisões básicas.
-
-É importante que estes sejam usados de forma consistente, ao passo que clientes automatizados como frameworks possam consumir sua API sem muito workarround
-
-Podemos dividir os status code em 5 faixas.
-
-1. **1xx**: status de informação, usados para comunicar algum tipo de informação a respeito do servidor.
-    - 100: continue, muito usado quando se quer evitar o envio de um payload muito grande mas precisa verificar se o servidor está disponivél
-        - Um caso de uso curioso que eu vi isso em prática foi em fila de geração de PDF de apólices em sistemas de seguradora.
-2. **2xx**: status de sucesso (é o que esperamos que aconteça no caminho feliz), representa uma operação bem sucedida.
-    - 200: Ok, simplesmente Ok
-    - 201: Content created, um puxão de orelha nos devs que deveriam usar mais esse status, principalmente quando uma operação resulta em algum tipo de dado criado, como vimos, métodos POST e PUT.
-    - 202: Accepted, quando uma requisição é aceita , porém o resultado será mandado depois, isso é crucial quando se faz http polling, que é o processo de ficar verificando no servidor até a informação está pronta , quando retorna um status 200, muito comun em sistemas de fila de impressão mais antigos ou de fila de arquivos gerados em background.
-    - 204: No content, a operação deu certo, mas não tem body algum a ser retornado, porém os headers são úteis e se necessário, deve ser atualizado cache, em casos de DELETE é o ideal a ser usado na maioria dos cenários*
-3. **3xx**: status de redirecionamento, servem para informar os possivéis motivos de dados terem sido migrados
-    - 301: Moved Permanently, siginifica que o conteúdo foi movido de url, a nova será disponibilizada no response.
-    - 302: Found, siginifica que o conteúdo foi achado e movido temporariamente, pode representar uma nova url e um novo método.
-    - 307: Temporary Redirect, semântica igual ao 302, porém significa que o método HTTP não deve ser mudado no redirect, apenas a url.
-4. **4xx**: status de erros causados pelo cliente ~~culpa do frontend~~, quando algum dado enviado ou requisição feita pelo lado cliente é inconsistente.
-    - 404: Não encontrado, para rota ou conteúdo não encontrado, origem do meme 404: Not Found
-    - 401: Não autenticado, siginifica que o usuário não forneceu a informação que determina que ele foi autenticado em algum momento, usado como identificador de endpoints protegidos, ou seja , endpoints disponivéis apenas para usuários autenticados.
-    - 403: Forbidden, siginifica que o usuário, independente de autenticado ou não, não possui acesso a informação devida.
-    - 418: I'm a teapot (Eu sou uma chaleira), servidor se recusa a fazer café.
-5. **5xx**: status de erro causados pelo servidor ~~culpa sua~~, usado principalmente para erros de mecanismos internos/
-    - 500: Internal Server Error, quando seu servidor tem um erro de execução , runtime ou um erro não tratavél, em ambiente de desenvolvimento e nos logs, normalmente consta a stacktrace que ocasionou a falha.
-    - 502: Bad Getway: Quando um servidor de Getway falha em achar ou realizar a conexão ocasionada pelo servidor de origem, normalmente associado a timeout entre o getway e o servidor consumido por este.
-    - 503: Service Unavailable, mostado quando há uma falha temporária, em conjunto com uma página de erro amigavél se possivél para explicar de forma breve a falha, em cassos de serviços como aplicação, é recomendado devolver o Header Retry-After com informações de qunado está previsto a voltar o recurso. Era muito comun no período de transição para a Web 2.0 (Twiter lá por 2010 e o famigerado "Rails não escala")
-
-## Dicas e macetes para uso coerente de status code
+# Dicas e macetes para uso coerente de status code
 
 - Quando uma operação como DELETE puder ser revertida por meio de um endpoint simples, ao realizar o DELETE trazer a url de undo nos headers.
 - Evite escrever headers costumizados que podem ser sobreescritos por proxy, como headers referente a timeout
