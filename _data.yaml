@@ -8,7 +8,7 @@ metas:
   robots: true
 social:
   - name: Mastodon
-    url: "@v_raton@fosstodon.org"
+    url: "https://fosstodon.org/@v_raton"
   - name: codeeberg
     url: "https://codeberg.org/v_raton"
   - name: linkedin
