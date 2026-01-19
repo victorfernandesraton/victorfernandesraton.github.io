@@ -13,72 +13,38 @@ cover = "cover.jpeg"
 - Um curso sobre HTTP
 - Um curso de FastAPI/Python
 
-Porém se possui interesse nesses temas, recomendo muito o curso
-[FastAPI do Zero](https://fastapidozero.dunossauro.com/estavel/) publicado pelo
-[Eduardo Mendes](https://dunossauro.com).
+Porém se possui interesse nesses temas, recomendo muito o curso [FastAPI do Zero](https://fastapidozero.dunossauro.com/estavel/) publicado pelo [Eduardo Mendes](https://dunossauro.com).
 
 # Esta apresentação é sobre
 
-- Formas de simplificar a implementação e consumo de API REST por meio de boas
-  práticas.
+- Formas de simplificar a implementação e consumo de API REST por meio de boas práticas.
 - Independente de tecnologia, ecossistema e linguagem.
-- Otimizações para facilitar sua vida na hora de lidar com automações e deploys
-  orquestrados
+- Otimizações para facilitar sua vida na hora de lidar com automações e deploys orquestrados
 
 # A web, REST API e Hipermídia
 
-Se você atua na área de tecnologia como desenvolvedor de sofware para a web, já
-seja familiarizado com o termo API (Application Programming Interface -
-Interface de Programação de Aplicação), que pode ser toda e quaisquer aplicação
-que tem como objetivo interfacear de forma programável algum recurso, indo de
-consulta a base de dados a acesso a recursos de hardware como GPU.
+Se você atua na área de tecnologia como desenvolvedor de sofware para a web, já seja familiarizado com o termo API (Application Programming Interface - Interface de Programação de Aplicação), que pode ser toda e quaisquer aplicação que tem como objetivo interfacear de forma programável algum recurso, indo de consulta a base de dados a acesso a recursos de hardware como GPU.
 
-Exemplos de API que podemos citar seria o uso de GPU por meio do navegador,
-através da
-[API WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+Exemplos de API que podemos citar seria o uso de GPU por meio do navegador, através da [API WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
 
-Porém pensando em aplicações web, uma API REST(ful) - Representational State
-Transfer, refere-se a uma forma de controlar e restringir uma aplicação por meio
-de representação de estados destas em recursos. Atualmente o formato mais comum de implementação consiste em um servidor Web que, por meio do protocolo HTTP
-de implementação consiste em um servidor Web que por meio do protocolo HTTP
-(Hipertext Transfer Protocol) que entrega as informações a respeito dos estados
-em estrutura JSON (Javascript Object Notation).
+Porém pensando em aplicações web, uma API REST(ful) - Representational State Transfer, refere-se a uma forma de controlar e restringir uma aplicação por meio de representação de estados destas em recursos. Atualmente o formato mais comum de implementação consiste em um servidor Web que, por meio do protocolo HTTP de implementação consiste em um servidor Web que por meio do protocolo HTTP (Hipertext Transfer Protocol) que entrega as informações a respeito dos estados em estrutura JSON (Javascript Object Notation).
 
-Uma aplicação REST que contemple todos os princípios referentes à idempotência,
-que é a capacidade de representar todos os estados necessários de forma
-semântica, usando os verbos adequados (GET, POST, PUT, PATCH, DELETE...) bem
-como respeitando os princípios de manter o estado entre requisições, ser
-cacheável e possuir mensagens expressivas em caso de falha é denominada de
-RESTful, porém podemos usar o termo em questão de forma análoga ao próprio
-conceito de REST API em linhas gerais.
+Uma aplicação REST que contemple todos os princípios referentes à idempotência, que é a capacidade de representar todos os estados necessários de forma semântica, usando os verbos adequados (GET, POST, PUT, PATCH, DELETE...) bem como respeitando os princípios de manter o estado entre requisições, ser cacheável e possuir mensagens expressivas em caso de falha é denominada de RESTful, porém podemos usar o termo em questão de forma análoga ao próprio conceito de REST API em linhas gerais.
 
 # Exemplo prático e resumido
 
-Uma API REST é como um restaurante, onde o estabelecimento é o `servidor`, o
-`cliente` por sua vez está implicito no nome.
+Uma API REST é como um restaurante, onde o estabelecimento é o `servidor`, o `cliente` por sua vez está implicito no nome.
 
-- Para saber quais pratos estão disponíveis, você lê o cardápio, assim como um
-  método GET no endpoint `/cardapio` pode retornar uma lista.
-- Ao pedir mais informações ao garçom sobre o prato em questão, seria como usar
-  o método GET no endpoint `cardapio/12` para saber os detalhes do item 12 do
-  cardápio
-- Para realizar um pedido ao garçom para a sua mesa, seria como usar o método
-  POST no endpoint /pedido, enviando no corpo da requisição um objeto com o
-  número da sua mesa e os itens do cardápio.
-- Para pedir uma mudança em um item do prato, seria equivalente a usar o método
-  PATCH.
-- Para mudar o pedido por completo ou pedir, com educação, para mudar o seu
-  pedido é como usar o método PUT
-- Para cancelar o pedido, podemos usar o DELETE
-- O método OPTIONS seria equivalente a verificar se o restaurante está servindo
-  aquele prato.
-- O método HEAD seria equivalente a avaliar o preço da refeição e se você tem
-  alguma alergia ao prato em questão.
-- Se o restaurante possui pulseiras de identificação entregues na hora da
-  reserva, seria o equivalente ao utilizar tokens de autenticação.
+- Para saber quais pratos estão disponíveis, você lê o cardápio, assim como um método GET no endpoint `/cardapio` pode retornar uma lista.
+- Ao pedir mais informações ao garçom sobre o prato em questão, seria como usar o método GET no endpoint `cardapio/12` para saber os detalhes do item 12 do cardápio
+- Para realizar um pedido ao garçom para a sua mesa, seria como usar o método POST no endpoint /pedido, enviando no corpo da requisição um objeto com o número da sua mesa e os itens do cardápio.
+- Para pedir uma mudança em um item do prato, seria equivalente a usar o método PATCH.
+- Para mudar o pedido por completo ou pedir, com educação, para mudar o seu pedido é como usar o método PUT
+- Para cancelar o pedido, podemos usar o DELETE O método OPTIONS seria equivalente a verificar se o restaurante está servindo aquele prato.
+- O método HEAD seria equivalente a avaliar o preço da refeição e se você tem alguma alergia ao prato em questão.
+- Se o restaurante possui pulseiras de identificação entregues na hora da reserva, seria o equivalente ao utilizar tokens de autenticação.
 
-Um exemplo de API REST aberta ao público seria a API
-[OMDb](https://www.omdbapi.com/), Open Movie Database
+Um exemplo de API REST aberta ao público seria a API [OMDb](https://www.omdbapi.com/), Open Movie Database
 
 # Componentes de uma requisição HTTP
 
@@ -120,11 +86,8 @@ Podemos dividir os status code em 5 faixas.
 
 ## Cabeçalhos HTTP (Headers)
 
-Cabeçalhos são informações extras que podem ser enviadas, bem como recebidas
-por uma ou para uma API REST. Nestes, em formatos de texto (string), detalhamos
-informações e metadados no geral sobre o conteúdo trafegado, coisas como informar
-a origem da aplicação, realizar o envio de chaves de autenticação e até mesmo
-informar a aplicação cliente sobre a política de cache do recurso.
+Cabeçalhos são informações extras que podem ser enviadas, bem como recebidas por uma ou para uma API REST. Nestes, em formatos de texto (string), detalhamos informações e metadados no geral sobre o conteúdo trafegado, coisas como informar
+a origem da aplicação, realizar o envio de chaves de autenticação e até mesmo informar a aplicação cliente sobre a política de cache do recurso.
 
 Exemplos de cabeçalhos comuns
 
@@ -134,18 +97,10 @@ Exemplos de cabeçalhos comuns
 
 ## HATEOAS (Hipermídia como Motor do Estado da Aplicação)
 
-Nesta conversa, o termo Hipermidia, mais precisamente o acrônomo Hypermedia as
-the Engine of Application State (HATEOAS), seria uma forma de implementação de
-arquitetura para REST API que, por meio das hipermídias, torna a consulta e
-navegação pelos recursos mais dinâmica, conseguindo comunicar, por meio de
-metadados e padrões, formas de navegação e integração entre os recursos
-disponibilizados.
+Nesta conversa, o termo Hipermidia, mais precisamente o acrônomo Hypermedia as the Engine of Application State (HATEOAS), seria uma forma de implementação de arquitetura para REST API que, por meio das hipermídias, torna a consulta e
+navegação pelos recursos mais dinâmica, conseguindo comunicar, por meio de metadados e padrões, formas de navegação e integração entre os recursos disponibilizados.
 
-A principal e mais comum forma de implementação de HATEOAS em aplicações modernas
-é dada por meio da implementação de recursos com
-[HAL - Hypertext Application Language](https://en.wikipedia.org/wiki/Hypertext_Application_Language),
-onde adicionamos a resposta do dado, possíveis links relacionados a este, como o exemplo a seguir.
-exemplo a resposta abaixo.
+A principal e mais comum forma de implementação de HATEOAS em aplicações modernas é dada por meio da implementação de recursos com [HAL - Hypertext Application Language](https://en.wikipedia.org/wiki/Hypertext_Application_Language), onde adicionamos a resposta do dado, possíveis links relacionados a este, como o exemplo abaixo.
 
 ```json
 {
@@ -159,8 +114,7 @@ exemplo a resposta abaixo.
 }
 ```
 
-Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**,
-**Siren**, **Hydra (JSON-LD)**, **Collection+JSON** e **UBER**.
+Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**, **Siren**, **Hydra (JSON-LD)**, **Collection+JSON** e **UBER**.
 
 ---
 
@@ -286,7 +240,7 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**,
 
 ```json
 {
-  "uber": {
+  "uber": { 
     "version": "1.0",
     "data": [
       {
@@ -308,45 +262,31 @@ Além do **HAL**, outros formatos para implementar HATEOS seriam **JSON:API**,
 
 ## HATEOS é complicado, mas não deveria ser
 
-A principal dificuldade dos formatos comuns para HATEOS gira em torno da
-dificuldade de serialização:
+A principal dificuldade dos formatos comuns para HATEOS gira em torno da dificuldade de serialização:
 
-- A obrigatoriedade de serializar os resultados para obter metadados tornando
-  toda operação de leitura de metadados bloqueante.
-- Interferência no próprio retorno dos dados , tornando mais complicado a vida
-  das aplicações clientes que consomen esta API
-- Mesmo um resultado sem itens algum, geraria a necessidade de serializar o
-  resultado para saber que este está sem itens no caso de listagem
+- A obrigatoriedade de serializar os resultados para obter metadados tornando toda operação de leitura de metadados bloqueante.
+- Interferência no próprio retorno dos dados , tornando mais complicado a vida das aplicações clientes que consomen esta API
+- Mesmo um resultado sem itens algum, geraria a necessidade de serializar o resultado para saber que este está sem itens no caso de listagem
 
-A serialização mal otimizada pode dificultar a performance de aplicações
-dinâmicas, tais como feeds de redes sociais, leitura de dados em tempo real e
-procesos de digestão de alto volume de dados.
+A serialização mal otimizada pode dificultar a performance de aplicações dinâmicas, tais como feeds de redes sociais, leitura de dados em tempo real e procesos de digestão de alto volume de dados.
 
-Outro problema menos evidente seria a obrigatoriedade de manter implementações
-sequenciais de problemas que seriam resolvidos de uma forma melhor por meio
-concorrência/paralelismo
+Outro problema menos evidente seria a obrigatoriedade de manter implementações sequenciais de problemas que seriam resolvidos de uma forma melhor por meio concorrência/paralelismo
 
 ### Como resolver o problema
 
-A solução para as dificuldades geradas pela implementação de uma arquitetura
-HATEOS consiste em atender os seguintes pré-requisitos
+A solução para as dificuldades geradas pela implementação de uma arquitetura HATEOS consiste em atender os seguintes pré-requisitos
 
 - Metadados precisam estar separados dos dados.
 - Metadados não precisam ser serializados.
 - Precisamos saber a informação de itens na página atual (mínimo aceitável).
-- Precisamos saber como informar a próxima página e a página anterior
-  (independente da forma de paginação: saltos, páginas ou ponteiros).
+- Precisamos saber como informar a próxima página e a página anterior (independente da forma de paginação: saltos, páginas ou ponteiros).
 
-A forma mais simples de resolver isso seria por meio da implementação da
-[RFC 8288 - Web Linking](https://datatracker.ietf.org/doc/html/rfc8288) para a paginação e demais informações por meio de
-cabeçalhos customizados.
+A forma mais simples de resolver isso seria por meio da implementação da [RFC 8288 - Web Linking](https://datatracker.ietf.org/doc/html/rfc8288) para a paginação e demais informações por meio de cabeçalhos customizados.
 
 > Ainda que muitos serviços usem o prefixo `X-` para headers especiais,
-> atualmente isso é desencorajado especificamente pela
-> [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648)
+> atualmente isso é desencorajado especificamente pela [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648)
 
-Desta forma, podemos recompor nosso exemplo de livros por meio do seguinte
-modelo para o corpo da resposta (Response Body) em uma simples lista de JSON.
+Desta forma, podemos recompor nosso exemplo de livros por meio do seguinte modelo para o corpo da resposta (Response Body) em uma simples lista de JSON.
 
 ```JSON
 [
@@ -358,10 +298,7 @@ modelo para o corpo da resposta (Response Body) em uma simples lista de JSON.
 ]
 ```
 
-Por fim, podemos ter os seguintes cabeçalhos. Nem todos são obrigatórios por
-questões de performance, principalmente aqueles que realizam a contagem de
-itens, porém o `Items-Returned` é uma ótima forma de saber se a lista retornou
-sem item algum (vazia).
+Por fim, podemos ter os seguintes cabeçalhos. Nem todos são obrigatórios por questões de performance, principalmente aqueles que realizam a contagem de itens, porém o `Items-Returned` é uma ótima forma de saber se a lista retornou sem item algum (vazia).
 
 ```http
 HTTP/1.1 200 OK
@@ -377,9 +314,7 @@ Link: <https://api.exemplo.com/items?page=2>; rel="next",
       <https://api.exemplo.com/items?page=1>; rel="prev"
 ```
 
-Considerando cenários de requisições de criação de dados, principalmente de
-objetos únicos, podemos usar o header `Location` caso este possua algum endpoint
-de consulta por meio de ID de referência que seja único e idempotente.
+Considerando cenários de requisições de criação de dados, principalmente de objetos únicos, podemos usar o header `Location` caso este possua algum endpoint de consulta por meio de ID de referência que seja único e idempotente.
 
 Outro ponto importante é que nem sempre poderemos configurar o domínio. Nossa API pode estar limitada por um API Gateway ou ferramenta de DNS. Nesses casos, é recomendado o uso de links relativos, isso cria um ônus para o cliente concatenar ao domínio original, mas este é disponibilizado no header Host.
 
