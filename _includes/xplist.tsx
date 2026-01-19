@@ -1,5 +1,6 @@
 export default function (
-  { title, children, search, nav, comp, lang, alternates, theme , monthYear}: Lume.Data,
+  { title, children, search, nav, comp, lang, alternates, theme, monthYear }:
+    Lume.Data,
 ) {
   const recent = search.pages(
     `lang=${lang} type=xp`,
@@ -22,7 +23,12 @@ export default function (
               {recent.map((page) => (
                 <li>
                   <a href={page.url}>{page.title}</a>
-                  <p>{monthYear(new Date(page.start_date))}{page.end_date ? " | " + monthYear(new Date(page.end_date)): " | Atual"}</p>
+                  <p>
+                    {monthYear(new Date(page.start_date))}
+                    {page.end_date
+                      ? " | " + monthYear(new Date(page.end_date))
+                      : " | Atual"}
+                  </p>
                 </li>
               ))}
             </ol>

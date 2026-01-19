@@ -7,7 +7,7 @@ export default function* ({ search, lang }: Lume.Data) {
       layout: "tag.tsx",
       title: capitalized(tag),
       result: tag,
-      lang
+      lang,
     };
     yield data;
   }

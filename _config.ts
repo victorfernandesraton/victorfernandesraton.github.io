@@ -28,24 +28,38 @@ site.use(highlight({
 site.ignore("README.md", "github/");
 
 site.use(nav());
-site.data("fullDate", function(date: Date, location: string = "pt-BR", timeZone = 'America/Bahia'): string {
-    const formatter = new Intl.DateTimeFormat(location,{
-        dateStyle: 'medium',
-        timeStyle: 'short',
-        hour12: false,
-        timeZone
-    })
-    return formatter.format(date)
-})
+site.data(
+  "fullDate",
+  function (
+    date: Date,
+    location: string = "pt-BR",
+    timeZone = "America/Bahia",
+  ): string {
+    const formatter = new Intl.DateTimeFormat(location, {
+      dateStyle: "medium",
+      timeStyle: "short",
+      hour12: false,
+      timeZone,
+    });
+    return formatter.format(date);
+  },
+);
 
-site.data("monthYear", function(date: Date, location: string = "pt-BR", timeZone = 'America/Bahia'): string {
-    const formatter = new Intl.DateTimeFormat(location,{
-        year: "numeric",
-        month: "short",
-        timeZone
-    })
-    return formatter.format(date)
-})
+site.data(
+  "monthYear",
+  function (
+    date: Date,
+    location: string = "pt-BR",
+    timeZone = "America/Bahia",
+  ): string {
+    const formatter = new Intl.DateTimeFormat(location, {
+      year: "numeric",
+      month: "short",
+      timeZone,
+    });
+    return formatter.format(date);
+  },
+);
 
 site.use(googleFonts({
   fonts: {
@@ -67,7 +81,7 @@ site.add("./theme.css");
 
 site.use(transformImages(/* Options */));
 
-site.use(metas())
+site.use(metas());
 site.use(inline());
 site.use(gzip());
 
@@ -82,7 +96,7 @@ site.use(feed({
     title: "=title",
     description: "=description",
     published: "=date",
-    image:"$ img.high attr(src)"
+    image: "$ img.high attr(src)",
   },
 }));
 

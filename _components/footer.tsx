@@ -1,4 +1,8 @@
-export default function () {
+type Social = {
+  name: string;
+  url: string;
+};
+export default function ({ social = [] }: { social: Social[] }) {
   const year = new Date().getFullYear();
   return (
     <footer>
@@ -40,6 +44,13 @@ export default function () {
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
       </div>
+      <ul class="social-links">
+        {social.map((item, index) => (
+          <li key={index}>
+            <a href={item.url}>{item.name}</a>
+          </li>
+        ))}
+      </ul>
     </footer>
   );
 }

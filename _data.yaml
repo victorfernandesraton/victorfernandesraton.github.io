@@ -7,5 +7,9 @@ metas:
   color: black
   robots: true
 social:
-  mastodon: "@v_raton@fosstodon.org"
-  codeeberg: "https://codeberg.org/v_raton"
+  - name: Mastodon
+    url: "@v_raton@fosstodon.org"
+  - name: codeeberg
+    url: "https://codeberg.org/v_raton"
+  - name: linkedin
+    url: "https://linkedin.com/vraton"

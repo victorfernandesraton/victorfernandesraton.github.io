@@ -22,7 +22,7 @@ export default function (
   const upCover = cover ? page.data.url + "/" + cover.split(".")[0] : undefined;
   const coverRes = upCover + "-big" + "." + "webp";
   const coverFallback = upCover + "-small" + "." + "webp";
-  const createdAt = new Date(date)
+  const createdAt = new Date(date);
 
   return (
     <>
@@ -35,9 +35,9 @@ export default function (
           </title>
           <link rel="stylesheet" href="/theme.css" />
           <meta name="description" content={description} />
-          <meta name="viewport" content="width=device-width,initial-scale=1"/>
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
           {coverFallback && (
-              <meta itemprop="image" content={`${url}/${coverFallback}`} />
+            <meta itemprop="image" content={`${url}/${coverFallback}`} />
           )}
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
