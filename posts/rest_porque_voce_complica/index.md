@@ -1,5 +1,5 @@
 +++
-title = 'REST API: Porquê você complica?'
+title = 'REST API: Por que você complica?'
 description = 'Fazendo uma API REST detalhada'
 date = 2025-12-06T02:12:00-03:00
 tags = ["api", "rest", "http"]
@@ -12,7 +12,7 @@ draft = false
 - Um curso sobre HTTP
 - Um curso de FastAPI/Python
 
-Porém se possui interesse nessses temas, recomendo muito o curso
+Porém se possui interesse nesses temas, recomendo muito o curso
 [FastAPI do Zero](https://fastapidozero.dunossauro.com/estavel/) publicado pelo
 [Eduardo Mendes](https://dunossauro.com).
 
@@ -20,16 +20,16 @@ Porém se possui interesse nessses temas, recomendo muito o curso
 
 - Formas de simplificar a implementação e consumo de API REST por meio de boas
   práticas.
-- Independente de tecnologia, ecosistema e linguagem.
-- Otimizações para facilitar sua vida na hroa de lidar com automações e deploys
+- Independente de tecnologia, ecossistema e linguagem.
+- Otimizações para facilitar sua vida na hora de lidar com automações e deploys
   orquestrados
 
-# A web , REST API e Hipermidia
+# A web, REST API e Hipermídia
 
 Se você atua na área de tecnologia como desenvolvedor de sofware para a web, já
-deve estar familiarizado com o termo API(Application Progaming Interface -
+seja familiarizado com o termo API (Application Programming Interface -
 Interface de Programação de Aplicação), que pode ser toda e quaisquer aplicação
-que tem como objetivo interfacear de forrma programavél algum recurso, indo de
+que tem como objetivo interfacear de forma programável algum recurso, indo de
 consulta a base de dados a acesso a recursos de hardware como GPU.
 
 Exemplos de API que podemos citar seria o uso de GPU por meio do navegador,
@@ -38,16 +38,16 @@ através da
 
 Porém pensando em aplicações web, uma API REST(ful) - Representational State
 Transfer, refere-se a uma forma de controlar e restringir uma aplicação por meio
-de representação de estados destas em recursos. Atualmente o formato mais comun
+de representação de estados destas em recursos. Atualmente o formato mais comum de implementação consiste em um servidor Web que, por meio do protocolo HTTP
 de implementação consiste em um servidor Web que por meio do protocolo HTTP
 (Hipertext Transfer Protocol) que entrega as informações a respeito dos estados
 em estrutura JSON (Javascript Object Notation).
 
-Uma aplicação REST que contemple todos os princípios referentes á ideopotência,
-que é a capacidade de representar todos os esttados necessários de forma
+Uma aplicação REST que contemple todos os princípios referentes à idempotência,
+que é a capacidade de representar todos os estados necessários de forma
 semântica, usando os verbos adequados (GET, POST, PUT, PATCH, DELETE...) bem
-como respeitando os principíos de se manter sem estados entre requisições, ser
-cacheavél e possuir mensagens expresivas em caso de falha é denominada de
+como respeitando os princípios de manter o estado entre requisições, ser
+cacheável e possuir mensagens expressivas em caso de falha é denominada de
 RESTful, porém podemos usar o termo em questão de forma análoga ao próprio
 conceito de REST API em linhas gerais.
 
@@ -56,94 +56,94 @@ conceito de REST API em linhas gerais.
 Uma API REST é como um restaurante, onde o estabelecimento é o `servidor`, o
 `cliente` por sua vez está implicito no nome.
 
-- Para saber quais pratos estão disponivéis, você lê o cardápio, assim como um
-  método GET no endpointt `/cardapio` pode retornar uma lista.
-- Ao pedir mais informações ao garçon sobre o prato em questão , seria como usar
+- Para saber quais pratos estão disponíveis, você lê o cardápio, assim como um
+  método GET no endpoint `/cardapio` pode retornar uma lista.
+- Ao pedir mais informações ao garçom sobre o prato em questão, seria como usar
   o método GET no endpoint `cardapio/12` para saber os detalhes do item 12 do
   cardápio
-- Para realizar um pedido ao garçon para a sua mesa, seria como usar o método
-  POST no endpoint /pedido, enviado no corpo da requisição um objetto com o
-  número da sua mesa e os items do cardápio.
-- Para pedir uma mudança em um item no prato, seria equivalente ao usar o método
+- Para realizar um pedido ao garçom para a sua mesa, seria como usar o método
+  POST no endpoint /pedido, enviando no corpo da requisição um objeto com o
+  número da sua mesa e os itens do cardápio.
+- Para pedir uma mudança em um item do prato, seria equivalente a usar o método
   PATCH.
-- Para mudar o pedido por completo , ou pedir (com educação) para mudar o seu
+- Para mudar o pedido por completo ou pedir, com educação, para mudar o seu
   pedido é como usar o método PUT
-- Para cancelar o pedido , podemos usar o DELETE
+- Para cancelar o pedido, podemos usar o DELETE
 - O método OPTIONS seria equivalente a verificar se o restaurante está servindo
   aquele prato.
 - O método HEAD seria equivalente a avaliar o preço da refeição e se você tem
   alguma alergia ao prato em questão.
-- Se o restuarante possui pulseiras de identificação entregues na hora da
+- Se o restaurante possui pulseiras de identificação entregues na hora da
   reserva, seria o equivalente ao utilizar tokens de autenticação.
 
-Um exeplo de API REST aberta ao público seria a API
-[OMDb](https://www.omdbapi.com/), Open Movie Databse
+Um exemplo de API REST aberta ao público seria a API
+[OMDb](https://www.omdbapi.com/), Open Movie Database
 
 # Componentes de uma requisição HTTP
 
-Dado que o principal objetivo de uma requisição HTTP, diz respeito a capacidade de comunicar dados entre servidor e cliente, podemos dividir esses dados em dois grupos:
+Dado que o principal objetivo de uma requisição HTTP diz respeito à capacidade de comunicar dados entre servidor e cliente, podemos dividir esses dados em dois grupos:
 
-- informações de infraestrutura e estado: são informações referentes a requisição que comunicam de forma genérica e imediata o estado atual de um servidor ou de um dado solicitado a este. Podemos dizer que neste grupo encontra-se os códigos de estado (Status Code) e o cabeçário.
-- informações de resultado: trata-se da informação retornada pelo servidor, chamamos normalmente isso de corpo de resposta ou response body da requisição. Este pode estar codificado em vários formatos, os mais comuns são `application/json`, `application/plaintext` para dados em texto plano bem como `application/media` para multimídia.
+- informações de infraestrutura e estado: são informações referentes a requisição que comunicam de forma genérica e imediata o estado atual de um servidor ou de um dado solicitado a este. neste grupo encontram-se os códigos de estado (Status Code) e o cabeçalho.
+- informações de resultado: trata-se da informação retornada pelo servidor, chamamos normalmente isso de corpo de resposta ou response body da requisição. Este pode estar codificado em vários formatos, os mais comuns são `application/json`, `text/plain` para dados em texto plano bem como tipos de mídia para multimídia.
 
 ## Status Code
 
-StatusCode são números de 3 dígitos entregues numa requisição http como forma de comunicar o retorno para uma requisição de forma imediata, sem precisar de serialização ou informações adicionais para tomar decisões básicas.
+Status Code são números de 3 dígitos entregues numa requisição HTTP como forma de comunicar o resultado de forma imediata, sem precisar de serialização ou informações adicionais para tomar decisões básicas.
 
-É importante que estes sejam usados de forma consistente, ao passo que clientes automatizados como frameworks possam consumir sua API sem muito workarround
+É importante que estes sejam usados de forma consistente, para que clientes automatizados, como frameworks, possam consumir sua API sem muitos ajustes
 
 Podemos dividir os status code em 5 faixas.
 
 1. **1xx**: status de informação, usados para comunicar algum tipo de informação a respeito do servidor.
-    - 100: continue, muito usado quando se quer evitar o envio de um payload muito grande mas precisa verificar se o servidor está disponivél
+    - 100: Continue, muito usado quando se quer evitar o envio de um payload muito grande, mas precisa verificar se o servidor está disponível
         - Um caso de uso curioso que eu vi isso em prática foi em fila de geração de PDF de apólices em sistemas de seguradora.
-2. **2xx**: status de sucesso (é o que esperamos que aconteça no caminho feliz), representa uma operação bem sucedida.
+2. **2xx**: status de sucesso (é o que esperamos que aconteça no caminho feliz), representa uma operação bem-sucedida.
     - 200: Ok, simplesmente Ok
-    - 201: Content created, um puxão de orelha nos devs que deveriam usar mais esse status, principalmente quando uma operação resulta em algum tipo de dado criado, como vimos, métodos POST e PUT.
-    - 202: Accepted, quando uma requisição é aceita , porém o resultado será mandado depois, isso é crucial quando se faz http polling, que é o processo de ficar verificando no servidor até a informação está pronta , quando retorna um status 200, muito comun em sistemas de fila de impressão mais antigos ou de fila de arquivos gerados em background.
-    - 204: No content, a operação deu certo, mas não tem body algum a ser retornado, porém os headers são úteis e se necessário, deve ser atualizado cache, em casos de DELETE é o ideal a ser usado na maioria dos cenários*
-3. **3xx**: status de redirecionamento, servem para informar os possivéis motivos de dados terem sido migrados
-    - 301: Moved Permanently, siginifica que o conteúdo foi movido de url, a nova será disponibilizada no response.
-    - 302: Found, siginifica que o conteúdo foi achado e movido temporariamente, pode representar uma nova url e um novo método.
-    - 307: Temporary Redirect, semântica igual ao 302, porém significa que o método HTTP não deve ser mudado no redirect, apenas a url.
-4. **4xx**: status de erros causados pelo cliente ~~culpa do frontend~~, quando algum dado enviado ou requisição feita pelo lado cliente é inconsistente.
+    - 201: Created, um código frequentemente negligenciado que deveria ser usado mais, principalmente quando uma operação resulta em algum tipo de dado criado, como vimos com métodos POST e PUT.
+    - 202: Accepted, quando uma requisição é aceita, porém o resultado será enviado depois, isso é crucial quando se faz HTTP polling, que é o processo de verificar no servidor até a informação estar pronta. Muito comum em sistemas de fila de impressão mais antigos ou de geração de arquivos em segundo plano.
+    - 204: No Content, a operação deu certo, mas não há body a ser retornado, porém os headers são úteis e, se necessário, o cache deve ser atualizado. Em casos de DELETE, é o ideal na maioria dos cenários*
+3. **3xx**: status de redirecionamento, servem para informar os possíveis motivos de dados terem sido migrados
+    - 301: Moved Permanently, significa que o conteúdo foi movido de URL, a nova será disponibilizada no response.
+    - 302: Found, significa que o conteúdo foi encontrado e movido temporariamente, pode representar uma nova URL e um novo método.
+    - 307: Temporary Redirect, semântica igual ao 302, porém significa que o método HTTP não deve ser mudado no redirect, apenas a URL.
+4. **4xx**: status de erros causados pelo cliente ~~culpa do frontend~~, quando algum dado enviado ou requisição feita pelo lado do cliente é inconsistente.
     - 404: Não encontrado, para rota ou conteúdo não encontrado, origem do meme 404: Not Found
-    - 401: Não autenticado, siginifica que o usuário não forneceu a informação que determina que ele foi autenticado em algum momento, usado como identificador de endpoints protegidos, ou seja , endpoints disponivéis apenas para usuários autenticados.
-    - 403: Forbidden, siginifica que o usuário, independente de autenticado ou não, não possui acesso a informação devida.
-    - 418: I'm a teapot (Eu sou uma chaleira), servidor se recusa a fazer café.
-5. **5xx**: status de erro causados pelo servidor ~~culpa sua~~, usado principalmente para erros de mecanismos internos/
-    - 500: Internal Server Error, quando seu servidor tem um erro de execução , runtime ou um erro não tratavél, em ambiente de desenvolvimento e nos logs, normalmente consta a stacktrace que ocasionou a falha.
-    - 502: Bad Getway: Quando um servidor de Getway falha em achar ou realizar a conexão ocasionada pelo servidor de origem, normalmente associado a timeout entre o getway e o servidor consumido por este.
-    - 503: Service Unavailable, mostado quando há uma falha temporária, em conjunto com uma página de erro amigavél se possivél para explicar de forma breve a falha, em cassos de serviços como aplicação, é recomendado devolver o Header Retry-After com informações de qunado está previsto a voltar o recurso. Era muito comun no período de transição para a Web 2.0 (Twiter lá por 2010 e o famigerado "Rails não escala")
+    - 401: Não autenticado, significa que o usuário não forneceu a informação que determina que ele foi autenticado em algum momento. Usado como identificador de endpoints protegidos, ou seja, endpoints disponíveis apenas para usuários autenticados.
+    - 403: Forbidden, significa que o usuário, independente de autenticado ou não, não possui acesso à informação devida.
+    - 418: I'm a Teapot (Eu sou uma chaleira), servidor se recusa a fazer café.
+5. **5xx**: status de erro causados pelo servidor ~~culpa sua~~, usado principalmente para erros de mecanismos internos
+    - 500: Internal Server Error, quando seu servidor tem um erro de execução, runtime ou um erro não tratável. Em ambiente de desenvolvimento e nos logs, normalmente consta a stacktrace que ocasionou a falha.
+    - 502: Bad Gateway, quando um servidor de Gateway falha em encontrar ou realizar a conexão com o servidor de origem, normalmente associado a timeout entre o gateway e o servidor consumido por este.
+    - 503: Service Unavailable, mostrado quando há uma falha temporária, em conjunto com uma página de erro amigável se possível para explicar de forma breve a falha. Em casos de serviços como aplicações, é recomendado devolver o Header Retry-After com informações de quando está previsto a volta do recurso. Era muito comum no período de transição para a Web 2.0 (Twitter lá por 2010 e o famigerado "Rails não escala")
 
 
-## Cabeçarios HTTP (Headers)
+## Cabeçalhos HTTP (Headers)
 
-Cabeçarios são informações extras que podem ser enviadas , bem como recebidas
-por uma ou para uma API REST, nestes em formatos de texto (string) detalhamos
-informações e metaddos no geral sobre o conteúdo trafegado, coisas como informar
-a origem da aplicação, realizar o envio de chaves de autentcação e até mesmo
-informar a aplicação cliente a política de cache do recurso.
+Cabeçalhos são informações extras que podem ser enviadas, bem como recebidas
+por uma ou para uma API REST. Nestes, em formatos de texto (string), detalhamos
+informações e metadados no geral sobre o conteúdo trafegado, coisas como informar
+a origem da aplicação, realizar o envio de chaves de autenticação e até mesmo
+informar a aplicação cliente sobre a política de cache do recurso.
 
-Exemplos de cabeçários comuns
+Exemplos de cabeçalhos comuns
 
 ![image](Screenshot_20251212_103814.webp)
 
 # Um caso de otimização por meio de uso de dados
 
-## HATEOS (Hypermidia as a the Engine of the Application State)
+## HATEOAS (Hipermídia como Motor do Estado da Aplicação)
 
 Nesta conversa, o termo Hipermidia, mais precisamente o acrônomo Hypermedia as
-the engine of application state (HATEOAS), seria uma forma de implementação de
-arquitetura para REST API que por meio das hipermidias, torna a consulta e
-navegação pelos recursos mais dinâmica, conseguindo comunicar por meio de
+the Engine of Application State (HATEOAS), seria uma forma de implementação de
+arquitetura para REST API que, por meio das hipermídias, torna a consulta e
+navegação pelos recursos mais dinâmica, conseguindo comunicar, por meio de
 metadados e padrões, formas de navegação e integração entre os recursos
 disponibilizados.
 
-A principal e mais comun forma de implementação de HATEOS em aplicações modernas
+A principal e mais comum forma de implementação de HATEOAS em aplicações modernas
 é dada por meio da implementação de recursos com
 [HAL - Hypertext Application Language](https://en.wikipedia.org/wiki/Hypertext_Application_Language),
-onde adicionamos a resposta do dado, possivéis links relacionados a este, como
+onde adicionamos a resposta do dado, possíveis links relacionados a este, como o exemplo a seguir.
 exemplo a resposta abaixo.
 
 ```json
@@ -322,7 +322,7 @@ dinâmicas, tais como feeds de redes sociais, leitura de dados em tempo real e
 procesos de digestão de alto volume de dados.
 
 Outro problema menos evidente seria a obrigatoriedade de manter implementações
-sequênciais de problemas que seriam resolvidos de uma forma melhor por meio
+sequenciais de problemas que seriam resolvidos de uma forma melhor por meio
 concorrência/paralelismo
 
 ### Como resolver o problema
@@ -330,21 +330,21 @@ concorrência/paralelismo
 A solução para as dificuldades geradas pela implementação de uma arquitetura
 HATEOS consiste em atender os seguintes pré-requisitos
 
-- Metadados precisam estar separados dos dados
-- Metadados Não precisam ser serializados
-- Precisamos saber a informação de items na página atual (Mínimo aceitavél)
+- Metadados precisam estar separados dos dados.
+- Metadados não precisam ser serializados.
+- Precisamos saber a informação de itens na página atual (mínimo aceitável).
 - Precisamos saber como informar a próxima página e a página anterior
-  (independente da forma de paginação (saltos, paginas ou ponteiros))
+  (independente da forma de paginação: saltos, páginas ou ponteiros).
 
 A forma mais simples de resolver isso seria por meio da implementação da
-[RFC 8288 - Web Linking]() para a paginação e demais informações por meio de
-cabeçários customizados.
+[RFC 8288 - Web Linking](https://datatracker.ietf.org/doc/html/rfc8288) para a paginação e demais informações por meio de
+cabeçalhos customizados.
 
 > Ainda que muitos serviços usem o prefixo `X-` para headers especiais,
 > atualmente isso é desencorajado especificamente pela
 > [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648)
 
-Desta forma, podemos recompoer nosso exemplo de livros por meio do seguinte
+Desta forma, podemos recompor nosso exemplo de livros por meio do seguinte
 modelo para o corpo da resposta (Response Body) em uma simples lista de JSON.
 
 ```JSON
@@ -357,9 +357,9 @@ modelo para o corpo da resposta (Response Body) em uma simples lista de JSON.
 ]
 ```
 
-Por fim, podemos ter os seguintes cabeçãrios, nem todos são obrigatórios por
+Por fim, podemos ter os seguintes cabeçalhos. Nem todos são obrigatórios por
 questões de performance, principalmente aqueles que realizam a contagem de
-items, porém o `Items-Returned` é uma ótima forma de saber se a lista retornou
+itens, porém o `Items-Returned` é uma ótima forma de saber se a lista retornou
 sem item algum (vazia).
 
 ```http
@@ -376,13 +376,13 @@ Link: <https://api.exemplo.com/items?page=2>; rel="next",
       <https://api.exemplo.com/items?page=1>; rel="prev"
 ```
 
-Considerando cenários de requisições de criação de dados , principalmente de
+Considerando cenários de requisições de criação de dados, principalmente de
 objetos únicos, podemos usar o header `Location` caso este possua algum endpoint
-de consulta por meio de id de referência que seja único e ideopotente.
+de consulta por meio de ID de referência que seja único e idempotente.
 
-Outro ponto importante é que nem sempre poderemos configurar o domínio, nossa API pode estar limitada por um API Getway ou ferramenta de DNS, nesses casos é recomendado o uso de links relativos, isso cria um ônus para o cliente concatenar ao dôminio original, mas este é disponiblizado no header Host.
+Outro ponto importante é que nem sempre poderemos configurar o domínio. Nossa API pode estar limitada por um API Gateway ou ferramenta de DNS. Nesses casos, é recomendado o uso de links relativos, isso cria um ônus para o cliente concatenar ao domínio original, mas este é disponibilizado no header Host.
 
-Dessa forma o exemplo que utilizamos anteriormente é capaz de evoluir para esse modelo
+Dessa forma, o exemplo que utilizamos anteriormente é capaz de evoluir para esse modelo:
 
 
 ```http
@@ -399,18 +399,18 @@ Link: </items?page=2>; rel="next",
       </items?page=1>; rel="prev"
 ```
 
-O uso de contadores deve ser moderado, visto que em bases grandes de dados , ou com mudanças constantes, essa operação pode custar muito recurso, nesses casos cabe ao desenvolvedor responsavél, avaliar as necessidades e capacidades do projeto.
+O uso de contadores deve ser moderado, visto que em bases grandes de dados ou com mudanças constantes, essa operação pode custar muito recurso. Nesses casos, cabe ao desenvolvedor responsável avaliar as necessidades e capacidades do projeto.
 
-# Dicas e macetes para uso coerente de status code
+# Dicas e boas práticas para uso coerente de status code
 
-- Quando uma operação como DELETE puder ser revertida por meio de um endpoint simples, ao realizar o DELETE trazer a url de undo nos headers.
-- Evite escrever headers costumizados que podem ser sobreescritos por proxy, como headers referente a timeout
-- Uma forma de parar ataques de força bruta automatizados é responder toda request de falha de autenticação com status 404 (*Gambiiarra)
-- 301 é muito comun para redirect quando você está em transição de dôminios
-- Em aplicações fullstack ou servidores que as respostas são visualizadas no browser e/ou pelo usuário final de forma direta, ttendem a responder com mensagens detalhadas e acessivéis possivéis infos de causa, 404 é bem comun vermos esse tipo de design.
-- Resultado de requisição POST, PUT é recomendado 201
-- Resultado de requisição GET, HEAD é recomendado 200
-- Resultado de requisição DELETE é normalmente 204
+- Quando uma operação como DELETE puder ser revertida por meio de um endpoint simples, ao realizar o DELETE, trazer a URL de undo nos headers.
+- Evite escrever cabeçalhos customizados que podem ser sobrescritos por proxy, como headers referentes a timeout.
+- Uma forma de prevenir ataques de força bruta automatizados é responder toda request de falha de autenticação com status 404 (*Gambiarra).
+- 301 é muito comum para redirect quando você está em transição de domínios.
+- Em aplicações fullstack ou servidores cujas respostas são visualizadas no browser e pelo usuário final de forma direta, tendem a responder com mensagens detalhadas e acessíveis possíveis infos de causa. 404 é bem comum vermos esse tipo de design.
+- Resultado de requisição POST, PUT é recomendado 201.
+- Resultado de requisição GET, HEAD é recomendado 200.
+- Resultado de requisição DELETE é normalmente 204.
 
 # Referências
 
