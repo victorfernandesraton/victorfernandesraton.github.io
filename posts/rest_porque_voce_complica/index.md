@@ -4,6 +4,7 @@ description = 'Fazendo uma API REST detalhada'
 date = 2025-12-06T02:12:00-03:00
 tags = ["api", "rest", "http"]
 draft = false 
+cover = "cover.jpeg"
 +++
 
 # Esta apresentação NÃO é sobre:
