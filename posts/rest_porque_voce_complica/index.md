@@ -518,7 +518,7 @@ def main():
 - Endpoint com headers metadata: `/feed/headers`
 - Documentação: `/docs`
 
-> Código completo e atualizado disponível em: [https://codeberg.org/v_raton/restapi-simplifcado-demo](https://codeberg.org/v_raton/restapi-simplifcado-demo)
+Código completo e atualizado disponível em: [https://codeberg.org/v_raton/restapi-simplifcado-demo](https://codeberg.org/v_raton/restapi-simplifcado-demo)
 
 ## Resultados dos Testes
 
