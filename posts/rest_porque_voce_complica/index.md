@@ -4,6 +4,7 @@ description = 'Fazendo uma API REST detalhada'
 date = 2025-12-06T02:12:00-03:00
 tags = ["api", "rest", "http"]
 draft = false 
+media = "https://www.youtube.com/live/vogBqPxwBCk?si=_r8Q-lAxXKqqeKOU&t=4890https://www.youtube.com/live/vogBqPxwBCk?si=_r8Q-lAxXKqqeKOU&t=4890"
 cover = "cover.jpeg"
 +++
 
@@ -337,6 +338,236 @@ Link: </items?page=2>; rel="next",
 
 O uso de contadores deve ser moderado, visto que em bases grandes de dados ou com mudanças constantes, essa operação pode custar muito recurso. Nesses casos, cabe ao desenvolvedor responsável avaliar as necessidades e capacidades do projeto.
 
+# Teste de comparação: HATEOAS vs Headers com metadados
+
+Para validar as vantagens da abordagem de separar dados de metadados usando headers HTTP, foram realizados testes de benchmark comparando ambas as implementações.
+
+## Metodologia de Testes
+
+Os testes foram divididos em duas categorias:
+
+### 1. Teste de carga com `wrk`
+
+Utilizamos o utilitário `wrk` para avaliar o desempenho do servidor sob carga, medindo:
+- Tempo de resposta médio (latência)
+- Total de requisições por segundo
+- Configuração: 100 conexões concorrentes, 4 threads, duração de 10 segundos
+
+```bash
+#!/usr/bin/env bash
+set -e
+
+SERVER_URL="${SERVER_URL:-http://localhost:8000}"
+DURATION="${DURATION:-10s}"
+THREADS="${THREADS:-4}"
+CONNECTIONS="${CONNECTIONS:-100}"
+
+echo "=== REST API Server Benchmark (wrk) ==="
+echo "Server: $SERVER_URL"
+echo "Duration: $DURATION"
+echo "Threads: $THREADS"
+echo "Connections: $CONNECTIONS"
+echo ""
+
+echo "--- Benchmarking /feed/headers endpoint ---"
+wrk -t$THREADS -c$CONNECTIONS -d$DURATION "$SERVER_URL/feed/headers?page=1&per_page=10"
+
+echo ""
+echo "--- Benchmarking /feed/hal endpoint ---"
+wrk -t$THREADS -c$CONNECTIONS -d$DURATION "$SERVER_URL/feed/hal?page=1&per_page=10"
+
+echo ""
+echo "--- Benchmarking /feed/headers (empty page) ---"
+wrk -t$THREADS -c$CONNECTIONS -d$DURATION "$SERVER_URL/feed/headers?page=10000&per_page=10"
+
+echo ""
+echo "--- Benchmarking /feed/hal (empty page) ---"
+wrk -t$THREADS -c$CONNECTIONS -d$DURATION "$SERVER_URL/feed/hal?page=10000&per_page=10"
+
+echo ""
+echo "=== Benchmark complete ==="
+```
+
+### 2. Teste de cliente com Python/requests
+
+Para avaliar o impacto no lado do cliente, foi implementado um benchmark que mede:
+- Consumo de API
+- Tempo médio para consultar lista paginada
+- Tempo médio para consultar lista vazia
+- Uso de RAM na serialização
+
+#### Função de medição de parse JSON
+
+```python
+def measure_json_parse(data: str) -> tuple:
+    tracemalloc.start()
+    start = time.perf_counter()
+    result = json.loads(data)
+    parse_time = time.perf_counter() - start
+    current, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    return parse_time, peak / 1024, result
+```
+
+#### Benchmark para endpoint com Headers
+
+```python
+def benchmark_headers(self, page: int, per_page: int) -> dict:
+    latencies = []
+    parse_times = []
+    mem_usage = []
+    body_sizes = []
+    items_count = 0
+
+    for _ in range(self.warmup):
+        self.http_client.get(
+            f"{self.base_url}/feed/headers", params={"page": page, "per_page": per_page}
+        )
+
+    for _ in range(self.iterations):
+        start = time.perf_counter()
+        response = self.http_client.get(
+            f"{self.base_url}/feed/headers", params={"page": page, "per_page": per_page}
+        )
+        http_latency = (time.perf_counter() - start) * 1000
+        latencies.append(http_latency)
+        body_sizes.append(len(response.content))
+
+        items_count = int(response.headers.get("X-Total-Count", 0))
+
+        if items_count > 0:
+            parse_time, mem_kb, _ = measure_json_parse(response.text)
+            parse_times.append(parse_time * 1000)
+            mem_usage.append(mem_kb)
+        else:
+            parse_times.append(0)
+            mem_usage.append(0)
+
+    return {
+        "latency_ms": {"mean": mean(latencies), "std": stdev(latencies) if len(latencies) > 1 else 0},
+        "parse_ms": {"mean": mean(parse_times), "std": stdev(parse_times) if len(parse_times) > 1 else 0},
+        "memory_kb": mean(mem_usage) if mem_usage else 0,
+        "body_bytes": mean(body_sizes),
+        "items_count": items_count,
+    }
+```
+
+#### Benchmark para endpoint HAL
+
+```python
+def benchmark_hal(self, page: int, per_page: int) -> dict:
+    latencies = []
+    parse_times = []
+    mem_usage = []
+    body_sizes = []
+
+    for _ in range(self.warmup):
+        self.http_client.get(
+            f"{self.base_url}/feed/hal", params={"page": page, "per_page": per_page}
+        )
+
+    for _ in range(self.iterations):
+        start = time.perf_counter()
+        response = self.http_client.get(
+            f"{self.base_url}/feed/hal", params={"page": page, "per_page": per_page}
+        )
+        http_latency = (time.perf_counter() - start) * 1000
+        latencies.append(http_latency)
+        body_sizes.append(len(response.content))
+
+        parse_time, mem_kb, _ = measure_json_parse(response.text)
+        parse_times.append(parse_time * 1000)
+        mem_usage.append(mem_kb)
+
+    return {
+        "latency_ms": {"mean": mean(latencies), "std": stdev(latencies) if len(latencies) > 1 else 0},
+        "parse_ms": {"mean": mean(parse_times), "std": stdev(parse_times) if len(parse_times) > 1 else 0},
+        "memory_kb": mean(mem_usage),
+        "body_bytes": mean(body_sizes),
+    }
+```
+
+#### Execução principal
+
+```python
+def main():
+    import sys
+
+    base_url = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8000"
+    iterations = int(sys.argv[2]) if len(sys.argv) > 2 else 100
+
+    benchmark = ClientBenchmark(base_url, iterations)
+
+    print(f"=== Client-side Benchmark ===")
+    print(f"Server: {base_url}")
+    print(f"Iterations: {iterations}, Warm-up: 10")
+
+    headers_result = benchmark.benchmark_headers(page=1, per_page=10)
+    hal_result = benchmark.benchmark_hal(page=1, per_page=10)
+    print_results(headers_result, hal_result, "Non-empty Page (page=1, per_page=10)")
+
+    headers_empty = benchmark.benchmark_headers(page=1001, per_page=10)
+    hal_empty = benchmark.benchmark_hal(page=1001, per_page=10)
+    print_results(headers_empty, hal_empty, "Empty Page (page=1001, per_page=10)")
+```
+
+### Estrutura da API de teste
+
+- Endpoint de health: `/feed/health`
+- Endpoint com HAL: `/feed/hal`
+- Endpoint com headers metadata: `/feed/headers`
+- Documentação: `/docs`
+
+> Código completo e atualizado disponível em: [https://codeberg.org/v_raton/restapi-simplifcado-demo](https://codeberg.org/v_raton/restapi-simplifcado-demo)
+
+## Resultados dos Testes
+
+### Teste de carga (wrk)
+
+#### Feed com dados (page=1, per_page=10)
+
+| Endpoint | Latência Média | Req/Sec | Total Requests | Transferência |
+|----------|----------------|---------|----------------|---------------|
+| /feed/headers | 84.75ms | 1174.65 | 11760 | 2.38MB/s |
+| /feed/hal | 96.27ms | 1033.43 | 10346 | 2.02MB/s |
+
+#### Feed vazia (page=10000, per_page=10)
+
+| Endpoint | Latência Média | Req/Sec | Total Requests | Transferência |
+|----------|----------------|---------|----------------|---------------|
+| /feed/headers | 76.90ms | 1295.31 | 12964 | 430.08KB/s |
+| /feed/hal | 83.86ms | 1187.43 | 11892 | 398.90KB/s |
+
+**Resumo do impacto no servidor:**
+- Headers: ~12% mais rápido que HAL com dados, ~9% mais rápido em feed vazia
+- Transfer: Headers transfere ~18% mais dados (metadados nos headers vs body)
+- Vazia: HAL tem overhead de serialização mesmo sem dados
+
+### Benchmark de cliente (Python)
+
+#### Página com dados (page=1, per_page=10)
+
+| Métrica | Headers | HAL |
+|---------|---------|-----|
+| HTTP latency (ms) | 2.55±0.27 | 2.56±0.23 |
+| JSON parse (ms) | 0.1506 | 0.1626 |
+| Memory (KB) | 3.93 | 4.59 |
+| Response (bytes) | 1794 | 1925 |
+
+#### Página vazia (page=1001, per_page=10)
+
+| Métrica | Headers | HAL |
+|---------|---------|-----|
+| HTTP latency (ms) | 2.34±0.22 | 2.44±0.14 |
+| JSON parse (ms) | 0.0000 | 0.0580 |
+| Memory (KB) | 0.00 | 1.88 |
+| Response (bytes) | 2 | 217 |
+
+**Resumo do impacto no cliente:**
+- **Com dados**: Headers ~7% mais rápido em parse JSON, ~14% menos memória
+- **Vazia**: Headers evita realizar o parse completo, ~99% menos bytes transferidos
+- **Economia total**: ~131 bytes por requisição com dados, ~215 bytes por requisição vazia
+
 # Dicas e boas práticas para uso coerente de status code
 
 - Quando uma operação como DELETE puder ser revertida por meio de um endpoint simples, ao realizar o DELETE, trazer a URL de undo nos headers.
@@ -347,6 +578,13 @@ O uso de contadores deve ser moderado, visto que em bases grandes de dados ou co
 - Resultado de requisição POST, PUT é recomendado 201.
 - Resultado de requisição GET, HEAD é recomendado 200.
 - Resultado de requisição DELETE é normalmente 204.
+
+# Vídeo da Apresentação
+
+Este artigo serve como material de referência para a apresentação "REST API: Por que você complica?". Assista ao vídeo completo abaixo:
+
+<iframe style="width: 100%; aspect-ratio: 16/9;" src="https://www.youtube-nocookie.com/embed/vogBqPxwBCk?si=EHh-rnsSjEUjzHsg&amp;start=4890" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 # Referências
 
@@ -365,3 +603,5 @@ O uso de contadores deve ser moderado, visto que em bases grandes de dados ou co
 - [RFC 6648 - Deprecating the "X-" Prefix and Similar Constructs in Application Protocols](https://datatracker.ietf.org/doc/html/rfc6648),
   Acessado em 11/12/2025
 - [A história de Ruby on Rails | Por quê deu certo?](https://www.youtube.com/watch?v=oEorhw5r2Do). Acessado em 12/12/2025
+- [REST API: Por que você complica? - Vídeo da apresentação](https://www.youtube.com/live/vogBqPxwBCk?si=_r8Q-lAxXKqqeKOU&t=4890https://www.youtube.com/live/vogBqPxwBCk?si=_r8Q-lAxXKqqeKOU&t=4890), Acessado em 01/02/2025
+- [Código fonte dos benchmarks](https://codeberg.org/v_raton/restapi-simplifcado-demo), Acessado em 01/02/2025 

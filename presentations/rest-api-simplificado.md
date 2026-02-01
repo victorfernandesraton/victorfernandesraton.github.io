@@ -57,9 +57,10 @@ style: |
 
 # O que É esta apresentação
 
-- ✅ Conceitos RESTful
-- ✅ Facilitar a tomada de decisão e padronização
-- ✅ Evitar erros comuns que causam problemas de performance 
+- ✅ RESTful API 
+- ✅ Boas práticas para uso de status code 
+- ✅ HATEOS
+- ✅ Dados, Metadados e otimização 
 
 > Para aprender a desenvolver uma API REST veja o curso do Eduardo Mendes (dunossauro) [FastAPI do zero](https://fastapidozero.dunossauro.com/estavel)
 
@@ -159,7 +160,7 @@ Link: </items?page=2>; rel="next"
 
 **Hypermedia as the Engine of Application State**
 
-- Mapeando dados nos reetornos
+- Mapeando dados nos retornos
 - Links de referência para entidades
 
 Formatos existentes:
