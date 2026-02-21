@@ -3,7 +3,7 @@ title = "Engenheiro de Software | SDR Virtual"
 position = "Engenheiro de Software"
 start_date = 2025-02-01
 business = "SDR Virtual"
-tags = ["python", "vuejs" ,"javascript", "sql",  "rpa", "webscraping", "archteture", "AI", "llm"]
+tags = ["python", "vuejs" ,"javascript", "sql",  "rpa", "webscraping", "archteture", "ai", "llm"]
 +++
 
 Desenvolvedor de meio período para o core da SDR Virtual, ferramenta de funil de vendas

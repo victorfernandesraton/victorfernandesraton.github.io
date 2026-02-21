@@ -3,7 +3,7 @@ title = "Arquiteto de Software | Wokpy"
 position = "Arquiteto de Software"
 start_date = 2025-04-01
 business = "Wokpy"
-tags = ["python", "nodejs" , "postgres",  "rpa", "webscraping", "archteture", "AI", "llm", "data science"]
+tags = ["python", "nodejs" , "postgres",  "rpa", "webscraping", "archteture", "ai", "llm", "data science"]
 +++
 
 Responsavél direto pela elaboração de uma arquitetura escalavél, performática e minimalista, usando Node.js como framework base.

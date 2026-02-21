@@ -4,7 +4,7 @@ position = "Engenheiro de Software"
 start_date = 2024-06-10
 end_date = 2025-04-01
 business = "HITSS"
-tags = ["python", "django", "djangorestframework", "postgres", "selenium", "rpa", "webscraping", "electron.js", "archteture", "data science", "AI", "llm", "nextjs", "ollama"]
+tags = ["python", "django", "djangorestframework", "postgres", "selenium", "rpa", "webscraping", "electron.js", "archteture", "data science", "ai", "llm", "nextjs", "ollama"]
 +++
 Atuei como engenheiro responsavél por criar uma solução de orquestração e distribuição de RPA's e Automações multiplataforma, com suporte á Java, Python e Nodejs.
 
