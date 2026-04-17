@@ -6,7 +6,6 @@ export default function (
     children,
     tags,
     description,
-    sitename,
     comp,
     alternates,
     lang,
