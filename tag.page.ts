@@ -7,6 +7,7 @@ export default function* ({ search, lang }: Lume.Data) {
       url: `/tag/${tagValue}/`,
       layout: "tag.tsx",
       title: capitalized(tagValue),
+      description: "Alguns posts e conteúdos para a #" + capitalized(tagValue),
       result: tag,
       lang,
     };

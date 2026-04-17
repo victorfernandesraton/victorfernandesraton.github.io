@@ -1,6 +1,7 @@
 export default function (
   {
     title,
+    description,
     children,
     search,
     comp,
@@ -29,6 +30,7 @@ export default function (
           <title>{title}</title>
           <link rel="stylesheet" href="/theme.css" />
           <link ref="preconnect" href={page.data.url} />
+          <meta name="description" content={description} />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
         </head>
         <body>
