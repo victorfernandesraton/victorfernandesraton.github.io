@@ -1,6 +1,10 @@
 {
   "fmt": {
-    "exclude": ["./**/*.md"]
+    "exclude": [
+      "./**/*.md",
+      "./posts/vibecodando_com_django/mermaid-diagram-erd.svg",
+      "./presentations/rest-api-simplificado.html"
+    ]
   },
   "nodeModulesDir": "auto",
   "imports": {
@@ -76,5 +80,5 @@
       ]
     }
   },
-  "lock": true 
+  "lock": true
 }
