@@ -33,7 +33,6 @@ export default function (
             href="/theme.css"
             media="print"
             onload="this.media='all'"
-            inline
           />
 
           <link ref="preconnect" href={page.data.url} />
