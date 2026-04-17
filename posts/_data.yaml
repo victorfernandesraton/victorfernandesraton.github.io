@@ -20,6 +20,6 @@ metas:
   generator: true
   title: "=title || $ h1"
   description: "=description"
-  image: "$ img.high.cover attr(src) || =cover"
+  image: "=cover || $ img.high.cover attr(src)"
   keywords: "=tags"
   color: "black"
