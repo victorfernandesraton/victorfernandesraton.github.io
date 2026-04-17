@@ -52,6 +52,7 @@ export default function (
                     src={coverFallback}
                     alt={`Cover for ${title} post (placeholder)`}
                     fetchpriority="low"
+                    image-size
                   />
                   <img
                     class="high cover"
@@ -59,6 +60,7 @@ export default function (
                     alt={`Cover for ${title} post`}
                     onload="this.classList.add('loaded'); this.previousElementSibling.style.opacity=0;"
                     fetchpriority="high"
+                    image-size
                   />
                 </div>
               </a>

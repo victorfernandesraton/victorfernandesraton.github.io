@@ -13,6 +13,9 @@ import feed from "lume/plugins/feed.ts";
 import metas from "lume/plugins/metas.ts";
 import seo from "lume/plugins/seo.ts";
 import cacheBusting from "lume/middlewares/cache_busting.ts";
+import imageSize from "lume/plugins/image_size.ts";
+import lightningCss from "lume/plugins/lightningcss.ts";
+import { version } from "lume/core/utils/browsers.ts";
 
 const site = lume({
   server: {
@@ -79,6 +82,23 @@ site.use(googleFonts({
   placeholder: "/* google-fonts */",
 }));
 
+site.use(lightningCss({
+  includes: "_includes",
+  options: {
+    minify: true,
+    drafts: {
+      customMedia: true,
+    },
+    targets: {
+      android: version([100, 0]),
+      chrome: version([100, 0]),
+      edge: version([100, 0]),
+      firefox: version([100, 0]),
+      ios_saf: version([18, 4]),
+      safari: version([16, 0]),
+    },
+  },
+}));
 site.data("sitename", "vraton.dev");
 site.data("theme", "everforest-dark");
 site.use(jsx());
@@ -123,6 +143,7 @@ site.use(feed({
     image: "$ img.high.cover attr(src)",
   },
 }));
+site.use(imageSize());
 
 site.use(seo(/* Options */));
 // font logo  - Universe 75 Black

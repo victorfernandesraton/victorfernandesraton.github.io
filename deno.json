@@ -79,5 +79,6 @@
       ]
     }
   },
-  "lock": true
+  "lock": true,
+  "allowScripts": ["npm:esbuild@0.28.0", "npm:sharp@0.34.5"]
 }

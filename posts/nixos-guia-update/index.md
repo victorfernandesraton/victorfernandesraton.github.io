@@ -2,7 +2,7 @@
 title = 'NixOS - guia de update'
 description = 'Como atualizar os pacotes do seu NixOS'
 date = 2023-09-25T00:00:00-03:00
-cover = "/images/nixos-rose-pine.png"
+cover = "cover.png"
 tags = ["so", "nix", "nixos"]
 +++
 
