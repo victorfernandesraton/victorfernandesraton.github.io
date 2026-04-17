@@ -46,7 +46,8 @@
       ],
       "write": [
         "./_site",
-        "./_cache"
+        "./_cache",
+        "./node_modules"
       ],
       "sys": [
         "networkInterfaces"
@@ -67,7 +68,7 @@
   ],
   "lint": {
     "plugins": [
-      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.1.2/lint.ts"
+      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/lint.ts"
     ],
     "rules": {
       "exclude": [
@@ -75,5 +76,5 @@
       ]
     }
   },
-  "lock": false
+  "lock": true 
 }
