@@ -85,6 +85,7 @@ site.use(jsx());
 site.use(favicon());
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);
 site.add("./theme.css");
+site.add("./lume.svg");
 
 site.use(transformImages(/* Options */));
 

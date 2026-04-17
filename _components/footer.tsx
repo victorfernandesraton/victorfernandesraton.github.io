@@ -10,7 +10,7 @@ export default function ({ social = [] }: { social: Social[] }) {
       <a class="powered-by" href="https://lume.land">
         <p>Powered by</p>
         <img
-          src="https://raw.githubusercontent.com/lumeland/logo/1eac98cb08ab69c428328246f591ab31731ebd7e/lume-dark.svg"
+          src="/lume.svg"
           width="50"
           alt="Lumen Logo"
         />

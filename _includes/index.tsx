@@ -25,10 +25,16 @@ export default function (
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
-      <html data-webui-theme={theme}>
+      <html data-webui-theme={theme} lang={lang ?? "pt-BR"}>
         <head>
           <title>{title}</title>
-          <link rel="stylesheet" href="/theme.css" />
+          <link
+            rel="stylesheet"
+            href="/theme.css"
+            media="print"
+            onload="this.media='all'"
+          />
+
           <link ref="preconnect" href={page.data.url} />
           <meta name="description" content={description} />
           <meta name="viewport" content="width=device-width,initial-scale=1" />

@@ -51,7 +51,7 @@ export default function (
                     class="low"
                     src={coverFallback}
                     alt={`Cover for ${title} post (placeholder)`}
-                    fetchpriority="high"
+                    fetchpriority="low"
                   />
                   <img
                     class="high cover"

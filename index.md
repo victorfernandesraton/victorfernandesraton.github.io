@@ -4,6 +4,7 @@ date = 2023-01-01T08:00:00-07:00
 draft = false
 id = 'index'
 description = 'Bem-vindo ao meu caos pessoal' 
+language= 'pt-BR'
 +++
 
 # Bem-vindo ao meu caos pessoal
