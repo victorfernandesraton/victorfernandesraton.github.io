@@ -1,8 +1,8 @@
 +++
 title = 'REST API: Por que você complica?'
-description = 'Fazendo uma API REST detalhada'
+description = 'Como melhorar sua API REST sem instalar nada'
 date = 2025-12-06T02:12:00-03:00
-tags = ["api", "rest", "http"]
+tags = ["api", "rest", "http", "python", "fastapi", "hateos"]
 draft = false 
 media = "https://www.youtube.com/live/vogBqPxwBCk?si=_r8Q-lAxXKqqeKOU&t=4890https://www.youtube.com/live/vogBqPxwBCk?si=_r8Q-lAxXKqqeKOU&t=4890"
 cover = "cover.jpeg"
