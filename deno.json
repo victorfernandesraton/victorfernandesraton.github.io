@@ -18,7 +18,6 @@
       "description": "Run Lume command",
       "command": "deno run -P=lume lume/cli.ts"
     },
-
     "compile": {
       "description": "Run compile",
       "command": "deno compile -P=lume lume/cli.ts"
