@@ -1,5 +1,15 @@
 export default function (
-  { title, description, search, nav, comp, lang, alternates, theme, result = "" }: Lume.Data,
+  {
+    title,
+    description,
+    search,
+    nav,
+    comp,
+    lang,
+    alternates,
+    theme,
+    result = "",
+  }: Lume.Data,
 ) {
   const recent = search.pages(result);
 
@@ -8,10 +18,15 @@ export default function (
       {{ __html: "<!DOCTYPE html>" }}
       <head>
         <title>{title}</title>
-        <link rel="stylesheet" href="/theme.css" />
+        <link
+          rel="stylesheet"
+          href="/theme.css"
+          media="print"
+          onload="this.media='all'"
+        />
+
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="description" content={description} />
-
       </head>
 
       <html data-webui-theme={theme}>

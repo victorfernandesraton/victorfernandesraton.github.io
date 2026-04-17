@@ -33,7 +33,12 @@ export default function (
           <title>
             {`${sitename} - ${title}`}
           </title>
-          <link rel="stylesheet" href="/theme.css" />
+          <link
+            rel="stylesheet"
+            href="/theme.css"
+            media="print"
+            onload="this.media='all'"
+          />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
@@ -53,7 +58,7 @@ export default function (
                     src={coverRes}
                     alt={`Cover for ${title} post`}
                     onload="this.classList.add('loaded'); this.previousElementSibling.style.opacity=0;"
-                    fetchpriority="low"
+                    fetchpriority="high"
                   />
                 </div>
               </a>

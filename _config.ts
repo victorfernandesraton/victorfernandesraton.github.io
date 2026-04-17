@@ -11,8 +11,15 @@ import highlight from "lume/plugins/code_highlight.ts";
 import gzip from "lume/plugins/gzip.ts";
 import feed from "lume/plugins/feed.ts";
 import metas from "lume/plugins/metas.ts";
+import seo from "lume/plugins/seo.ts";
+import cacheBusting from "lume/middlewares/cache_busting.ts";
 
-const site = lume({ server: { debugBar: true } }, {
+const site = lume({
+  server: {
+    debugBar: true,
+    middlewares: [cacheBusting()],
+  },
+}, {
   markdown: {
     plugins: [mila, [markdownItMedia, { controls: true }]],
   },
@@ -64,9 +71,9 @@ site.data(
 site.use(googleFonts({
   fonts: {
     title:
-      "https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap",
+      "https://fonts.googleapis.com/css2?family=Space+Grotesk&display=optional",
     display:
-      "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@300&display=swap",
+      "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@300&display=optional",
   },
   cssFile: "theme.css",
   placeholder: "/* google-fonts */",
@@ -106,14 +113,17 @@ site.use(feed({
   info: {
     title: "=site.title",
     description: "=site.description",
+    generator: true, // Set `true` to automatically generate the "Lume {version}"
   },
   items: {
     title: "=title",
     description: "=posittion",
     published: "=end_date",
+    image: "$ img.high.cover attr(src)",
   },
 }));
 
+site.use(seo(/* Options */));
 // font logo  - Universe 75 Black
 // font title - Univers LT 49 Light Ultra Condensed
 // font links and extra -  Roadgeek 2005 Series F or D

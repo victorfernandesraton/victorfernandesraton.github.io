@@ -11,7 +11,12 @@ export default function (
       {{ __html: "<!DOCTYPE html>" }}
       <head>
         <title>{title}</title>
-        <link rel="stylesheet" href="/theme.css" role="text" />
+        <link
+          rel="stylesheet"
+          href="/theme.css"
+          media="print"
+          onload="this.media='all'"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <html data-webui-theme={theme}>

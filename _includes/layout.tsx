@@ -5,7 +5,12 @@ export default ({ title, children, theme }: Lume.Data) => (
     <html data-webui-theme={theme}>
       <head>
         <title>{title}</title>
-        <link rel="stylesheet" href="/theme.css" />
+        <link
+          rel="stylesheet"
+          href="/theme.css"
+          media="print"
+          onload="this.media='all'"
+        />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </head>
       <body>
