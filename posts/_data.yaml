@@ -16,7 +16,10 @@ transformImages:
 metas:
   site: vraton's site
   fediverse: "@v_raton@fosstodon.org"
-  lang: pt
+  lang: pt-BR
   generator: true
-  title: "=title"
+  title: "=title || $ h1"
   description: "=description"
+  image: "$ img.high.cover attr(src) || =cover"
+  keywords: "=tags"
+  color: "black"

@@ -34,11 +34,7 @@ export default function (
             {`${sitename} - ${title}`}
           </title>
           <link rel="stylesheet" href="/theme.css" />
-          <meta name="description" content={description} />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
-          {coverFallback && (
-            <meta itemprop="image" content={`${url}/${coverFallback}`} />
-          )}
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>
