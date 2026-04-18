@@ -185,9 +185,9 @@ ul.tags {
   display: block;
   overflow: hidden;
   width: 100%;
-  height: 30rem;
+  aspect-ratio: 15 / 8;
   @media screen and (max-width: 768px) {
-    height: 15rem;
+    aspect-ratio: 8 / 5;
   }
   background-color: #2d353b;
 }

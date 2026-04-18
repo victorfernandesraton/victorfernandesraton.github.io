@@ -130,7 +130,7 @@ Agora é só criar breakpoints e debugar o que precisamos.
 
 Mas agora vem a parte séria, inspirado por
 [este vídeo](https://www.youtube.com/watch?v=1p7xa_BHYDs) do
-[mCoding]https://www.youtube.com/channel/UCaiL2GDNpLYH6Wokkk1VNcg), decidi fazer
+[mCoding](https://www.youtube.com/channel/UCaiL2GDNpLYH6Wokkk1VNcg), decidi fazer
 algo usando `itertools`
 
 O primeiro ponto que precisamos entender é que ao ler o PDF e extrair as

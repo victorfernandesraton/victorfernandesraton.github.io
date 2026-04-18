@@ -6,13 +6,14 @@ transformImages:
     suffix: -big
     format: webp
 
-  - resize: [20]
+  - resize: [225]
     matches: cover
     suffix: -small
     format: webp
 
   - resize: [900]
-    format: [webp, png, jpg]
+    format: [webp, png, jpg, gif]
+
 metas:
   site: vraton's site
   fediverse: "@v_raton@fosstodon.org"

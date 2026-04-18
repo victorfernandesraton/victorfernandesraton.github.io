@@ -12,6 +12,7 @@ export default function ({ social = [] }: { social: Social[] }) {
         <img
           src="/lume.svg"
           width="50"
+          height="50"
           alt="Lumen Logo"
         />
       </a>
@@ -26,21 +27,29 @@ export default function ({ social = [] }: { social: Social[] }) {
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
           alt=""
+          width="16"
+          height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
           alt=""
+          width="16"
+          height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"
           alt=""
+          width="16"
+          height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/sa.svg"
           alt=""
+          width="16"
+          height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
       </div>

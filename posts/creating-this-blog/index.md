@@ -570,10 +570,10 @@ export default Post;
 
 And where is a list and post render as a markdown
 
-![image](/images/blog-works.gif)
+![image](./blog-works.gif)
 
 Its a simple blog implementation using for initial modeling for this blog, of
 course, along side of time , i added some styles and features, you can follow
 this repo and look some changes a made here.
 
-![image](/images/thats-all.jpg)
+![image](./thats-all.jpg)

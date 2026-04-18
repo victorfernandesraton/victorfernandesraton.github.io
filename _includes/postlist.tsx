@@ -16,18 +16,18 @@ export default function (
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
-      <head>
-        <title>{title}</title>
-        <link
-          rel="stylesheet"
-          href="/theme.css"
-          media="print"
-          onload="this.media='all'"
-        />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="description" content={description} />
-      </head>
-      <html data-webui-theme={theme}>
+      <html data-webui-theme={theme} lang={lang ?? "pt-BR"}>
+        <head>
+          <title>{title}</title>
+          <link
+            rel="stylesheet"
+            href="/theme.css"
+            media="print"
+            onload="this.media='all'"
+          />
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <meta name="description" content={description} />
+        </head>
         <body>
           <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
           <main class="list">

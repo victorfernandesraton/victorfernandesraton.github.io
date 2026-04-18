@@ -4,6 +4,7 @@ import nav from "lume/plugins/nav.ts";
 import favicon from "lume/plugins/favicon.ts";
 import mila from "markdown-it-link-attributes";
 import inline from "lume/plugins/inline.ts";
+import cacheBusting from "lume/middlewares/cache_busting.ts";
 import markdownItMedia from "@gotfeedback/markdown-it-media";
 import transformImages from "lume/plugins/transform_images.ts";
 import googleFonts from "lume/plugins/google_fonts.ts";
@@ -12,10 +13,31 @@ import gzip from "lume/plugins/gzip.ts";
 import feed from "lume/plugins/feed.ts";
 import metas from "lume/plugins/metas.ts";
 import seo from "lume/plugins/seo.ts";
-import cacheBusting from "lume/middlewares/cache_busting.ts";
 import imageSize from "lume/plugins/image_size.ts";
 import lightningCss from "lume/plugins/lightningcss.ts";
 import { version } from "lume/core/utils/browsers.ts";
+import type MarkdownIt from "markdown-it";
+
+const addImageSizeAttribute = () => (md: typeof MarkdownIt) => {
+  const defaultImageRender = md.renderer.rules.image ||
+    function (tokens: any, idx: number, options: any, env: any, self: any) {
+      return self.renderToken(tokens, idx, options);
+    };
+
+  md.renderer.rules.image = function (
+    tokens: any,
+    idx: number,
+    options: any,
+    env: any,
+    self: any,
+  ) {
+    const token = tokens[idx];
+    if (!token.attrGet("image-size")) {
+      token.attrPush(["image-size", ""]);
+    }
+    return defaultImageRender(tokens, idx, options, env, self);
+  };
+};
 
 const site = lume({
   location: new URL("https://vraton.dev"),
@@ -25,7 +47,11 @@ const site = lume({
   },
 }, {
   markdown: {
-    plugins: [mila, [markdownItMedia, { controls: true }]],
+    plugins: [
+      mila,
+      [markdownItMedia, { controls: true }],
+      addImageSizeAttribute(),
+    ],
   },
 });
 site.use(highlight({
@@ -36,7 +62,7 @@ site.use(highlight({
   },
 }));
 
-site.ignore("README.md", "github/");
+site.ignore("README.md", "github/", "./presentation/");
 
 site.use(nav());
 site.data(

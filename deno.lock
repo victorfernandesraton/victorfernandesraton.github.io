@@ -45,6 +45,7 @@
     "npm:markdown-it-attrs@4.3.1": "4.3.1_markdown-it@14.1.1",
     "npm:markdown-it-deflist@3.0.0": "3.0.0",
     "npm:markdown-it-link-attributes@^4.0.1": "4.0.1",
+    "npm:markdown-it@14": "14.1.1",
     "npm:markdown-it@14.1.1": "14.1.1",
     "npm:remove-markdown@0.6.3": "0.6.3",
     "npm:sharp@0.34.5": "0.34.5"
@@ -795,6 +796,7 @@
     "https://cdn.jsdelivr.net/gh/ventojs/vento@2.3.1/plugins/set.ts": "cbe42b771a04203b6fc1c178e655fa2536ab90ae67e52c083cf7c71f37c62711",
     "https://cdn.jsdelivr.net/gh/ventojs/vento@2.3.1/plugins/trim.ts": "8d33271327b09ffd8f569ebde85125b1324fa9538a54d6072ac97a9fb5d24264",
     "https://cdn.jsdelivr.net/gh/ventojs/vento@2.3.1/plugins/unescape.ts": "1c56f0310c7757880df7684fc6b7bf9efd27fdb6b929b89626802f5a99cb93ee",
+    "https://deno.land/x/xml@7.0.4/_types.ts": "203f97a91686f1aa9423ef07abe646da7caa07a2cf13b27897ffc4f43fdeae8f",
     "https://deno.land/x/xml@7.0.4/mod.ts": "ca2bb5a9a90d236a2b6242c8643717e0c53f645092d2407792dad728e1367f9a",
     "https://deno.land/x/xml@7.0.4/parse.ts": "8ae0d8339f589c29ab203dd7887e06325e2064efedfe9c61e2cd6d907443b664",
     "https://deno.land/x/xml@7.0.4/stringify.ts": "f604d3d88b8bdaff11dbc9d57a6e98fd9b353e3bfbafcaa3f421e6b470ea0e02",
@@ -803,7 +805,8 @@
   "workspace": {
     "dependencies": [
       "npm:@gotfeedback/markdown-it-media@^1.0.1",
-      "npm:markdown-it-link-attributes@^4.0.1"
+      "npm:markdown-it-link-attributes@^4.0.1",
+      "npm:markdown-it@14"
     ]
   }
 }
