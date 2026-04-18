@@ -56,14 +56,13 @@ const site = lume({
 });
 site.use(highlight({
   theme: {
-    name: "agate", // The theme name to download
+    name: "base16/gruvbox-dark-pale", // The theme name to download
     cssFile: "/theme.css", // The destination filename
     placeholder: "/* code-hightlight */", // Optional placeholder to replace with the theme code
   },
 }));
 
 site.ignore("README.md", "github/", "./presentation/");
-
 site.use(nav());
 site.data(
   "fullDate",
@@ -146,12 +145,14 @@ site.use(feed({
   info: {
     title: "=site.title",
     description: "=site.description",
+    generator: true
   },
   items: {
     title: "=title",
     description: "=description",
     published: "=date",
     image: "$ img.high attr(src)",
+    authorName: "v_raton",
   },
 }));
 
@@ -161,13 +162,13 @@ site.use(feed({
   info: {
     title: "=site.title",
     description: "=site.description",
-    generator: true, // Set `true` to automatically generate the "Lume {version}"
+    generator: true,
   },
   items: {
     title: "=title",
-    description: "=posittion",
+    description: "=children",
     published: "=end_date",
-    image: "$ img.high.cover attr(src)",
+    authorName: "v_raton",
   },
 }));
 site.use(imageSize());
