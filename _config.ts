@@ -145,7 +145,7 @@ site.use(feed({
   info: {
     title: "=site.title",
     description: "=site.description",
-    generator: true
+    generator: true,
   },
   items: {
     title: "=title",
