@@ -18,6 +18,7 @@ import lightningCss from "lume/plugins/lightningcss.ts";
 import { version } from "lume/core/utils/browsers.ts";
 
 const site = lume({
+  location: new URL("https://vraton.dev"),
   server: {
     debugBar: true,
     middlewares: [cacheBusting()],
