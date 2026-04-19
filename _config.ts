@@ -20,17 +20,23 @@ import type MarkdownIt from "markdown-it";
 
 const addImageSizeAttribute = () => (md: typeof MarkdownIt) => {
   const defaultImageRender = md.renderer.rules.image ||
-    function (tokens: any, idx: number, options: any, env: any, self: any) {
+    // deno-lint-ignore no-explicit-any
+    function (tokens: any, idx: number, options: any, _env: any, self: any) {
       return self.renderToken(tokens, idx, options);
     };
 
   md.renderer.rules.image = function (
+    // deno-lint-ignore no-explicit-any
     tokens: any,
     idx: number,
+    // deno-lint-ignore no-explicit-any
     options: any,
+    // deno-lint-ignore no-explicit-any
     env: any,
+    // deno-lint-ignore no-explicit-any
     self: any,
-  ) {
+    // deno-lint-ignore no-explicit-any
+  ): any {
     const token = tokens[idx];
     if (!token.attrGet("image-size")) {
       token.attrPush(["image-size", ""]);
