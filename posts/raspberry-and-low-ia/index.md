@@ -4,7 +4,7 @@ date = 2024-07-13T13:30:48-03:00
 draft = false
 description = 'Usando modelos LLM em um Raspberry Pi 5 com apenas 4GB de RAM'
 tags = ['os' , 'raspberry', 'debian', 'casaos', 'llm', 'ollama']
-cover = 'cover.jpg'
+cover = 'cover.webp'
 +++
 
 # Voltando a um mês na maquina do tempo
@@ -49,7 +49,7 @@ raspberry vai precisar de pelo menos cooler, microSD e cabo HDMI, e poderiam
 fazer um package já com a fonte junta, olha a quantidade de caixinhas que tenho
 aqui que irão pro lixo , pois em Salvador , reciclagem é uma grande mentira.
 
-![image](./trash.jpg)
+![image](./trash.webp)
 
 # Fazendo instalação e conexão ssh.
 
@@ -59,7 +59,7 @@ aplicativo .deb ,
 Após isso eu gerei uma imagenm no microSD com o sistema em modo light, mas se
 essa for sua primeira vez , sugiro que escolha a opção recomendada
 
-![image](./screenshot-os.png)
+![image](./screenshot-os.webp)
 
 Defini uns parâmetros para poder fazer ssh mais tarde, como nome do device e do
 usuário (serão usados mais tarde, fique atento), assim eu renomeei meu device
@@ -68,7 +68,7 @@ tanbém defini a conexão do meu wifi com senha pra não ter o trabalho de cabea
 habilitei a conexão ssh, onde precisarei ter definido a senha do usuário root
 que criei como v_raton.
 
-![image](./screenshot-ssid.png)
+![image](./screenshot-ssid.webp)
 
 Curioso que esse instalador já define o datetime e o tipo de teclado , que no
 meu caso é americano, isso é importante para que ele não defina o sistema em
@@ -76,7 +76,7 @@ pt-br o que seria um grande incomodo.
 
 Eu defini o login de ssh por meio da senha do usuário, mas pode ser feito por
 meio de uma chave de criptografia , como mostra as opções abaixo
-![image](./screenshot-ssh.png)
+![image](./screenshot-ssh.webp)
 
 # Achando o dito cujo
 
@@ -121,7 +121,7 @@ Neste caso o comando é `sudo raspi-config` ele vai te levar pra um prompt no
 terminal, para sair basta ir na opção de update, não se assuste, mas apenas seu
 teclado funciona aqui , e para sair basta usar o ESC
 
-![image](./raspi-config.png)
+![image](./raspi-config.webp)
 
 Com seu sistema atualizado basta instalar o [Ollama](https://ollama.com/), uma
 ferramenta para gerenciar modelos e ferramentas de LLM, com ela é bem fácil
@@ -420,7 +420,7 @@ Portanto, o valor de P(2) é 1.
 Agora sem mais delongas vamos executar o nosso script , a fins de registro esses
 são os valores de uso de recurso do dispositivo em idle:
 
-![image](./monitor-before-test.png)
+![image](./monitor-before-test.webp)
 
 - CPU: 0.09%
 - RAM: 413MB
@@ -445,7 +445,7 @@ O uso de memória achei curioso pois sempre ficava no topo, mas acredito ter
 algum tipo de problema na configuração desse raspberry pois o swap está sempre
 alocado no máximo, terei de investigar depois.
 
-![image](./monitor-after-test.png)
+![image](./monitor-after-test.webp)
 
 Por fim parece que o qwen2 é um modelo mais econômico em termos de recurso, mas
 acredito que isso seja por causa da opção de parâmetros com 0.5 Bilhões. O mais

@@ -190,12 +190,12 @@ tabela, para isso entraremos no modo de inspeção do navegador, nessa etapa é
 crucial que esteja usando um navegador baseado no Chromiun, para conseguir
 reproduzir meus passos com fidelidade.
 
-![Teste](./Screenshot_table_oscar_wikipedia.png)
+![Teste](./Screenshot_table_oscar_wikipedia.webp)
 
 Na aba de elementos do modo de inspeção conseguimos encontrar nossa suspeita, a
 tabela que precisamos.
 
-![image](./Screenshot_table_oscar_highlight.png)
+![image](./Screenshot_table_oscar_highlight.webp)
 
 Com o nosso elemento selecionado podemos fazer experimentos, ao clicar no
 representando do elemento na árvore do modo de inspeção , aparecerá as opções

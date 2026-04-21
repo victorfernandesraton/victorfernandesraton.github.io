@@ -1709,7 +1709,7 @@ Outro fator curioso é que a ausência de javascript me permitiu criar as telas 
 
 Por fim, uma das falhas do `allauth`, a blibioteca que eu uso pra login, é que por padrão ela não utiliza a UI do Django Admin, criando um template padrão que é um html extremamente quebrado visualmente, esse eu separei até uma captura de tela
 
-![image](../Screenshot_login_responsive.png)
+![image](../Screenshot_login_responsive.webp)
 
 # O veredito
 
