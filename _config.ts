@@ -134,7 +134,7 @@ site.use(lightningCss({
 site.data("sitename", "vraton.dev");
 site.data("theme", "everforest-dark");
 site.use(jsx());
-site.use(favicon());
+site.use(favicon({input: './favicon.svg'}));
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);
 site.add("./theme.css");
 site.add("./lume.svg");
