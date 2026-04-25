@@ -38,7 +38,10 @@ const addImageSizeAttribute = () => (md: typeof MarkdownIt) => {
     // deno-lint-ignore no-explicit-any
   ): any {
     const token = tokens[idx];
-    if (!token.attrGet("image-size")) {
+    const src = token.attrGet("src") || "";
+    // Skip images in presentations directory (Lume passes filename in env), GIFs, and already processed images
+    const currentFile = env?.filename || "";
+    if (!currentFile.includes("presentations") && !src.endsWith(".gif") && !token.attrGet("image-size")) {
       token.attrPush(["image-size", ""]);
     }
     return defaultImageRender(tokens, idx, options, env, self);
@@ -60,15 +63,18 @@ const site = lume({
     ],
   },
 });
+
+// Ignore files that should not be processed
+site.ignore("README.md", "AGENTS.md", "github/", "presentations/");
+
 site.use(highlight({
   theme: {
-    name: "base16/gruvbox-dark-pale", // The theme name to download
+    name: "github-dark", // High contrast theme for accessibility (WCAG compliant)
     cssFile: "/theme.css", // The destination filename
     placeholder: "/* code-hightlight */", // Optional placeholder to replace with the theme code
   },
 }));
 
-site.ignore("README.md", "github/", "./presentation/");
 site.use(nav());
 site.data(
   "fullDate",
@@ -135,9 +141,10 @@ site.data("sitename", "vraton.dev");
 site.data("theme", "everforest-dark");
 site.use(jsx());
 site.use(favicon({input: './favicon.svg'}));
-site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);
+site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv"]);
 site.add("./theme.css");
 site.add("./lume.svg");
+// Note: .svg files are handled individually to avoid conflicts with favicon plugin
 
 site.use(transformImages(/* Options */));
 
