@@ -35,19 +35,31 @@
 
 /* Font face definitions with system fallback to prevent CLS */
 @font-face {
-  font-family: 'display';
+  font-family: "display";
   font-display: swap;
-  src: local('Open Sans'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial'), local('sans-serif');
+  src:
+    local("Open Sans"),
+    local("Segoe UI"),
+    local("Roboto"),
+    local("Helvetica Neue"),
+    local("Arial"),
+    local("sans-serif");
 }
 
 @font-face {
-  font-family: 'title';
+  font-family: "title";
   font-display: swap;
-  src: local('Space Grotesk'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial'), local('sans-serif');
+  src:
+    local("Space Grotesk"),
+    local("Segoe UI"),
+    local("Roboto"),
+    local("Helvetica Neue"),
+    local("Arial"),
+    local("sans-serif");
 }
 
 body {
-  font-family: display, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: display, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--fg);
   min-height: 100vh;
   margin: 0;

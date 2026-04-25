@@ -41,7 +41,10 @@ const addImageSizeAttribute = () => (md: typeof MarkdownIt) => {
     const src = token.attrGet("src") || "";
     // Skip images in presentations directory (Lume passes filename in env), GIFs, and already processed images
     const currentFile = env?.filename || "";
-    if (!currentFile.includes("presentations") && !src.endsWith(".gif") && !token.attrGet("image-size")) {
+    if (
+      !currentFile.includes("presentations") && !src.endsWith(".gif") &&
+      !token.attrGet("image-size")
+    ) {
       token.attrPush(["image-size", ""]);
     }
     return defaultImageRender(tokens, idx, options, env, self);
@@ -140,7 +143,7 @@ site.use(lightningCss({
 site.data("sitename", "vraton.dev");
 site.data("theme", "everforest-dark");
 site.use(jsx());
-site.use(favicon({input: './favicon.svg'}));
+site.use(favicon({ input: "./favicon.svg" }));
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv"]);
 site.add("./theme.css");
 site.add("./lume.svg");

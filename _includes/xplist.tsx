@@ -13,7 +13,11 @@ export default function (
         <head>
           <title>{title}</title>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin="anonymous"
+          />
           <link
             rel="preload"
             href="/theme.css"
@@ -24,7 +28,10 @@ export default function (
             rel="stylesheet"
             href="/theme.css"
           />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
         </head>
         <body>
           <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
