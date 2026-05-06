@@ -43,46 +43,24 @@
       "ffi": [
         "./node_modules/.deno/@img+sharp-linux-x64@0.34.5/node_modules/@img/sharp-linux-x64/lib/sharp-linux-x64.node"
       ],
-      "read": [
-        "./",
-        "/proc/self/exe",
-        "/usr/bin/ldd"
-      ],
-      "write": [
-        "./_site",
-        "./_cache",
-        "./node_modules"
-      ],
-      "sys": [
-        "networkInterfaces"
-      ],
+      "read": ["./", "/proc/self/exe", "/usr/bin/ldd"],
+      "write": ["./_site", "./_cache", "./node_modules"],
+      "sys": ["networkInterfaces"],
       "env": true
     }
   },
   "compilerOptions": {
-    "types": [
-      "lume/types.ts"
-    ],
+    "types": ["lume/types.ts"],
     "jsx": "react-jsx",
     "jsxImportSource": "lume"
   },
-  "unstable": [
-    "temporal",
-    "fmt-component"
-  ],
+  "unstable": ["temporal", "fmt-component"],
   "lint": {
-    "plugins": [
-      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/lint.ts"
-    ],
+    "plugins": ["https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/lint.ts"],
     "rules": {
-      "exclude": [
-        "no-import-prefix"
-      ]
+      "exclude": ["no-import-prefix"]
     }
   },
   "lock": true,
-  "allowScripts": [
-    "npm:esbuild@0.28.0",
-    "npm:sharp@0.34.5"
-  ]
+  "allowScripts": ["npm:esbuild@0.28.0", "npm:sharp@0.34.5"]
 }
