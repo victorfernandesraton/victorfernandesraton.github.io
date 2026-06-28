@@ -9,8 +9,8 @@
   "nodeModulesDir": "auto",
   "imports": {
     "@gotfeedback/markdown-it-media": "npm:@gotfeedback/markdown-it-media@^1.0.1",
-    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/",
-    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.14/jsx-runtime.ts",
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts",
     "markdown-it-link-attributes": "npm:markdown-it-link-attributes@^4.0.1",
     "markdown-it": "npm:markdown-it@^14.1.1"
   },
@@ -30,6 +30,10 @@
     "serve": {
       "description": "Run and serve the site for development",
       "command": "deno task lume -s"
+    },
+    "new": {
+      "description": "Create new content or code using artifacts",
+      "command": "deno task lume new"
     }
   },
   "permissions": {
@@ -43,24 +47,46 @@
       "ffi": [
         "./node_modules/.deno/@img+sharp-linux-x64@0.34.5/node_modules/@img/sharp-linux-x64/lib/sharp-linux-x64.node"
       ],
-      "read": ["./", "/proc/self/exe", "/usr/bin/ldd"],
-      "write": ["./_site", "./_cache", "./node_modules"],
-      "sys": ["networkInterfaces"],
+      "read": [
+        "./",
+        "/proc/self/exe",
+        "/usr/bin/ldd"
+      ],
+      "write": [
+        "./_site",
+        "./_cache",
+        "./node_modules"
+      ],
+      "sys": [
+        "networkInterfaces"
+      ],
       "env": true
     }
   },
   "compilerOptions": {
-    "types": ["lume/types.ts"],
+    "types": [
+      "lume/types.ts"
+    ],
     "jsx": "react-jsx",
     "jsxImportSource": "lume"
   },
-  "unstable": ["temporal", "fmt-component"],
+  "unstable": [
+    "temporal",
+    "fmt-component"
+  ],
   "lint": {
-    "plugins": ["https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/lint.ts"],
+    "plugins": [
+      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/lint.ts"
+    ],
     "rules": {
-      "exclude": ["no-import-prefix"]
+      "exclude": [
+        "no-import-prefix"
+      ]
     }
   },
   "lock": true,
-  "allowScripts": ["npm:esbuild@0.28.0", "npm:sharp@0.34.5"]
+  "allowScripts": [
+    "npm:esbuild@0.28.0",
+    "npm:sharp@0.34.5"
+  ]
 }

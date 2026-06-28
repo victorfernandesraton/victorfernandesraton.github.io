@@ -17,6 +17,7 @@ import imageSize from "lume/plugins/image_size.ts";
 import lightningCss from "lume/plugins/lightningcss.ts";
 import { version } from "lume/core/utils/browsers.ts";
 import type MarkdownIt from "markdown-it";
+import svgo from "lume/plugins/svgo.ts";
 
 const addImageSizeAttribute = () => (md: typeof MarkdownIt) => {
   const defaultImageRender = md.renderer.rules.image ||
@@ -143,11 +144,11 @@ site.use(lightningCss({
 site.data("sitename", "vraton.dev");
 site.data("theme", "everforest-dark");
 site.use(jsx());
+site.use(svgo(/* Options */));
 site.use(favicon({ input: "./favicon.svg" }));
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv"]);
 site.add("./theme.css");
 site.add("./lume.svg");
-// Note: .svg files are handled individually to avoid conflicts with favicon plugin
 
 site.use(transformImages(/* Options */));
 

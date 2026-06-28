@@ -26,28 +26,28 @@ export default function ({ social = [] }: { social: Social[] }) {
         </a>
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-          alt=""
+          alt="CC"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
-          alt=""
+          alt="BY"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"
-          alt=""
+          alt="NC"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
           src="https://mirrors.creativecommons.org/presskit/icons/sa.svg"
-          alt=""
+          alt="SA"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
