@@ -1,6 +1,6 @@
 [
   {
     "label": "deno serve",
-    "command": "deno task serve",
-  },
+    "command": "deno task serve"
+  }
 ]

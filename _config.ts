@@ -18,37 +18,42 @@ import lightningCss from "lume/plugins/lightningcss.ts";
 import { version } from "lume/core/utils/browsers.ts";
 import type MarkdownIt from "markdown-it";
 import svgo from "lume/plugins/svgo.ts";
+import picture from "lume/plugins/picture.ts";
+import markdownItAttrs from "markdown-it-attrs";
 
-const addImageSizeAttribute = () => (md: typeof MarkdownIt) => {
-  const defaultImageRender = md.renderer.rules.image ||
-    // deno-lint-ignore no-explicit-any
-    function (tokens: any, idx: number, options: any, _env: any, self: any) {
-      return self.renderToken(tokens, idx, options);
-    };
-
+const addImageAttributes = () => (md: MarkdownIt) => {
+  const originalRender = md.renderer.rules.image;
   md.renderer.rules.image = function (
-    // deno-lint-ignore no-explicit-any
-    tokens: any,
+    tokens: unknown[],
     idx: number,
-    // deno-lint-ignore no-explicit-any
-    options: any,
-    // deno-lint-ignore no-explicit-any
-    env: any,
-    // deno-lint-ignore no-explicit-any
-    self: any,
-    // deno-lint-ignore no-explicit-any
-  ): any {
-    const token = tokens[idx];
-    const src = token.attrGet("src") || "";
-    // Skip images in presentations directory (Lume passes filename in env), GIFs, and already processed images
-    const currentFile = env?.filename || "";
-    if (
-      !currentFile.includes("presentations") && !src.endsWith(".gif") &&
-      !token.attrGet("image-size")
-    ) {
-      token.attrPush(["image-size", ""]);
+    options: Record<string, unknown>,
+    env: Record<string, unknown>,
+    self: Record<string, unknown>,
+  ): string {
+    const token = tokens[idx] as Record<string, unknown>;
+    if (typeof token.attrGet !== "function") {
+      return originalRender(tokens, idx, options, env, self);
     }
-    return defaultImageRender(tokens, idx, options, env, self);
+
+    const attrGet = (name: string): string | undefined =>
+      (token.attrGet as (name: string) => string | undefined).call(
+        token,
+        name,
+      );
+    const attrPush = (attr: [string, string]) =>
+      (token.attrPush as (attr: [string, string]) => void).call(
+        token,
+        attr,
+      );
+
+    if (!attrGet("image-size")) attrPush(["image-size", ""]);
+    if (!attrGet("sizes")) {
+      attrPush(["sizes", "(min-width: 900px) 900px, calc(100vw - 2rem)"]);
+    }
+    if (!attrGet("loading")) attrPush(["loading", "lazy"]);
+    if (!attrGet("decoding")) attrPush(["decoding", "async"]);
+
+    return originalRender(tokens, idx, options, env, self);
   };
 };
 
@@ -61,9 +66,10 @@ const site = lume({
 }, {
   markdown: {
     plugins: [
+      markdownItAttrs,
       mila,
       [markdownItMedia, { controls: true }],
-      addImageSizeAttribute(),
+      addImageAttributes(),
     ],
   },
 });
@@ -150,6 +156,7 @@ site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv"]);
 site.add("./theme.css");
 site.add("./lume.svg");
 
+site.use(picture());
 site.use(transformImages(/* Options */));
 
 site.use(metas());
@@ -168,7 +175,7 @@ site.use(feed({
     title: "=title",
     description: "=description",
     published: "=date",
-    image: "$ img.high attr(src)",
+    image: "$ .blurred-img.cover picture img attr(src)",
     authorName: "v_raton",
   },
 }));

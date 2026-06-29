@@ -144,6 +144,18 @@ article img {
   height: auto;
 }
 
+article picture {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 0;
+  max-width: 100%;
+}
+article picture img {
+  width: 100%;
+  height: auto;
+}
+
 footer, .intro {
   text-align: center;
 }
@@ -230,26 +242,25 @@ ul.tags {
 .blurred-img.cover img.low {
   filter: blur(20px);
   transform: scale(1.1);
-  transition: opacity 0.3s ease;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: bottom;
   display: block;
 }
-.blurred-img.cover img.high {
+.blurred-img.cover picture {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+.blurred-img.cover picture img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: bottom;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.blurred-img.cover img.high.loaded {
-  opacity: 1;
+  display: block;
 }
 
 article video {
