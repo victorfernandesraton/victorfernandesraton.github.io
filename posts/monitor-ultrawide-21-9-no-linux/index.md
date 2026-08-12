@@ -227,6 +227,34 @@ $ python3 patch-edid.py
 
 ### 3. Instalar o EDID e configurar o initramfs
 
+Antes de chegar na solução final, tentamos dois caminhos. Vou narrar ambos porque as falhas são didáticas.
+
+#### Tentativa 1: debugfs (bloqueado por kernel lockdown)
+
+O primeiro plano do LLM foi aplicar o EDID via debugfs em runtime, sem precisar de reboot:
+
+```bash
+$ sudo cp lg-ultrawide-2560x1080.bin /sys/kernel/debug/dri/0/HDMI-A-1/edid_override
+cp: cannot create regular file '...edid_override': Operation not permitted
+```
+
+**Bloqueado.** O kernel estava em **lockdown mode** — por causa de Secure Boot habilitado na UEFI. O lockdown impede escrita em `/sys/kernel/debug` para evitar que um processo userspace injete dados arbitrários em subsistemas do kernel que rodam em ring 0. Tentei duas vezes assinar módulos do kernel com `mokutil --import` pra ver se destravava — não adiantou. O lockdown bloqueia o debugfs independente de assinatura: é uma trava de integridade do kernel, não de autenticação de módulo. Depois de dois `mokutil` frustrados, aceitamos que o caminho era outro.
+
+#### Tentativa 2: drm.edid_firmware (funcionou, mas precisou de hook manual)
+
+O plano B foi usar o parâmetro de kernel `drm.edid_firmware=`. Primeiro copiamos o EDID para `/lib/firmware/edid/` e eu mesmo rodei `sudo update-initramfs -u`. Mas ao verificar:
+
+```bash
+$ sudo lsinitramfs /boot/initrd.img-$(uname -r) | grep lg-ultrawide
+# (sem output — o EDID não foi incluído!)
+```
+
+O `update-initramfs` do Debian **não inclui automaticamente** firmwares customizados que não são conhecidos pelo kernel. Diferente de outras distros onde jogar o arquivo em `/lib/firmware` e rebuildar o initramfs é suficiente, no Debian o `initramfs-tools` só empacota firmwares que estão referenciados por módulos de kernel ou listados em hooks explícitos. O arquivo tava no disco, mas o initramfs ignorou — e sem ele lá dentro, o parâmetro `drm.edid_firmware=` seria ignorado em silêncio porque o KMS inicializa antes do root filesystem ser montado.
+
+A solução foi **manual**: criar um hook do `initramfs-tools` em `/etc/initramfs-tools/hooks/edid-override`, dar `chmod +x`, rodar `update-initramfs -u` de novo, e verificar com `lsinitramfs` que o arquivo realmente entrou. Só depois disso o parâmetro de kernel faria efeito.
+
+Por que isso funciona enquanto o debugfs falhou? Porque o firmware carregado via initramfs é um **blob de dados** (não código executável) — ele não precisa de assinatura de módulo de kernel, e o lockdown não interfere nesse caminho. É a mesma via que o kernel usa pra carregar firmware de WiFi, Bluetooth, etc.
+
 ```bash
 # Copiar para /lib/firmware
 sudo mkdir -p /lib/firmware/edid
@@ -256,13 +284,19 @@ usr/lib/firmware/edid/lg-ultrawide-2560x1080.bin
 
 ### 4. Adicionar o parâmetro no GRUB
 
+Com o initramfs pronto, faltava injetar o parâmetro no boot. O OpenCode tentou editar o `/etc/default/grub` direto (e tomou `PermissionDenied`), então pivotou pra um `sed` com sudo:
+
 ```bash
-# Editar /etc/default/grub
+$ sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash drm.edid_firmware=HDMI-A-1:edid\/lg-ultrawide-2560x1080.bin"/' /etc/default/grub
+
+$ grep CMDLINE_LINUX_DEFAULT /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash drm.edid_firmware=HDMI-A-1:edid/lg-ultrawide-2560x1080.bin"
 
-# Aplicar e reiniciar
-sudo update-grub
-sudo reboot
+$ sudo update-grub
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.12.100+deb13-amd64
+Found initrd image: /boot/initrd.img-6.12.100+deb13-amd64
+done
 ```
 
 ### 5. Verificar
@@ -334,7 +368,7 @@ Esse post é fruto de uma sessão real de troubleshooting com o **OpenCode** usa
 
 3. **Plano de ação com avaliação de riscos** — antes de executar qualquer mudança, ele me explicou exatamente o que ia acontecer e quais eram os riscos (tela preta, necessidade de reverter pelo GRUB). Só avançou depois que eu confirmei.
 
-4. **Execução guiada** — como o debugfs tava bloqueado (kernel lockdown), ele pivotou para `drm.edid_firmware=` com hook de initramfs no GRUB. Cada comando foi sugerido com explicação do que fazia.
+4. **Execução com retry** — a primeira tentativa (debugfs `edid_override`) falhou por kernel lockdown (Secure Boot). Tentei assinar módulos do kernel duas vezes com `mokutil`, sem efeito. A segunda (initramfs sem hook) falhou porque o `update-initramfs` do Debian não inclui firmware customizado automaticamente — rodei o comando, verifiquei com `lsinitramfs` e não achou nada. Na terceira, o LLM gerou o hook do initramfs-tools, eu criei o arquivo manualmente (`sudo tee`, `chmod +x`), rebuildei, só então o `lsinitramfs` confirmou. Aí sim fomos pro GRUB com `sudo sed` (o editor direto tomou `PermissionDenied`). Cada falha foi diagnosticada e corrigida na mesma sessão.
 
 5. **Validação pós-reboot** — depois do reboot, rodou `kscreen-doctor` e `fastfetch` pra confirmar que `2560x1080@56Hz` tava ativo como preferred mode.
 
@@ -382,6 +416,6 @@ Nem tudo é o cabo. Meu HDMI 2.1 estava perfeito, mas o chip LSPCON do Ice Lake 
 
 O EDID override com 56 Hz deu conta do recado — monitor rodando em 21:9 nativo, pixel-perfect, sem scaling artificial. Os 4 Hz a menos são insignificantes no uso diário, e a persistência via initramfs + parâmetro de kernel garante que sobrevive a reboots e atualizações.
 
-Se seu notebook Intel tem HDMI e um monitor ultrawide, vale checar se o limite de 165 MHz do LSPCON é o culpado antes de trocar de cabo ou desistir do monitor.
+Mas não foi na primeira tentativa. O debugfs falhou por lockdown do kernel (tentei assinar módulo duas vezes com `mokutil`, sem sucesso). O initramfs ignorou o firmware no primeiro `update-initramfs` — no Debian o hook não é automático, tive que criar o script na mão, dar `chmod +x`, rebuildar e verificar com `lsinitramfs`. O `sudo sed` foi necessário porque o editor direto tomou `PermissionDenied`. Três ciclos de erro → diagnóstico → correção (mais os dois `mokutil` no meio do caminho) até chegar no reboot vitorioso. E é exatamente esse tipo de iteração que faz uma sessão de troubleshooting valer a pena: cada falha ensina algo sobre como o sistema funciona.
 
-Sobre o uso de AI, o termo "vibe" tem sido usado pra tudo, e por mais que tenha brincado com o termo neste post, nada disso foi "Vibe", houve questionamento, pesquisa, análise de riscos e limitação de acessos quando necessário, mas o experimento aqui foi mostrar que deixar a AI assumir o controle pode dá sim resultado desde que você seja cuidadoso e saiba aonde está pisando.
+Sobre o uso de IA: o termo "vibe" tem sido usado pra tudo, e por mais que eu tenha brincado com o termo no título, nada disso foi "vibe". Houve questionamento, pesquisa, análise de riscos, limitação de acessos quando necessário e três tentativas com falhas reais antes do acerto. O experimento aqui foi mostrar que deixar a IA assumir o controle pode dar resultado — desde que você seja cuidadoso e saiba onde está pisando.
