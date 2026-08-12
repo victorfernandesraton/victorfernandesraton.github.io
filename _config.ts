@@ -151,6 +151,7 @@ site.use(jsx());
 site.use(svgo(/* Options */));
 site.use(favicon({ input: "./favicon.svg" }));
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv"]);
+site.copy("downloads");
 site.add("./theme.css");
 site.add("./lume.svg");
 

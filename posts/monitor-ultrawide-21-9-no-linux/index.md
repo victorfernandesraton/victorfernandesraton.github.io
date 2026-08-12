@@ -340,7 +340,7 @@ Esse post é fruto de uma sessão real de troubleshooting com o **OpenCode** usa
 
 A transcrição completa da sessão está disponível para download:
 
-→ **[Baixar transcrição completa da sessão](sessao-opencode.md)** (Session ID: `ses_03687fa7dffeg1Gun9oO7z2Ay6`, 03/08/2026, DeepSeek V4 Pro / Plano Go)
+→ **Baixar transcrição da sessão:** <a href="/downloads/sessao-ultrawide-opencode.md" download>sessao-ultrawide-opencode.md</a> (Session ID: `ses_03687fa7dffeg1Gun9oO7z2Ay6`, 03/08/2026, DeepSeek V4 Pro / Plano Go)
 
 # ⚠️ Riscos e responsabilidade
 
