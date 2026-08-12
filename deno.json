@@ -12,8 +12,8 @@
     "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
     "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts",
     "markdown-it-link-attributes": "npm:markdown-it-link-attributes@^4.0.1",
-    "markdown-it": "npm:markdown-it@^14.2.0",
-    "markdown-it-attrs": "npm:markdown-it-attrs@^5.0.0"
+    "markdown-it": "npm:markdown-it@^14.3.0",
+    "markdown-it-attrs": "npm:markdown-it-attrs@^5.0.1"
   },
   "tasks": {
     "lume": {

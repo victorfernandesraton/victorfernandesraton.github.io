@@ -19,9 +19,8 @@ import { version } from "lume/core/utils/browsers.ts";
 import type MarkdownIt from "markdown-it";
 import svgo from "lume/plugins/svgo.ts";
 import picture from "lume/plugins/picture.ts";
-import markdownItAttrs from "markdown-it-attrs";
 
-const addImageAttributes = () => (md: MarkdownIt) => {
+const addImageAttrs = () => (md: MarkdownIt) => {
   const originalRender = md.renderer.rules.image;
   md.renderer.rules.image = function (
     tokens: unknown[],
@@ -66,10 +65,9 @@ const site = lume({
 }, {
   markdown: {
     plugins: [
-      markdownItAttrs,
       mila,
       [markdownItMedia, { controls: true }],
-      addImageAttributes(),
+      addImageAttrs(),
     ],
   },
 });
