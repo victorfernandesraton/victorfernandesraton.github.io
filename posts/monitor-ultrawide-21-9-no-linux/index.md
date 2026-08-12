@@ -1,7 +1,7 @@
 +++
 title = 'VIBE troubleshoot: Configurando monitor ultrawide 21:9 no Linux'
 description = 'O drama do HDMI 2.1 no Intel Ice Lake, a limitação de 165 MHz do LSPCON e como resolvi com EDID override e uma ajuda de um amigo chinês 🇨🇳'
-date = 2026-08-03T18:45:00-03:00
+date = 2026-08-10T18:45:00-03:00
 draft = false
 tags = ['linux', 'debian', 'hardware', 'monitor', 'intel', 'kde', 'opencode', 'deepseek']
 cover = 'cover.png'
