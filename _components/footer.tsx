@@ -19,7 +19,7 @@ export default function ({ social = [] }: { social: Social[] }) {
 
       <div>
         <a href="https://vraton.dev">raton.dev</a> © {year} by{" "}
-        <a href="https://fosstodon.org/@v_raton">Victor Raton</a>{" "}
+        <a href="https://bolha.us/@v_raton">Victor Raton</a>{" "}
         is licensed under{" "}
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
           CC BY-NC-SA 4.0

@@ -2,7 +2,7 @@ type: xp
 layout: xp.tsx
 metas:
   site: vraton's site
-  fediverse: "@v_raton@fosstodon.org"
+  fediverse: "@v_raton@bolha.us"
   lang: pt
   generator: true
   title: "=title"
