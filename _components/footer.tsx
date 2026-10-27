@@ -56,7 +56,7 @@ export default function ({ social = [] }: { social: Social[] }) {
       <ul class="social-links">
         {social.map((item, index) => (
           <li key={index}>
-            <a href={item.url}>{item.name}</a>
+            <a rel="me" href={item.url}>{item.name}</a>
           </li>
         ))}
       </ul>
