@@ -43,5 +43,14 @@
     "globals": "^17.14.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.1"
+  },
+  "author": {
+    "name": "Victor Raton",
+    "email": "43411882+victorfernandesraton@users.noreply.github.com",
+    "url": "https://vraton.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorfernandesraton/victorfernandesraton.github.io.git"
   }
 }

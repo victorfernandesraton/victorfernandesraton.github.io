@@ -15,8 +15,31 @@ import lightningCss from "@lumeland/plugin-lightningcss";
 import { version } from "@lumeland/core/utils/browsers.ts";
 import type { Options as MarkdownOptions } from "@lumeland/plugin-markdown";
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import svgo from "@lumeland/plugin-svgo";
 import picture from "@lumeland/plugin-picture";
+
+/** Fields read from package.json at build time. */
+type PackageJson = {
+  repository?: string | { type?: string; url?: string };
+};
+
+/** Owner/repo slug ("owner/repo") from any GitHub URL or slug string. */
+const slugFromUrl = (raw: string): string =>
+  raw
+    .replace(/^git\+/, "")
+    .replace(/^(git@github\.com:|https?:\/\/github\.com\/)/, "")
+    .replace(/\.git$/, "");
+
+const readPackageJson = (): PackageJson => {
+  try {
+    return JSON.parse(
+      readFileSync(new URL("./package.json", import.meta.url), "utf-8"),
+    ) as PackageJson;
+  } catch {
+    return {};
+  }
+};
 
 /**
  * Short SHA of the commit that produced the build.
@@ -35,17 +58,22 @@ const getCommitSha = (): string => {
   }
 };
 
-/** Owner/repo slug of the git origin (falls back to this repository). */
+/** Owner/repo slug of the project (package.json → CI → git origin). */
 const getRepoSlug = (): string => {
+  const pkg = readPackageJson();
+  const pkgRepo = typeof pkg.repository === "string"
+    ? pkg.repository
+    : pkg.repository?.url;
+  if (pkgRepo) return slugFromUrl(pkgRepo);
   const repo = process.env.GITHUB_REPOSITORY;
   if (repo) return repo;
   try {
-    return execFileSync("git", ["remote", "get-url", "origin"], {
-      encoding: "utf-8",
-      timeout: 5000,
-    }).trim()
-      .replace(/^(git@github\.com:|https?:\/\/github\.com\/)/, "")
-      .replace(/\.git$/, "");
+    return slugFromUrl(
+      execFileSync("git", ["remote", "get-url", "origin"], {
+        encoding: "utf-8",
+        timeout: 5000,
+      }).trim(),
+    );
   } catch {
     return "victorfernandesraton/victorfernandesraton.github.io";
   }
