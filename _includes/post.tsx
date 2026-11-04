@@ -19,6 +19,9 @@ export default function (
     fullDate,
   } = data;
 
+  // frontmatter tags may be a string or an array
+  const tagList: string[] = Array.isArray(tags) ? tags : tags ? [tags] : [];
+
   const upCover = cover ? page.data.url + cover.split(".")[0] : undefined;
   const coverPath = cover ? page.data.url + cover : undefined;
   const coverFallback = upCover + "-small" + "." + "webp";
@@ -119,7 +122,7 @@ export default function (
             <h2>{description}</h2>
             <h3>{fullDate(createdAt)}</h3>
             <ul class="tags">
-              {tags.map((item, index) => (
+              {tagList.map((item, index) => (
                 <li key={index}>
                   <a href={`/tag/${item}/`}>{item}</a>
                 </li>

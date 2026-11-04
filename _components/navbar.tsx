@@ -1,6 +1,6 @@
 export default function (
   { nav, lang }: Lume.Data,
-  {}: Lume.Helpers,
+  _helpers: Lume.Helpers,
 ) {
   const index = nav.menu("/");
   return (

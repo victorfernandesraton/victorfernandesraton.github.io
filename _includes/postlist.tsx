@@ -43,7 +43,7 @@ export default function (
           <main class="list">
             {children}
             <ol>
-              {recent.map((page) => (
+              {recent.map((page: Lume.Data) => (
                 <li>
                   <a href={page.url}>{page.title}</a>
                   <p>{fullDate(new Date(page.date))}</p>

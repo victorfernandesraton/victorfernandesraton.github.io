@@ -55,7 +55,7 @@ export default function (
             <article>
               <h2>Posts</h2>
               <ol>
-                {recent.map((page) => (
+                {recent.map((page: Lume.Data) => (
                   <li>
                     <a href={page.url}>
                       <h3>{page.title}</h3>
@@ -69,7 +69,7 @@ export default function (
             <article>
               <h2>Experiências</h2>
               <ol>
-                {xp.map((page) => (
+                {xp.map((page: Lume.Data) => (
                   <li>
                     <a href={page.url}>
                       <h3>{page.title}</h3>

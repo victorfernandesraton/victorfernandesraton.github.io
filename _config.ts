@@ -1,79 +1,82 @@
-import lume from "lume/mod.ts";
-import jsx from "lume/plugins/jsx.ts";
-import nav from "lume/plugins/nav.ts";
-import favicon from "lume/plugins/favicon.ts";
+import lume from "@lumeland/lume";
+import jsx from "@lumeland/plugin-jsx";
+import nav from "@lumeland/plugin-nav";
+import favicon from "@lumeland/plugin-favicon";
 import mila from "markdown-it-link-attributes";
-import inline from "lume/plugins/inline.ts";
-import cacheBusting from "lume/middlewares/cache_busting.ts";
+import inline from "@lumeland/plugin-inline";
 import markdownItMedia from "@gotfeedback/markdown-it-media";
-import transformImages from "lume/plugins/transform_images.ts";
-import googleFonts from "lume/plugins/google_fonts.ts";
-import highlight from "lume/plugins/code_highlight.ts";
-import gzip from "lume/plugins/gzip.ts";
-import feed from "lume/plugins/feed.ts";
-import metas from "lume/plugins/metas.ts";
-import seo from "lume/plugins/seo.ts";
-import imageSize from "lume/plugins/image_size.ts";
-import lightningCss from "lume/plugins/lightningcss.ts";
-import { version } from "lume/core/utils/browsers.ts";
-import type MarkdownIt from "markdown-it";
-import svgo from "lume/plugins/svgo.ts";
-import picture from "lume/plugins/picture.ts";
+import transformImages from "@lumeland/plugin-transform-images";
+import googleFonts from "@lumeland/plugin-google-fonts";
+import highlight from "@lumeland/plugin-code-highlight";
+import feed from "@lumeland/plugin-feed";
+import metas from "@lumeland/plugin-metas";
+import imageSize from "@lumeland/plugin-image-size";
+import lightningCss from "@lumeland/plugin-lightningcss";
+import { version } from "@lumeland/core/utils/browsers.ts";
+import type { Options as MarkdownOptions } from "@lumeland/plugin-markdown";
+import svgo from "@lumeland/plugin-svgo";
+import picture from "@lumeland/plugin-picture";
 
-const addImageAttrs = () => (md: MarkdownIt) => {
+/**
+ * Types of the markdown-it plugins accepted by Lume. They come from the copy of
+ * markdown-it bundled with @lumeland/plugin-markdown (v15), whose types are
+ * incompatible with the @types/markdown-it (v14) used by markdown-it-* plugins,
+ * hence the casts applied on the plugin list below.
+ */
+type MarkdownPluginEntry = NonNullable<MarkdownOptions["plugins"]>[number];
+type MarkdownItPlugin = Extract<
+  MarkdownPluginEntry,
+  (...args: never[]) => unknown
+>;
+
+const addImageAttrs = (): MarkdownItPlugin => (md) => {
   const originalRender = md.renderer.rules.image;
+  if (!originalRender) return;
   md.renderer.rules.image = function (
-    tokens: unknown[],
-    idx: number,
-    options: Record<string, unknown>,
-    env: Record<string, unknown>,
-    self: Record<string, unknown>,
+    tokens,
+    idx,
+    options,
+    env,
+    self,
   ): string {
-    const token = tokens[idx] as Record<string, unknown>;
+    const token = tokens[idx];
     if (typeof token.attrGet !== "function") {
       return originalRender(tokens, idx, options, env, self);
     }
 
-    const attrGet = (name: string): string | undefined =>
-      (token.attrGet as (name: string) => string | undefined).call(
-        token,
-        name,
-      );
-    const attrPush = (attr: [string, string]) =>
-      (token.attrPush as (attr: [string, string]) => void).call(
-        token,
-        attr,
-      );
-
-    if (!attrGet("image-size")) attrPush(["image-size", ""]);
-    if (!attrGet("sizes")) {
-      attrPush(["sizes", "(min-width: 900px) 900px, calc(100vw - 2rem)"]);
+    if (!token.attrGet("image-size")) token.attrPush(["image-size", ""]);
+    if (!token.attrGet("sizes")) {
+      token.attrPush(["sizes", "(min-width: 900px) 900px, calc(100vw - 2rem)"]);
     }
-    if (!attrGet("loading")) attrPush(["loading", "lazy"]);
-    if (!attrGet("decoding")) attrPush(["decoding", "async"]);
+    if (!token.attrGet("loading")) token.attrPush(["loading", "lazy"]);
+    if (!token.attrGet("decoding")) token.attrPush(["decoding", "async"]);
 
     return originalRender(tokens, idx, options, env, self);
   };
 };
 
+// The markdown-it-* plugins are typed against @types/markdown-it (v14) while
+// Lume's plugin loader uses its own bundled markdown-it (v15). The shapes match
+// at runtime, so the entries are cast to Lume's types.
+const markdownPlugins = [
+  mila,
+  [markdownItMedia, { controls: true }],
+  addImageAttrs(),
+] as unknown as NonNullable<MarkdownOptions["plugins"]>;
+
 const site = lume({
   location: new URL("https://vraton.dev"),
   server: {
     debugBar: true,
-    middlewares: [cacheBusting()],
   },
 }, {
   markdown: {
-    plugins: [
-      mila,
-      [markdownItMedia, { controls: true }],
-      addImageAttrs(),
-    ],
+    plugins: markdownPlugins,
   },
 });
 
 // Ignore files that should not be processed
-site.ignore("README.md", "AGENTS.md", "github/", "presentations/");
+site.ignore("README.md", "AGENTS.md", "github/", "presentations/", "types.d.ts");
 
 site.use(highlight({
   theme: {
@@ -129,7 +132,8 @@ site.use(googleFonts({
 }));
 
 site.use(lightningCss({
-  includes: "_includes",
+  // In Lume 4 the plugin resolves `_includes` automatically, so the old
+  // `includes` option no longer exists.
   options: {
     minify: true,
     drafts: {
@@ -160,7 +164,6 @@ site.use(transformImages(/* Options */));
 
 site.use(metas());
 site.use(inline());
-site.use(gzip());
 
 site.use(feed({
   output: ["/posts.rss", "/posts.json"],
@@ -196,7 +199,6 @@ site.use(feed({
 }));
 site.use(imageSize());
 
-site.use(seo(/* Options */));
 // font logo  - Universe 75 Black
 // font title - Univers LT 49 Light Ultra Condensed
 // font links and extra -  Roadgeek 2005 Series F or D

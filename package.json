@@ -1,0 +1,46 @@
+{
+  "name": "victorfernandesratongithubio",
+  "private": true,
+  "type": "module",
+  "allowScripts": {
+    "esbuild": false,
+    "fsevents": false,
+    "@parcel/watcher": false
+  },
+  "scripts": {
+    "serve": "lume build -s",
+    "build": "lume build",
+    "check": "tsc --noEmit",
+    "lint": "eslint .",
+    "ci": "npm run check && npm run lint"
+  },
+  "dependencies": {
+    "@gotfeedback/markdown-it-media": "^1.0.1",
+    "@lumeland/lume": "^4.0.1",
+    "@lumeland/plugin-code-highlight": "^1.0.0",
+    "@lumeland/plugin-favicon": "^1.0.0",
+    "@lumeland/plugin-feed": "^1.0.0",
+    "@lumeland/plugin-google-fonts": "^1.0.0",
+    "@lumeland/plugin-image-size": "^1.0.0",
+    "@lumeland/plugin-inline": "^1.0.0",
+    "@lumeland/plugin-jsx": "^1.0.0",
+    "@lumeland/plugin-lightningcss": "^1.0.0",
+    "@lumeland/plugin-metas": "^1.0.0",
+    "@lumeland/plugin-nav": "^1.0.0",
+    "@lumeland/plugin-picture": "^1.0.0",
+    "@lumeland/plugin-svgo": "^1.0.0",
+    "@lumeland/plugin-transform-images": "^1.0.0",
+    "@lumeland/ssx": "^0.1.16",
+    "markdown-it": "^14.3.3",
+    "markdown-it-attrs": "^5.0.1",
+    "markdown-it-link-attributes": "^4.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/markdown-it-link-attributes": "^3.0.5",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1"
+  }
+}

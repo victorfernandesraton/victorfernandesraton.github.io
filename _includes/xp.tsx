@@ -13,6 +13,9 @@ export default function (
     theme,
   } = data;
 
+  // frontmatter tags may be a string or an array
+  const tagList: string[] = Array.isArray(tags) ? tags : tags ? [tags] : [];
+
   return (
     <>
       {{ __html: "<!DOCTYPE html>" }}
@@ -33,7 +36,7 @@ export default function (
             <h1>{title}</h1>
             <h2>{description}</h2>
             <ul>
-              {tags.map((item, index) => (
+              {tagList.map((item, index) => (
                 <li key={index}>
                   <a href={`/tag/${item}/`}>{item}</a>
                 </li>

@@ -45,7 +45,7 @@ export default function (
             <h1>#{title}</h1>
             <h2>{description}</h2>
             <ol>
-              {recent.map((page) => (
+              {recent.map((page: Lume.Data) => (
                 <li>
                   <a href={page.url}>{page.title}</a>
                 </li>
