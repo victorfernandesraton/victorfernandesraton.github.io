@@ -48,7 +48,7 @@
     "jsr:@std/yaml@1.0.12": "1.0.12",
     "jsr:@std/yaml@1.1.0": "1.1.0",
     "jsr:@std/yaml@^1.0.5": "1.1.0",
-    "npm:@gotfeedback/markdown-it-media@^1.0.1": "1.0.1_markdown-it@14.3.0",
+    "npm:@gotfeedback/markdown-it-media@^1.0.1": "1.0.1_markdown-it@14.3.3",
     "npm:@resvg/resvg-wasm@2.6.2": "2.6.2",
     "npm:esbuild@0.28.0": "0.28.0",
     "npm:highlight.js@11.11.1": "11.11.1",
@@ -56,13 +56,13 @@
     "npm:image-dimensions@2.5.0": "2.5.0",
     "npm:image-dimensions@2.5.1": "2.5.1",
     "npm:lightningcss-wasm@1.32.0": "1.32.0",
-    "npm:markdown-it-attrs@4.3.1": "4.3.1_markdown-it@14.3.0",
-    "npm:markdown-it-attrs@4.5.0": "4.5.0_markdown-it@14.3.0",
-    "npm:markdown-it-attrs@^5.0.1": "5.0.1_markdown-it@14.3.0",
+    "npm:markdown-it-attrs@4.3.1": "4.3.1_markdown-it@14.3.3",
+    "npm:markdown-it-attrs@4.5.0": "4.5.0_markdown-it@14.3.3",
+    "npm:markdown-it-attrs@^5.0.1": "5.0.1_markdown-it@14.3.3",
     "npm:markdown-it-deflist@3.0.0": "3.0.0",
     "npm:markdown-it-link-attributes@^4.0.1": "4.0.1",
     "npm:markdown-it@14.1.1": "14.1.1",
-    "npm:markdown-it@^14.3.0": "14.3.0",
+    "npm:markdown-it@^14.3.3": "14.3.3",
     "npm:remove-markdown@0.6.3": "0.6.3",
     "npm:remove-markdown@0.6.4": "0.6.4",
     "npm:sharp@0.34.5": "0.34.5",
@@ -400,10 +400,10 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
-    "@gotfeedback/markdown-it-media@1.0.1_markdown-it@14.3.0": {
+    "@gotfeedback/markdown-it-media@1.0.1_markdown-it@14.3.3": {
       "integrity": "sha512-NTxdb3QtKiaYkibqVh0SC4KPgVwYhYsEYFGQN4w4G8mHmWOt8lEiB+27Mbe99Xghz/Xow3LEBtWpkSCFjxeg8A==",
       "dependencies": [
-        "markdown-it@14.3.0"
+        "markdown-it@14.3.3"
       ]
     },
     "@img/colour@1.1.0": {
@@ -693,22 +693,22 @@
         "uc.micro"
       ]
     },
-    "markdown-it-attrs@4.3.1_markdown-it@14.3.0": {
+    "markdown-it-attrs@4.3.1_markdown-it@14.3.3": {
       "integrity": "sha512-/ko6cba+H6gdZ0DOw7BbNMZtfuJTRp9g/IrGIuz8lYc/EfnmWRpaR3CFPnNbVz0LDvF8Gf1hFGPqrQqq7De0rg==",
       "dependencies": [
-        "markdown-it@14.3.0"
+        "markdown-it@14.3.3"
       ]
     },
-    "markdown-it-attrs@4.5.0_markdown-it@14.3.0": {
+    "markdown-it-attrs@4.5.0_markdown-it@14.3.3": {
       "integrity": "sha512-dsuEyK/MDAYsdZLDIaDAQXz5+gP0AAbJ4ZjOSB0w+ZGe4lLbzyCgGg0LApC6j9zUK2F+2SA9VkzXfyNG9hL/8g==",
       "dependencies": [
-        "markdown-it@14.3.0"
+        "markdown-it@14.3.3"
       ]
     },
-    "markdown-it-attrs@5.0.1_markdown-it@14.3.0": {
+    "markdown-it-attrs@5.0.1_markdown-it@14.3.3": {
       "integrity": "sha512-dTP49/FLERwbgqmfIG5LwnC99qecIJYalKQbl3pY+7Hajk+Z+cazeEZaKwofpM9KFxvfRVF0UN9GYxKKAakfNg==",
       "dependencies": [
-        "markdown-it@14.3.0"
+        "markdown-it@14.3.3"
       ]
     },
     "markdown-it-deflist@3.0.0": {
@@ -729,8 +729,8 @@
       ],
       "bin": true
     },
-    "markdown-it@14.3.0": {
-      "integrity": "sha512-RCEsPjR+sr0x+AuYp601tKTkgFG4YEPLCzHST3cQ/fhlJkqAkz1L2/Qbp1j9qw5SBwQHFBoW8+hoN5xssOF0Tw==",
+    "markdown-it@14.3.3": {
+      "integrity": "sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==",
       "dependencies": [
         "argparse",
         "entities",
@@ -1331,7 +1331,7 @@
       "npm:@gotfeedback/markdown-it-media@^1.0.1",
       "npm:markdown-it-attrs@^5.0.1",
       "npm:markdown-it-link-attributes@^4.0.1",
-      "npm:markdown-it@^14.3.0"
+      "npm:markdown-it@^14.3.3"
     ]
   }
 }
