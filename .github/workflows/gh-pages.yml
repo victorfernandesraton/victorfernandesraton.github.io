@@ -31,6 +31,11 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          # Explicit guard: lume 4 defaults LUME_DRAFTS=true in production
+          # builds, which publishes draft pages. The npm script sets it too;
+          # this guarantees it regardless of script or lume version changes.
+          LUME_DRAFTS: "false"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

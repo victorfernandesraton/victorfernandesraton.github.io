@@ -8,8 +8,8 @@
     "@parcel/watcher": false
   },
   "scripts": {
-    "serve": "lume build -s",
-    "build": "lume build",
+    "serve": "LUME_DRAFTS=true lume build -s",
+    "build": "LUME_DRAFTS=false lume build",
     "check": "tsc --noEmit",
     "lint": "eslint .",
     "ci": "npm run check && npm run lint"
