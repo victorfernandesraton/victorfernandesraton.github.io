@@ -2,11 +2,24 @@ type Social = {
   name: string;
   url: string;
 };
-export default function ({ social = [] }: { social: Social[] }) {
+
+export default function (
+  { social = [], commitSha, commitUrl }: {
+    social?: Social[];
+    commitSha?: string;
+    commitUrl?: string;
+  },
+) {
   const year = new Date().getFullYear();
   return (
     <footer>
       <p>Developed with &#128156; by victorfernandesraton</p>
+      {commitSha && commitUrl && (
+        <p class="commit-info">
+          deploy{" "}
+          <a href={commitUrl} rel="nofollow">@{commitSha.slice(0, 7)}</a>
+        </p>
+      )}
       <a class="powered-by" href="https://lume.land">
         <p>Powered by</p>
         <img

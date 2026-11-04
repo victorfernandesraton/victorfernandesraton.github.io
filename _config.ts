@@ -14,8 +14,47 @@ import imageSize from "@lumeland/plugin-image-size";
 import lightningCss from "@lumeland/plugin-lightningcss";
 import { version } from "@lumeland/core/utils/browsers.ts";
 import type { Options as MarkdownOptions } from "@lumeland/plugin-markdown";
+import { execFileSync } from "node:child_process";
 import svgo from "@lumeland/plugin-svgo";
 import picture from "@lumeland/plugin-picture";
+
+/**
+ * Short SHA of the commit that produced the build.
+ * In CI this comes from GITHUB_SHA, locally from `git rev-parse`.
+ */
+const getCommitSha = (): string => {
+  const envSha = process.env.GITHUB_SHA ?? process.env.COMMIT_SHA;
+  if (envSha) return envSha;
+  try {
+    return execFileSync("git", ["rev-parse", "--short", "HEAD"], {
+      encoding: "utf-8",
+      timeout: 5000,
+    }).trim();
+  } catch {
+    return "";
+  }
+};
+
+/** Owner/repo slug of the git origin (falls back to this repository). */
+const getRepoSlug = (): string => {
+  const repo = process.env.GITHUB_REPOSITORY;
+  if (repo) return repo;
+  try {
+    return execFileSync("git", ["remote", "get-url", "origin"], {
+      encoding: "utf-8",
+      timeout: 5000,
+    }).trim()
+      .replace(/^(git@github\.com:|https?:\/\/github\.com\/)/, "")
+      .replace(/\.git$/, "");
+  } catch {
+    return "victorfernandesraton/victorfernandesraton.github.io";
+  }
+};
+
+const commitSha = getCommitSha();
+const commitUrl = commitSha
+  ? `https://github.com/${getRepoSlug()}/commit/${commitSha}`
+  : "";
 
 /**
  * Types of the markdown-it plugins accepted by Lume. They come from the copy of
@@ -150,6 +189,8 @@ site.use(lightningCss({
   },
 }));
 site.data("sitename", "vraton.dev");
+site.data("commitSha", commitSha);
+site.data("commitUrl", commitUrl);
 site.data("theme", "everforest-dark");
 site.use(jsx());
 site.use(svgo(/* Options */));
