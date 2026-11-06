@@ -227,26 +227,23 @@ site.use(jsx());
 type SvgoOptions = NonNullable<Parameters<typeof svgo>[0]>;
 
 site.use(svgo({
-  // multipass + explicit preset: extra passes squeeze a few more bytes and
-  // removeViewBox is kept disabled so SVGs keep scaling responsively.
-  // (cast: svgo 4 typings reject the inline {name, params} preset shape)
+  // multipass + sortAttrs: extra passes squeeze a few more bytes and the
+  // attribute order becomes deterministic across builds.
+  // (svgo 4 removed removeViewBox from preset-default, so the viewBox is
+  // always preserved — no override needed. The cast is still required:
+  // svgo 4 typings reject the explicit plugin list shape.)
   options: {
     multipass: true,
     plugins: [
-      {
-        name: "preset-default",
-        params: {
-          overrides: {
-            removeViewBox: false,
-          },
-        },
-      },
+      "preset-default",
       // deterministic attribute order across builds
       "sortAttrs",
     ],
   } as SvgoOptions["options"],
 }));
 site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);
+// Serve the ico fallback at the URL browsers request by default (/favicon.ico)
+site.copy("/static/favicon.ico", "/favicon.ico");
 site.copy("downloads");
 site.add("./theme.css");
 site.add("./lume.svg");

@@ -5,6 +5,8 @@ export default ({ title, children, theme }: Lume.Data) => (
     <html data-webui-theme={theme}>
       <head>
         <title>{title}</title>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

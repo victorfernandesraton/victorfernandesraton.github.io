@@ -12,6 +12,8 @@ export default function (
       <html data-webui-theme={theme} lang={lang ?? "pt-BR"}>
         <head>
           <title>{title}</title>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <link rel="icon" href="/favicon.ico" sizes="32x32" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
