@@ -1,7 +1,6 @@
 import lume from "@lumeland/lume";
 import jsx from "@lumeland/plugin-jsx";
 import nav from "@lumeland/plugin-nav";
-import favicon from "@lumeland/plugin-favicon";
 import mila from "markdown-it-link-attributes";
 import inline from "@lumeland/plugin-inline";
 import markdownItMedia from "@gotfeedback/markdown-it-media";
@@ -11,6 +10,7 @@ import highlight from "@lumeland/plugin-code-highlight";
 import feed from "@lumeland/plugin-feed";
 import metas from "@lumeland/plugin-metas";
 import imageSize from "@lumeland/plugin-image-size";
+import readingInfo from "@lumeland/plugin-reading-info";
 import lightningCss from "@lumeland/plugin-lightningcss";
 import { version } from "@lumeland/core/utils/browsers.ts";
 import type { Options as MarkdownOptions } from "@lumeland/plugin-markdown";
@@ -154,6 +154,9 @@ site.use(highlight({
 }));
 
 site.use(nav());
+// Computes page.data.readingInfo ({words, minutes, time}) for .md pages.
+// 225 wpm ~ average reading speed for Portuguese text (default is 275 wpm).
+site.use(readingInfo({ wordsPerMinute: 225 }));
 site.data(
   "fullDate",
   function (
@@ -221,9 +224,29 @@ site.data("commitSha", commitSha);
 site.data("commitUrl", commitUrl);
 site.data("theme", "everforest-dark");
 site.use(jsx());
-site.use(svgo(/* Options */));
-site.use(favicon({ input: "./favicon.svg" }));
-site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv"]);
+type SvgoOptions = NonNullable<Parameters<typeof svgo>[0]>;
+
+site.use(svgo({
+  // multipass + explicit preset: extra passes squeeze a few more bytes and
+  // removeViewBox is kept disabled so SVGs keep scaling responsively.
+  // (cast: svgo 4 typings reject the inline {name, params} preset shape)
+  options: {
+    multipass: true,
+    plugins: [
+      {
+        name: "preset-default",
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      // deterministic attribute order across builds
+      "sortAttrs",
+    ],
+  } as SvgoOptions["options"],
+}));
+site.add([".png", ".webp", ".jpeg", ".jpg", ".mp4", ".csv", ".svg"]);
 site.copy("downloads");
 site.add("./theme.css");
 site.add("./lume.svg");

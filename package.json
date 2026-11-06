@@ -28,6 +28,7 @@
     "@lumeland/plugin-metas": "^1.0.0",
     "@lumeland/plugin-nav": "^1.0.0",
     "@lumeland/plugin-picture": "^1.0.0",
+    "@lumeland/plugin-reading-info": "^1.0.0",
     "@lumeland/plugin-svgo": "^1.0.0",
     "@lumeland/plugin-transform-images": "^1.0.0",
     "@lumeland/ssx": "^0.1.16",

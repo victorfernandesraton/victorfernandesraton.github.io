@@ -7,6 +7,7 @@ export default function (
     children,
     tags,
     description,
+    readingInfo,
     sitename,
     comp,
     url,
@@ -120,7 +121,7 @@ export default function (
             )}
             <h1>{title}</h1>
             <h2>{description}</h2>
-            <h3>{fullDate(createdAt)}</h3>
+            <h3>{fullDate(createdAt)} · {readingInfo.minutes} min de leitura</h3>
             <ul class="tags">
               {tagList.map((item, index) => (
                 <li key={index}>

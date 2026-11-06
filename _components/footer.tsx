@@ -38,28 +38,28 @@ export default function (
           CC BY-NC-SA 4.0
         </a>
         <img
-          src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+          src="/static/icons/cc/cc.svg"
           alt="CC"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
-          src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
+          src="/static/icons/cc/by.svg"
           alt="BY"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
-          src="https://mirrors.creativecommons.org/presskit/icons/nc.svg"
+          src="/static/icons/cc/nc.svg"
           alt="NC"
           width="16"
           height="16"
           style="max-width: 1em;max-height:1em;margin-left: .2em;"
         />
         <img
-          src="https://mirrors.creativecommons.org/presskit/icons/sa.svg"
+          src="/static/icons/cc/sa.svg"
           alt="SA"
           width="16"
           height="16"
