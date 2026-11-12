@@ -26,9 +26,22 @@ export default function (
   const upCover = cover ? page.data.url + cover.split(".")[0] : undefined;
   const coverPath = cover ? page.data.url + cover : undefined;
   const coverFallback = upCover + "-small" + "." + "webp";
-  const coverPreloadDesktop = upCover + "-900w" + "." + "webp";
-  const coverPreloadTablet = upCover + "-720w" + "." + "webp";
-  const coverPreloadMobile = upCover + "-300w" + "." + "webp";
+  // Preload hints for the LCP cover image. The srcset densities mirror the
+  // <picture> sources below exactly, so the browser preloads the exact file
+  // it will display. The viewport meta must come BEFORE these hints: until
+  // it is parsed the default viewport (980px) matches the desktop media
+  // query and every breakpoint image would be downloaded on mobile.
+  const coverPreload: [string, string, string][] = cover
+    ? [
+        [`${upCover}-300w.avif 1x, ${upCover}-300w@2.avif 2x`, "(max-width: 599px)", `${upCover}-300w.avif`],
+        [
+          `${upCover}-720w.avif 1x, ${upCover}-720w@2.avif 2x`,
+          "(min-width: 600px) and (max-width: 899px)",
+          `${upCover}-720w.avif`,
+        ],
+        [`${upCover}-900w.avif 1x, ${upCover}-900w@2.avif 2x`, "(min-width: 900px)", `${upCover}-900w.avif`],
+      ]
+    : [];
   const createdAt = new Date(date);
 
   return (
@@ -37,6 +50,11 @@ export default function (
 
       <html data-webui-theme={theme} lang={lang ?? "pt-BR"}>
         <head>
+          {/* The viewport meta MUST come before any resource hints: the
+              preload scanner evaluates `media` attributes against the default
+              viewport (980px) until this tag is parsed, which made the desktop
+              cover preload download on mobile. */}
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
           <title>
             {`${sitename} - ${title}`}
           </title>
@@ -58,32 +76,18 @@ export default function (
             rel="stylesheet"
             href="/theme.css"
           />
-          {cover && (
-            <>
-              <link
-                rel="preload"
-                as="image"
-                href={coverPreloadMobile}
-                fetchpriority="high"
-                media="(max-width: 599px)"
-              />
-              <link
-                rel="preload"
-                as="image"
-                href={coverPreloadTablet}
-                fetchpriority="high"
-                media="(min-width: 600px) and (max-width: 899px)"
-              />
-              <link
-                rel="preload"
-                as="image"
-                href={coverPreloadDesktop}
-                fetchpriority="high"
-                media="(min-width: 900px)"
-              />
-            </>
-          )}
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          {coverPreload.map(([srcset, media, href]) => (
+            <link
+              key={media}
+              rel="preload"
+              as="image"
+              type="image/avif"
+              fetchpriority="high"
+              href={href}
+              imagesrcset={srcset}
+              media={media}
+            />
+          ))}
         </head>
         <comp.Navbar nav={nav} alternates={alternates} lang={lang} />
         <body>

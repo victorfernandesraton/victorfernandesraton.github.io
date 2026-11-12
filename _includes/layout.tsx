@@ -4,6 +4,7 @@ export default ({ title, children, theme }: Lume.Data) => (
 
     <html data-webui-theme={theme}>
       <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>{title}</title>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -23,7 +24,6 @@ export default ({ title, children, theme }: Lume.Data) => (
           rel="stylesheet"
           href="/theme.css"
         />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
       </head>
       <body>
         {children}

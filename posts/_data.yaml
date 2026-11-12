@@ -9,7 +9,11 @@ transformImages:
   - resize: [225]
     matches: cover
     suffix: -small
-    format: webp
+    # Low-quality placeholder blurred behind the cover (CSS blur(20px)),
+    # so compression artifacts are invisible and the file stays tiny.
+    format:
+      format: webp
+      quality: 30
 
   - resize: [900]
     format: [webp, png, jpg, gif]

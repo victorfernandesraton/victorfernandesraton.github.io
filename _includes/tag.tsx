@@ -18,6 +18,7 @@ export default function (
       {{ __html: "<!DOCTYPE html>" }}
       <html data-webui-theme={theme} lang={lang ?? "pt-BR"}>
         <head>
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
           <title>{title}</title>
           <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
           <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -37,7 +38,6 @@ export default function (
             rel="stylesheet"
             href="/theme.css"
           />
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
           <meta name="description" content={description} />
         </head>
         <body>

@@ -1,5 +1,11 @@
 /* google-fonts */
 /* code-hightlight */
+/* WCAG AA contrast fix for the injected github-dark syntax theme:
+   `.hljs-section` (#1f6feb on #0d1117) had 4.08:1 (< 4.5:1). #58a6ff gives
+   7.5:1 and keeps the same hue family. */
+.hljs-section {
+  color: #58a6ff;
+}
 [data-webui-theme="everforest-dark"] {
   --red: #e67e80;
   --orange: #e69875;
